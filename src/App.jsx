@@ -1,8 +1,10 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 import "./App.css";
-import { login } from "./services/auth.service";
+import { loginUser } from "./feature/authentication";
 
 function App() {
+  const dispatch = useDispatch()
   const [formData, setFormData] = useState({
     username: "",
     password: "",
@@ -11,7 +13,7 @@ function App() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
   const handleLogin = async () => {
-    const res = await login(formData);
+    const res = await dispatch(loginUser(formData));
     console.log(res);
   };
 
