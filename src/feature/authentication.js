@@ -27,13 +27,24 @@ export const loginUser = createAsyncThunk(
   }
 );
 
+// Async thunk for register
+export const register = createAsyncThunk(
+  'user/register',
+  async (data, { rejectWithValue }) => {
+    try {
+      const response = await api.post(`/register`, data);
+      return response.data; // Assuming response data contains user information
+    } catch (error) {
+      return rejectWithValue(error.response?.data?.message || 'Register failed');
+
+    }
+  }
+);
+
 const user = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    // setUser: (state, action) => {
-
-    // },
     setIsLoggedIn(state, action) {
       const isLoggedIn = action.payload;
       state.isLoggedIn = isLoggedIn;
@@ -47,6 +58,7 @@ const user = createSlice({
       state.isLoggedIn = false;
       state.isFirstLogin = false;
       state.role = [];
+      state.error = false;
     },
   },
   extraReducers: (builder) => {
@@ -64,6 +76,7 @@ const user = createSlice({
         state.username = user.username;
         state.role = user.role;
         state.loading = false;
+        state.errorMessage = '';
       })
       // Handle rejected state (failed login)
       .addCase(loginUser.rejected, (state, action) => {
@@ -76,6 +89,8 @@ const user = createSlice({
 });
 
 export const {
-  setUser
-} = user.actions
+  setIsLoggedIn,
+  setFirstLogin,
+  signout,
+} = user.actions;
 export default user.reducer;
