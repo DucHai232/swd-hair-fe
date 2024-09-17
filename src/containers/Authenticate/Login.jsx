@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import "./App.css";
-import { loginUser } from "./feature/authentication";
+import { loginUser } from "../../feature/authentication";
 
 function App() {
   const dispatch = useDispatch()
