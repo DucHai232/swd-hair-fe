@@ -1,8 +1,9 @@
-import { Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import ForgotPassword from '../containers/Authenticate/ForgotPassword';
-import Login from '../containers/Authenticate/login';
+import Login from '../containers/Authenticate/Login';
 import Register from '../containers/Authenticate/Register';
 import UserProfile from '../containers/Authenticate/UserProfile';
+import Home from '../containers/Home';
 import PrivateRoleBasedRoute from './PrivateRoleBasedRoute';
 
 //luồng ruoting chính sẽ là component này
@@ -12,12 +13,12 @@ const AppRoutes = () => {
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
       <Route path="/forgot-password" element={<ForgotPassword />} />
-      <Route path="/user-profile" element={<UserProfile />} />
+      <Route path="/" element={<Home />} />
       <Route
-        path='/'
-        element={<PrivateRoleBasedRoute path="/" Component={UserProfile} requiredRoles={['admin', 'staff', 'customer', 'stylist', 'manager']}/>}
-      >
-      </Route>
+        path='/user-profile'
+        element={<PrivateRoleBasedRoute path="/user-profile" Component={UserProfile} requiredRoles={['admin', 'staff', 'customer', 'stylist', 'manager']}/>}
+      />
+      <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   )
 }

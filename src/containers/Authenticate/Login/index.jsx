@@ -1,8 +1,9 @@
-import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { loginUser } from "../../feature/authentication";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { loginUser } from "../../../feature/authentication";
 
 function App() {
+  const accessToken = useSelector((state) => state.user.accessToken)
   const dispatch = useDispatch()
   const [formData, setFormData] = useState({
     username: "",
@@ -13,8 +14,10 @@ function App() {
   };
   const handleLogin = async () => {
     const res = await dispatch(loginUser(formData));
-    console.log(res);
   };
+  useEffect(() => {
+    console.log(accessToken)
+  }, [accessToken])
 
   return (
     <>

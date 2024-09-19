@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { api } from "../services/api.service";
+import { axiosInstance } from "../services/api.service";
 
 const initialState = {
   error: false,
@@ -18,8 +18,8 @@ export const loginUser = createAsyncThunk(
   'user/loginUser',
   async (data, { rejectWithValue }) => {
     try {
-      const response = await api.post(`/login`, data);
-      return response.data; // Assuming response data contains user information
+      const response = await axiosInstance.post(`/login`, data);
+      return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || 'Login failed');
 
@@ -32,8 +32,8 @@ export const register = createAsyncThunk(
   'user/register',
   async (data, { rejectWithValue }) => {
     try {
-      const response = await api.post(`/register`, data);
-      return response.data; // Assuming response data contains user information
+      const response = await axiosInstance.post(`/register`, data);
+      return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || 'Register failed');
 
@@ -41,7 +41,7 @@ export const register = createAsyncThunk(
   }
 );
 
-const user = createSlice({
+const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
@@ -52,7 +52,7 @@ const user = createSlice({
     setFirstLogin(state, action) {
       state.isFirstLogin = action.payload;
     },
-    singout: (state) => {
+    signout: (state) => {
       state.accessToken = '';
       state.username = '';
       state.isLoggedIn = false;
@@ -92,5 +92,5 @@ export const {
   setIsLoggedIn,
   setFirstLogin,
   signout,
-} = user.actions;
-export default user.reducer;
+} = userSlice.actions;
+export default userSlice.reducer;

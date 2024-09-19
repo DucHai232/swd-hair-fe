@@ -8,12 +8,17 @@ import staffReducer from '../feature/staff';
 import stylistReducer from '../feature/stylist';
 import voucherReducer from '../feature/voucher';
 import appointmentReducer from '../feature/appointment';
+import appReducer from '../feature/app';
 
 const userPersistConfig = {
 	key: 'user',
 	storage: storage,
 	// blacklist: ['']
 	// whitelist: ['isLoggedIn']
+};
+const appPersistConfig = {
+	key: 'app',
+	storage: storage,
 };
 const cutstomerPersistConfig = {
 	key: 'cutstomer',
@@ -41,6 +46,7 @@ const appointmentPersistConfig = {
 };
 
 const combinedReducer = combineReducers({
+	app: persistReducer(appPersistConfig, appReducer),
 	user: persistReducer(userPersistConfig, userReducer),
 	cutstomer: persistReducer(cutstomerPersistConfig, customerReducer),
 	serviceReducer: persistReducer(servicePersistConfig, serviceReducer),
