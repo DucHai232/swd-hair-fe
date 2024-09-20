@@ -4,6 +4,7 @@ import Login from '../containers/Authenticate/Login';
 import Register from '../containers/Authenticate/Register';
 import UserProfile from '../containers/Authenticate/UserProfile';
 import Home from '../containers/Home';
+import ManagerDashboard from '../containers/ManagerDashboard';
 import PrivateRoleBasedRoute from './PrivateRoleBasedRoute';
 
 //luồng ruoting chính sẽ là component này
@@ -17,6 +18,14 @@ const AppRoutes = () => {
       <Route
         path='/user-profile'
         element={<PrivateRoleBasedRoute path="/user-profile" Component={UserProfile} requiredRoles={['admin', 'staff', 'customer', 'stylist', 'manager']}/>}
+      />
+      <Route
+        path='/manager-dashboard'
+        element={<PrivateRoleBasedRoute path="/manager-dashboard" Component={ManagerDashboard} requiredRoles={['manager']} menu='details'/>}
+      />
+      <Route
+        path='/manager-services'
+        element={<PrivateRoleBasedRoute path="/manager-services" Component={ManagerDashboard} requiredRoles={['manager']} menu='services'/>}
       />
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
