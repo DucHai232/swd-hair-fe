@@ -21,6 +21,7 @@ const DashboardDetail = () => {
   const reviews = [
     { customer: 'John Doe', review: 'Great service!', rating: 5 },
     { customer: 'Jane Smith', review: 'Loved my new hair color!', rating: 4 },
+    { customer: 'Jane Smith', review: 'Loved my new hair color!', rating: 5 },
   ];
 
   useEffect(() => {
