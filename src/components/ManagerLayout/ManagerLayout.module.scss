@@ -1,0 +1,16 @@
+.logo {
+  color: white;
+  text-align: center;
+  padding: 10px;
+}
+
+.sidebar {
+  min-height: 100vh;
+}
+
+.collapseButton {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 1;
+}

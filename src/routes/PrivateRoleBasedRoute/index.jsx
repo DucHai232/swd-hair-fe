@@ -1,23 +1,20 @@
+
+import { useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
 
-const PrivateRoleBasedRoute = (props) => {
-	// eslint-disable-next-line react/prop-types
-	const { path, Component, requiredRoles } = props;
-	//Should replace by get user role (from storage, redux store or anything...) localStorage || cookies
-	const userRole = 'Customer';
-
-	//Check user role with route's required roles
-	// eslint-disable-next-line react/prop-types
-	const canAccessWithRoles = requiredRoles.includes(userRole);
-
-	//Should replace by get logged in status
-	//const isAuthenticated = true;
-
-	//Send navigate state, included last path
+const PrivateRoleBasedRoute  = (props) => {
+	const { path, Component, requiredRoles, menu } = props;
+	// Should replace by get user role (from storage, redux store or anything...) localStorage || cookies
+	const userRole = useSelector((state) => state.user.role);
+	// Check user role with route's required roles
+	const canAccessWithRoles = requiredRoles.includes(userRole[0]);
+	// Send navigate state, included last path
 	const routingState = {
-		requestedPath: path
+		requestedPath: path,
 	};
-	return canAccessWithRoles ? <Component /> : <Navigate to='/login' state={routingState} />;
+
+	return canAccessWithRoles ? <Component menuItem={menu}/> : <Navigate to='/login' state={routingState} />;
 };
+
 
 export default PrivateRoleBasedRoute;
