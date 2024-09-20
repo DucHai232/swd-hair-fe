@@ -1,4 +1,4 @@
-import AppRoutes from "../../routes/Routes"
+import AppRoutes from "../../routes/Routes";
 
 //component này để xử lý disconnect, token hết hạn,...
 const App = () => {
@@ -6,7 +6,7 @@ const App = () => {
     <div className="App">
       <AppRoutes />
     </div>
-  )
-}
+  );
+};
 
-export default App
+export default App;
