@@ -1,4 +1,4 @@
-import AppRoutes from '../../routes/routes'
+import AppRoutes from "../../routes/Routes"
 
 //component này để xử lý disconnect, token hết hạn,...
 const App = () => {
