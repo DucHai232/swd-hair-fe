@@ -1,0 +1,26 @@
+.Container{
+    display: flex;
+}
+.Button{
+    border: 1px solid black;
+    border-radius: 10px;
+    margin: 10px 0px 10px 0px;
+    padding: 10px;
+    width: 100px;
+    font-size: large;
+}
+.AvatarUsername{
+    display: flex;
+    border: 1px solid black;
+    border-radius: 10px;
+    margin: 10px;
+}
+.Avatar{
+    margin: 10px 4px 10px 10px;
+    background-color: #fde3cf; 
+    color: '#f56a00';
+}
+.Point{
+    padding: 15px 13px 0px 0px;
+    font-weight: 1000;
+}
