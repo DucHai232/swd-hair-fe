@@ -1,0 +1,16 @@
+@import '../../../share/styles/color.scss';
+
+.container {
+  display: flex;
+  margin: auto;
+  max-width: 1000px;
+}
+.button {
+  margin: 10px auto;
+  padding: 13px;
+  width: 150px;
+  font-size: 20px;
+  border-radius: 20px;
+  border: 1px solid black;  
+}
+  

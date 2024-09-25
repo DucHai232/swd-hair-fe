@@ -1,37 +1,28 @@
 import React from "react";
 import style from "./Header.module.scss";
-import Avatar from "../Header/Avatar/index";
-import Logo from "../../assets/HairSalonLogoShop.png";
+import Logo from "../Header/Logo/index";
+import Navigation from "../../components/Header/Navigation/index";
+import Avatar from "../Header/Avatar/AvatarCustomer/index";
+import ButtonLogin from "../../components/Header/Avatar/ButtonLogin/index";
 import { Col, Row } from "antd";
-import { Link } from "react-router-dom";
 
-const index = () => {
+const Header = () => {
   return (
     <>
       <Row className={style.container}>
-        <Col span={8}>
-          <Link to="/">
-            <div className={style.Logo}>
-              <img className={style.img} src={Logo} alt="Logo" />
-            </div>
-          </Link>
+        <Col span={4}>
+          <Logo />
         </Col>
-        <Col span={8}>
-          <ul className={style.ul}>
-            <li className={style.li}>Servives</li>
-            <li className={style.li}>Stylist</li>
-            <li className={style.li}>Contact Us</li>
-            <li className={style.li}>About Us</li>
-            <li className={style.li}>Policies & Terms</li>
-            <li className={style.li}>FAQS</li>
-          </ul>
+        <Col span={16}>
+          <Navigation />
         </Col>
-        <Col span={8}>
-          <Avatar />
+        <Col span={4}>
+          {/* <Avatar className={style.UserPoint} /> */}
+          <ButtonLogin />
         </Col>
       </Row>
     </>
   );
 };
 
-export default index;
+export default Header;
