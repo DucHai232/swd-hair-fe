@@ -27,6 +27,10 @@ const AppRoutes = () => {
         path='/manager-services'
         element={<PrivateRoleBasedRoute path="/manager-services" Component={ManagerDashboard} requiredRoles={['manager']} menu='services'/>}
       />
+      <Route
+        path='/manager-emp'
+        element={<PrivateRoleBasedRoute path="/manager-emp" Component={ManagerDashboard} requiredRoles={['manager']} menu='employee'/>}
+      />
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   )

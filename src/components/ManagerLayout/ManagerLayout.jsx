@@ -28,6 +28,9 @@ const ManagerLayout = (props) => {
           <Menu.Item key="services" icon={<UserOutlined />}>
           <Link to='/manager-services'>Services Management</Link>
           </Menu.Item>
+          <Menu.Item key="employee" icon={<UserOutlined />}>
+          <Link to='/manager-emp'>Employee Management</Link>
+          </Menu.Item>
           <Menu.Item key="3" icon={<SettingOutlined />}>
             Settings
           </Menu.Item>
