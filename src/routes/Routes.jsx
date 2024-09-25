@@ -3,6 +3,7 @@ import ForgotPassword from '../containers/Authenticate/ForgotPassword';
 import Login from '../containers/Authenticate/Login';
 import Register from '../containers/Authenticate/Register';
 import UserProfile from '../containers/Authenticate/UserProfile';
+import DisconnectPage from '../containers/DisconnectPage';
 import Home from '../containers/Home';
 import ManagerDashboard from '../containers/ManagerDashboard';
 import PrivateRoleBasedRoute from './PrivateRoleBasedRoute';
@@ -15,6 +16,7 @@ const AppRoutes = () => {
       <Route path="/register" element={<Register />} />
       <Route path="/forgot-password" element={<ForgotPassword />} />
       <Route path="/" element={<Home />} />
+      <Route path="/disconnect" element={<DisconnectPage />} />
       <Route
         path='/user-profile'
         element={<PrivateRoleBasedRoute path="/user-profile" Component={UserProfile} requiredRoles={['admin', 'staff', 'customer', 'stylist', 'manager']}/>}
