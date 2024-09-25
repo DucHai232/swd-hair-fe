@@ -58,23 +58,8 @@ const DashboardDetail = () => {
 
   return (
     <div className={styles.dashboardContainer}>
-      <Row gutter={16}>
-        <Col span={8}>
-          <Card title="Appointments Overview">
-            <List
-              dataSource={appointments}
-              renderItem={(item) => (
-                <List.Item>
-                  <List.Item.Meta
-                    title={`${item.name} - ${item.service}`}
-                    description={`Time: ${item.time}`}
-                  />
-                </List.Item>
-              )}
-            />
-          </Card>
-        </Col>
-        <Col span={8}>
+      <Row gutter={4} style={{ marginTop: '16px' }}>
+      <Col span={8}>
           <Card title="Staff Management">
             <List
               dataSource={staff}
@@ -90,17 +75,6 @@ const DashboardDetail = () => {
           </Card>
         </Col>
         <Col span={8}>
-          <Card title="Services Overview">
-            <List
-              dataSource={services}
-              renderItem={(item) => <List.Item>{item}</List.Item>}
-            />
-          </Card>
-        </Col>
-      </Row>
-
-      <Row gutter={16} style={{ marginTop: '16px' }}>
-        <Col span={12}>
           <Card title="Customer Reviews">
             <List
               dataSource={reviews}
@@ -115,7 +89,7 @@ const DashboardDetail = () => {
             />
           </Card>
         </Col>
-        <Col span={12}>
+        <Col span={8}>
           <Card title="Revenue Analytics">
             <Statistic
               title="Total Revenue"
