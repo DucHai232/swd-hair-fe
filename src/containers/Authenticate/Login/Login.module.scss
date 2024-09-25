@@ -40,13 +40,13 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center; 
+  align-items: center;
   padding: 1rem;
-  text-align: center; 
+  text-align: center;
 }
 
 .title {
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.25rem;
   font-size: 2rem;
   font-weight: bold;
 }
@@ -64,4 +64,37 @@
 
 .fullWidthButton {
   width: 100%;
+}
+
+.forgotPasswordContainer {
+  display: flex;
+  justify-content: center;
+  margin-top: 16px;
+}
+
+.forgotPasswordLink {
+  color: #1890ff;
+  text-decoration: none;
+  transition: color 0.3s;
+
+  &:hover {
+    color: #40a9ff;
+    text-decoration: underline;
+  }
+}
+
+.signupContainer {
+  margin-top: 16px;
+  text-align: center;
+}
+
+.signupLink {
+  color: #1890ff;
+  text-decoration: none;
+  transition: color 0.3s;
+
+  &:hover {
+    color: #40a9ff;
+    text-decoration: underline;
+  }
 }

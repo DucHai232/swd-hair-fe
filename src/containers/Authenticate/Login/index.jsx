@@ -1,6 +1,7 @@
 import { Button, Form, Input } from "antd";
 import styles from "./Login.module.scss";
 import hair_salon_2 from "../../../assets/hair_salon_2.jpg";
+import { Link } from "react-router-dom";
 
 function App() {
   return (
@@ -52,6 +53,17 @@ function App() {
             >
               Login
             </Button>
+
+            <div className={styles.forgotPasswordContainer}>
+              <Link>Forgot Password?</Link>
+            </div>
+
+            <span className={styles.signupContainer}>
+              Dont have an account yet?{" "}
+              <strong>
+                <Link>Sign up here!</Link>
+              </strong>
+            </span>
           </Form>
         </div>
       </div>
