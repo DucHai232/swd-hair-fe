@@ -1,5 +1,6 @@
 import axios from 'axios';
 import axiosRetry from 'axios-retry';
+import { setOnLineStatus } from '../feature/app';
 
 // Axios instance setup
 const url = import.meta.env.VITE_SERVER_URL;
@@ -12,13 +13,18 @@ export const axiosInstance = axios.create({
   responseType: 'json',
 });
 
-// Retry logic
+
+
+// Set up interceptors
+const setUpInterceptor = (store) => {
+  // Retry logic
 axiosRetry(axiosInstance, {
   retries: 5,
   retryDelay: (retryCount) => retryCount * 500,
   shouldResetTimeout: true,
   retryCondition: (error) => {
     if (!navigator.onLine) {
+      store.dispatch(setOnLineStatus(false))
       return false;
     }
 
@@ -37,9 +43,6 @@ axiosRetry(axiosInstance, {
     );
   },
 });
-
-// Set up interceptors
-const setUpInterceptor = (store) => {
   // Request interceptor
   axiosInstance.interceptors.request.use(
     async (config) => {

@@ -16,10 +16,6 @@ const userPersistConfig = {
 	// blacklist: ['']
 	// whitelist: ['isLoggedIn']
 };
-const appPersistConfig = {
-	key: 'app',
-	storage: storage,
-};
 const cutstomerPersistConfig = {
 	key: 'cutstomer',
 	storage: storage,
@@ -46,7 +42,7 @@ const appointmentPersistConfig = {
 };
 
 const combinedReducer = combineReducers({
-	app: persistReducer(appPersistConfig, appReducer),
+	app: appReducer,
 	user: persistReducer(userPersistConfig, userReducer),
 	cutstomer: persistReducer(cutstomerPersistConfig, customerReducer),
 	serviceReducer: persistReducer(servicePersistConfig, serviceReducer),
