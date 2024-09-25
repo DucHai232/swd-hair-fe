@@ -1,20 +1,20 @@
-import { createSlice } from "@reduxjs/toolkit";
+  import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = {
-  customername: '',
-};
+  const initialState = {
+    customername: '',
+  };
 
-const customerSlice = createSlice({
-  name: 'customer',
-  initialState,
-  reducers: {
-    setCustomerName: (state, action) => {
-      state.customername = action.payload;
+  const customerSlice = createSlice({
+    name: 'customer',
+    initialState,
+    reducers: {
+      setCustomerName: (state, action) => {
+        state.customername = action.payload;
+      },
     },
-  },
-});
+  });
 
-export const {
-  setCustomerName
-} = customerSlice.actions;
-export default customerSlice.reducer;
+  export const {
+    setCustomerName
+  } = customerSlice.actions;
+  export default customerSlice.reducer;
