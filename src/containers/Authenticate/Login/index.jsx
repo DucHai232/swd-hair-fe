@@ -1,9 +1,32 @@
 import { Button, Form, Input } from "antd";
 import styles from "./Login.module.scss";
 import hair_salon_2 from "../../../assets/hair_salon_2.jpg";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { loginUser } from "../../../feature/authentication";
 
 function App() {
+  const accessToken = useSelector((state) => state.user.accessToken);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [formData, setFormData] = useState({
+    username: "",
+    password: "",
+  });
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+  const handleLogin = async (values) => {
+    const res = await dispatch(loginUser(values));
+    if (res) {
+      navigate("/home");
+    }
+  };
+  useEffect(() => {
+    console.log(accessToken);
+  }, [accessToken]);
+
   return (
     <div className={styles.background}>
       <div className={styles.loginContainer}>
@@ -28,6 +51,7 @@ function App() {
           >
             <Form.Item
               name="username"
+              onChange={(e) => handleChange(e)}
               label="Username"
               rules={[
                 { required: true, message: "Please input your username!" },
@@ -38,6 +62,7 @@ function App() {
 
             <Form.Item
               name="password"
+              onChange={(e) => handleChange(e)}
               label="Password"
               rules={[
                 { required: true, message: "Please input your password!" },
@@ -50,6 +75,7 @@ function App() {
               type="primary"
               htmlType="submit"
               className={styles.fullWidthButton}
+              onClick={() => handleLogin()}
             >
               Login
             </Button>
