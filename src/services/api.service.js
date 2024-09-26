@@ -1,26 +1,30 @@
-import axios from "axios";
-import axiosRetry from "axios-retry";
-import { setOnLineStatus } from "../feature/app";
+import axios from 'axios';
+import axiosRetry from 'axios-retry';
+import { setOnLineStatus } from '../feature/app';
 
+// Axios instance setup
 const url = import.meta.env.VITE_SERVER_URL;
 
 export const axiosInstance = axios.create({
   baseURL: url,
   headers: {
-    "Content-Type": "application/json",
+    'Content-Type': 'application/json',
   },
-  responseType: "json",
+  responseType: 'json',
 });
 
+
+
+// Set up interceptors
+const setUpInterceptor = (store) => {
+  // Retry logic
 axiosRetry(axiosInstance, {
   retries: 5,
-  retryDelay: retryCount => {
-    return retryCount * 500;
-  },
+  retryDelay: (retryCount) => retryCount * 500,
   shouldResetTimeout: true,
-  retryCondition: error => {
+  retryCondition: (error) => {
     if (!navigator.onLine) {
-      dispatchEvent(setOnLineStatus(false))
+      store.dispatch(setOnLineStatus(false))
       return false;
     }
 
@@ -37,18 +41,24 @@ axiosRetry(axiosInstance, {
       status === 408 ||
       status === 400
     );
-  }
-});
-
-axiosInstance.interceptors.request.use(
-  async (config) => {
-    const accessToken = localStorage.getItem("access_token");
-    if (accessToken) {
-      config.headers["Authorization"] = `Bearer ${accessToken}`;
-    }
-    return config;
   },
-  (error) => {
-    return Promise.reject(error);
-  }
-);
+});
+  // Request interceptor
+  axiosInstance.interceptors.request.use(
+    async (config) => {
+      const appState = await store.getState()
+      const accessToken = await appState?.user?.accessToken;
+      if (accessToken) {
+        config.headers['Authorization'] = `Bearer ${accessToken}`;
+      }
+      return config;
+    },
+    (error) => {
+      // Handle request errors
+      return Promise.reject(error);
+    }
+  );
+
+};
+
+export default setUpInterceptor;

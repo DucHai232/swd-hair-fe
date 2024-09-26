@@ -10,15 +10,15 @@ import voucherReducer from '../feature/voucher';
 import appointmentReducer from '../feature/appointment';
 import appReducer from '../feature/app';
 
+const appPersistConfig = {
+	key: 'app',
+	storage: storage,
+};
 const userPersistConfig = {
 	key: 'user',
 	storage: storage,
 	// blacklist: ['']
 	// whitelist: ['isLoggedIn']
-};
-const appPersistConfig = {
-	key: 'app',
-	storage: storage,
 };
 const cutstomerPersistConfig = {
 	key: 'cutstomer',
