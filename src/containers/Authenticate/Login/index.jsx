@@ -87,7 +87,7 @@ function App() {
             <span className={styles.signupContainer}>
               Dont have an account yet?{" "}
               <strong>
-                <Link>Sign up here!</Link>
+                <Link to="/register">Sign up here!</Link>
               </strong>
             </span>
           </Form>
