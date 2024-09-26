@@ -1,10 +1,12 @@
 import React from "react";
 import style from "./ButtonLogin.module.scss";
 
-const ButtonLogin = () => {
+const ButtonLogin = ({ onClick }) => {
   return (
     <>
-      <button className={style.button}>Login Now!</button>
+      <button onClick={onClick} className={style.button}>
+        Login Now!
+      </button>
     </>
   );
 };
