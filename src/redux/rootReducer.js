@@ -10,6 +10,10 @@ import voucherReducer from '../feature/voucher';
 import appointmentReducer from '../feature/appointment';
 import appReducer from '../feature/app';
 
+const appPersistConfig = {
+	key: 'app',
+	storage: storage,
+};
 const userPersistConfig = {
 	key: 'user',
 	storage: storage,
@@ -42,7 +46,7 @@ const appointmentPersistConfig = {
 };
 
 const combinedReducer = combineReducers({
-	app: appReducer,
+	app: persistReducer(appPersistConfig, appReducer),
 	user: persistReducer(userPersistConfig, userReducer),
 	cutstomer: persistReducer(cutstomerPersistConfig, customerReducer),
 	serviceReducer: persistReducer(servicePersistConfig, serviceReducer),
