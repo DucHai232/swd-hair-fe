@@ -2,9 +2,11 @@ import { useState } from 'react';
 import { Layout, Menu } from 'antd';
 import {
   HomeOutlined,
-  UserOutlined,
+  TeamOutlined,
   SettingOutlined,
   LogoutOutlined,
+  ScissorOutlined,
+  ShoppingOutlined
 } from '@ant-design/icons';
 import styles from './ManagerLayout.module.scss';
 import { Link } from 'react-router-dom';
@@ -25,11 +27,14 @@ const ManagerLayout = (props) => {
           <Menu.Item key="details" icon={<HomeOutlined />}>
             <Link to='/manager-dashboard'>Dashboard</Link>
           </Menu.Item>
-          <Menu.Item key="services" icon={<UserOutlined />}>
+          <Menu.Item key="services" icon={<ShoppingOutlined />}>
           <Link to='/manager-services'>Services Management</Link>
           </Menu.Item>
-          <Menu.Item key="employee" icon={<UserOutlined />}>
-          <Link to='/manager-emp'>Employee Management</Link>
+          <Menu.Item key="stylist" icon={<ScissorOutlined />}>
+          <Link to='/manager-stylist'>Stylist Management</Link>
+          </Menu.Item>
+          <Menu.Item key="staff" icon={<TeamOutlined />}>
+          <Link to='/manager-staff'>Staff Management</Link>
           </Menu.Item>
           <Menu.Item key="3" icon={<SettingOutlined />}>
             Settings

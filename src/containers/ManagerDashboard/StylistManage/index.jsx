@@ -19,7 +19,7 @@ const employeesData = [
   // You can add more employees here
 ];
 
-const EmployeesManage = () => {
+const StylistManage = () => {
   // Define the columns of the table
   const columns = [
     {
@@ -100,4 +100,4 @@ const EmployeesManage = () => {
   );
 };
 
-export default EmployeesManage;
+export default StylistManage;
