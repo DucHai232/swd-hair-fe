@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "../../../feature/authentication";
 
-function App() {
+function Login() {
   const accessToken = useSelector((state) => state.user.accessToken);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -17,8 +17,8 @@ function App() {
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
-  const handleLogin = async (values) => {
-    const res = await dispatch(loginUser(values));
+  const handleLogin = async (data) => {
+    const res = await dispatch(loginUser(data));
     if (res) {
       navigate("/home");
     }
@@ -48,6 +48,7 @@ function App() {
             initialValues={{ remember: true }}
             autoComplete="off"
             className={styles.form}
+            onFinish={handleLogin}
           >
             <Form.Item
               name="username"
@@ -75,7 +76,6 @@ function App() {
               type="primary"
               htmlType="submit"
               className={styles.fullWidthButton}
-              onClick={() => handleLogin()}
             >
               Login
             </Button>
@@ -97,4 +97,4 @@ function App() {
   );
 }
 
-export default App;
+export default Login;
