@@ -28,8 +28,19 @@
 }
 
 .footerTitle {
+
+
+
+  font-size: 1.1rem;
+  font-weight: bold;
   color: #ffc300;
-  margin-top: 1rem;
+}
+
+.footerCopyright {
+  text-align: center;
+  margin-top: 30px;
+  color: #fff15c;
+
 }
 
 .footerLinks {
@@ -46,6 +57,7 @@
   color: #ffffff;
   cursor: pointer;
   &:hover {
+
     color: #fbf5bc;
   }
 }
@@ -90,4 +102,15 @@
 .bookingButton:hover {
   background: linear-gradient(45deg, #f07b9e, #fbbce8);
   color: #ffffff;
+
+    color: #777777;
+  }
+}
+
+.icon {
+  font-size: 24px;
+  margin: 0 10px;
+  cursor: pointer;
+  color: rgb(141, 219, 227);
+
 }
