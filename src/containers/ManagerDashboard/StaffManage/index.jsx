@@ -1,70 +1,56 @@
 import React, { useState } from 'react';
-import { Table, Button, Modal, Form, Input, Tag, Space } from 'antd';
+import { Table, Button, Space, Modal, Form, Input } from 'antd';
 
-const employeesData = [
+const staffData = [
   {
-    _id: '66e657812287bd197205262a',
-    username: 'sl1',
-    name: 'Stylist 1',
-    email: 'sl1@gmail.com',
-    phoneNumber: '0123456789',
-    dateOfBirth: '1990-01-15',
-    banned: false,
+    _id: '1',
+    username: 'staff1',
+    name: 'Staff 1',
+    email: 'staff1@example.com',
+    phoneNumber: '123-456-7890',
+    appointmentsCompleted: 50,
+    hireDate: '2023-05-01T00:00:00Z',
   },
   {
-    _id: '66e657812287bd197205262b',
-    username: 'sl2',
-    name: 'Stylist 2',
-    email: 'sl2@gmail.com',
-    phoneNumber: '0987654321',
-    dateOfBirth: '1988-05-20',
-    banned: false,
+    _id: '2',
+    username: 'staff2',
+    name: 'Staff 2',
+    email: 'staff2@example.com',
+    phoneNumber: '123-456-7891',
+    appointmentsCompleted: 30,
+    hireDate: '2023-06-15T00:00:00Z',
   },
-  {
-    _id: '66e657812287bd197205262c',
-    username: 'sl3',
-    name: 'Stylist 3',
-    email: 'sl3@gmail.com',
-    phoneNumber: '0987654322',
-    dateOfBirth: '1985-12-10',
-    banned: false,
-  },
+  // Add more staff members here
 ];
 
-const StylistManage = () => {
-  const [dataSource, setDataSource] = useState(employeesData);
+const StaffManage = () => {
+  const [dataSource, setDataSource] = useState(staffData);
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [editingStylist, setEditingStylist] = useState(null);
+  const [editingStaff, setEditingStaff] = useState(null);
 
   // Handle opening the edit modal
   const handleEdit = (record) => {
-    setEditingStylist(record);
+    setEditingStaff(record);
     setIsModalVisible(true);
   };
 
   // Handle closing the modal
   const handleCancel = () => {
     setIsModalVisible(false);
-    setEditingStylist(null);
+    setEditingStaff(null);
   };
 
   // Handle saving the edited data
   const handleSave = (values) => {
     setDataSource((prevData) =>
-      prevData.map((stylist) =>
-        stylist._id === editingStylist._id ? { ...stylist, ...values } : stylist
+      prevData.map((staff) =>
+        staff._id === editingStaff._id ? { ...staff, ...values } : staff
       )
     );
     handleCancel();
   };
 
-  // Define the columns of the table
   const columns = [
-    {
-      title: 'Username',
-      dataIndex: 'username',
-      key: 'username',
-    },
     {
       title: 'Name',
       dataIndex: 'name',
@@ -81,20 +67,15 @@ const StylistManage = () => {
       key: 'phoneNumber',
     },
     {
-      title: 'Date of Birth',
-      dataIndex: 'dateOfBirth',
-      key: 'dateOfBirth',
-      render: (dateOfBirth) => new Date(dateOfBirth).toLocaleDateString(),
+      title: 'Appointments',
+      dataIndex: 'appointmentsCompleted',
+      key: 'appointmentsCompleted',
     },
     {
-      title: 'Banned',
-      dataIndex: 'banned',
-      key: 'banned',
-      render: (banned) => (
-        <Tag color={banned ? 'red' : 'green'}>
-          {banned ? 'Banned' : 'Active'}
-        </Tag>
-      ),
+      title: 'Hire Date',
+      dataIndex: 'hireDate',
+      key: 'hireDate',
+      render: (hireDate) => new Date(hireDate).toLocaleDateString(),
     },
     {
       title: 'Actions',
@@ -111,7 +92,7 @@ const StylistManage = () => {
 
   return (
     <div>
-      <h2>Stylist Management</h2>
+      <h2>Staff Management</h2>
       <Table
         columns={columns}
         dataSource={dataSource}
@@ -119,22 +100,22 @@ const StylistManage = () => {
         pagination={{ pageSize: 5 }}
       />
 
-      {/* Modal for editing stylist details */}
+      {/* Modal for editing staff details */}
       <Modal
-        title="Edit Stylist"
-        visible={isModalVisible}
+        title="Edit Staff"
+        open={isModalVisible}
         onCancel={handleCancel}
         footer={null}
       >
         <Form
           layout="vertical"
           onFinish={handleSave}
-          initialValues={editingStylist}
+          initialValues={editingStaff}
         >
           <Form.Item
             name="name"
             label="Name"
-            rules={[{ required: true, message: 'Please input the stylist name!' }]}
+            rules={[{ required: true, message: 'Please input the staff name!' }]}
           >
             <Input />
           </Form.Item>
@@ -152,13 +133,6 @@ const StylistManage = () => {
           >
             <Input />
           </Form.Item>
-          <Form.Item
-            name="dateOfBirth"
-            label="Date of Birth"
-            rules={[{ required: true, message: 'Please input the date of birth!' }]}
-          >
-            <Input type="date" />
-          </Form.Item>
           <Form.Item>
             <Button type="primary" htmlType="submit">
               Save
@@ -170,4 +144,4 @@ const StylistManage = () => {
   );
 };
 
-export default StylistManage;
+export default StaffManage;

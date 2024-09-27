@@ -6,7 +6,8 @@ import {
   SettingOutlined,
   LogoutOutlined,
   ScissorOutlined,
-  ShoppingOutlined
+  ShoppingOutlined,
+  TrophyOutlined
 } from '@ant-design/icons';
 import styles from './ManagerLayout.module.scss';
 import { Link } from 'react-router-dom';
@@ -32,6 +33,9 @@ const ManagerLayout = (props) => {
           </Menu.Item>
           <Menu.Item key="stylist" icon={<ScissorOutlined />}>
           <Link to='/manager-stylist'>Stylist Management</Link>
+          </Menu.Item>
+          <Menu.Item key="stylistPerform" icon={<TrophyOutlined />}>
+          <Link to='/manager-stylist-performance'>Stylist Performance</Link>
           </Menu.Item>
           <Menu.Item key="staff" icon={<TeamOutlined />}>
           <Link to='/manager-staff'>Staff Management</Link>

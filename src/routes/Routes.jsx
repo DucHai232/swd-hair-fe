@@ -33,6 +33,14 @@ const AppRoutes = () => {
         path='/manager-stylist'
         element={<PrivateRoleBasedRoute path="/manager-stylist" Component={ManagerDashboard} requiredRoles={['manager']} menu='stylist'/>}
       />
+      <Route
+        path='/manager-stylist-performance'
+        element={<PrivateRoleBasedRoute path="/manager-stylist-performance" Component={ManagerDashboard} requiredRoles={['manager']} menu='stylistPerform'/>}
+      />
+      <Route
+        path='/manager-staff'
+        element={<PrivateRoleBasedRoute path="/manager-staff" Component={ManagerDashboard} requiredRoles={['manager']} menu='staff'/>}
+      />
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   )
