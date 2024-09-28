@@ -122,7 +122,7 @@ const StylistManage = () => {
       {/* Modal for editing stylist details */}
       <Modal
         title="Edit Stylist"
-        visible={isModalVisible}
+        open={isModalVisible}
         onCancel={handleCancel}
         footer={null}
       >

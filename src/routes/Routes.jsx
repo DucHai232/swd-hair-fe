@@ -7,6 +7,7 @@ import DisconnectPage from '../containers/DisconnectPage';
 import Home from '../containers/Home';
 import ManagerDashboard from '../containers/ManagerDashboard';
 import PrivateRoleBasedRoute from './PrivateRoleBasedRoute';
+import StylistPage from '../containers/StylistPage';
 
 //luồng ruoting chính sẽ là component này
 const AppRoutes = () => {
@@ -40,6 +41,14 @@ const AppRoutes = () => {
       <Route
         path='/manager-staff'
         element={<PrivateRoleBasedRoute path="/manager-staff" Component={ManagerDashboard} requiredRoles={['manager']} menu='staff'/>}
+      />
+      <Route
+        path='/stylist-appointment'
+        element={<PrivateRoleBasedRoute path="/stylist-appointment" Component={StylistPage} requiredRoles={['stylist']} menu='stylist-appointment'/>}
+      />
+      <Route
+        path='/stylist-calendar'
+        element={<PrivateRoleBasedRoute path="/stylist-calendar" Component={StylistPage} requiredRoles={['stylist']} menu='stylist-calendar'/>}
       />
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
