@@ -1,6 +1,6 @@
 import React from "react";
 import style from "./Trending.module.scss";
-import { Card, Carousel} from "antd";
+import { Card, Carousel } from "antd";
 import img from "../../../share/assets/boyhair.jpg";
 
 const Trending = () => {
@@ -26,10 +26,14 @@ const Trending = () => {
       <Carousel className={style.carousel} autoplay>
         {DataCard.map((data) => (
           <div className={style.card}>
-            <img className={style.img} src={img}/>
-            <h1 className={style.title}>Hot Service</h1>
-            <p className={style.description}>dich vu goi uon nhuom</p>
-            <p></p>
+            <div>
+              <img className={style.img} src={img} />
+              <h1 className={style.title}>Hot Service</h1>
+            </div>
+            <div>
+              <p className={style.description}>dich vu goi uon nhuom</p>
+              <p>dánh giá</p>
+            </div>
           </div>
         ))}
       </Carousel>
