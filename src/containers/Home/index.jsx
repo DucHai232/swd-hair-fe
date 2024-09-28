@@ -2,7 +2,6 @@ import Header from "../../components/Header/index";
 import Footer from "../../components/Footer/index";
 import IntroComponent from "../../components/HomePageBody/IntroComponent/index";
 import Services from "../../components/HomePageBody/Services/index";
-import Trending from "../../components/HomePageBody/Trending/index";
 import Stylist from "../../components/HomePageBody/Stylist/index";
 import { useLocation } from "react-router-dom";
 
@@ -22,7 +21,6 @@ const Home = () => {
       <Header />
       <IntroComponent />
       <Services />
-      <Trending />
       <Stylist />
       <div style={{ backgroundColor: "blue", margin: "20px", height: "50px" }}>
         Không gian quán

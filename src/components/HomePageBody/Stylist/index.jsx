@@ -69,7 +69,7 @@ const StylistSlider = () => {
   return (
     <div className={styles.stylistSlider}>
       <h2>Our Stylists</h2>
-      <Carousel autoplay slidesPerRow={3} dots={true} arrows={true} speed={3000}>
+      <Carousel autoplay slidesPerRow={4} dots={true} arrows={true} speed={3000}>
         {stylists.map((stylist) => (
           <div key={stylist._id} className={styles.stylistCard}>
             <img src={stylist.image} alt={stylist.name} className={styles.stylistImage} />

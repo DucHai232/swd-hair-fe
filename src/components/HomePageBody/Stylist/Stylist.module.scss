@@ -1,5 +1,6 @@
 .stylistSlider {
     // Overall container styling
+    margin: 0 10%;
     padding: 40px;
     background-color: #f8f9fa; // Light background color
     border-radius: 8px;
@@ -16,7 +17,7 @@
   
   // Stylist card styling
   .stylistCard {
-    max-width: 470px; // Optional: Set a max width for larger screens
+    max-width: 20%; // Optional: Set a max width for larger screens
     text-align: center;
     background: #ffffff; // White background for cards
     border: 1px solid #e0e0e0; // Light border
@@ -61,6 +62,7 @@
     display: flex; // Enable flexbox on the carousel
     justify-content: center; // Center align the carousel items
     align-items: center; // Center vertically
+    margin-left: 10px;
   }
   
   // Slick slide adjustments
