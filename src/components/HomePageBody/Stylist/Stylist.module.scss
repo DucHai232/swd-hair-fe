@@ -1,6 +1,6 @@
 .stylistSlider {
     // Overall container styling
-    margin: 0 10%;
+    margin: 100px 10%;
     padding: 40px;
     background-color: #f8f9fa; // Light background color
     border-radius: 8px;
@@ -25,7 +25,7 @@
     padding: 20px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease, box-shadow 0.3s ease; // Animation for hover effect
-    margin: 0 10px; // Margin for spacing between cards
+    margin: 20px 10px; // Margin for spacing between cards
   
     &:hover {
       transform: translateY(-5px); // Lift effect on hover
@@ -63,6 +63,8 @@
     justify-content: center; // Center align the carousel items
     align-items: center; // Center vertically
     margin-left: 10px;
+    width: 100%; 
+    height: 100%;
   }
   
   // Slick slide adjustments
@@ -70,7 +72,7 @@
     display: flex; // Use flexbox for positioning
     justify-content: center; // Center align cards
     align-items: center; // Align items at the start
-    width: 40vw; // Set width to 50% minus some margin for spacing
+    
   }
   
   // Responsive adjustments
