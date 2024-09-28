@@ -6,17 +6,11 @@ import styles from './DashboardDetail.module.scss'; // SCSS for styling
 
 const DashboardDetail = () => {
   // Dummy data for demonstration
-  const appointments = [
-    { name: 'John Doe', time: '10:00 AM', service: 'Haircut' },
-    { name: 'Jane Smith', time: '11:00 AM', service: 'Hair Coloring' },
-  ];
   
   const staff = [
     { name: 'Alice', role: 'Stylist' },
     { name: 'Bob', role: 'Barber' },
   ];
-  
-  const services = ['Haircut', 'Hair Coloring', 'Shaving', 'Facial'];
 
   const reviews = [
     { customer: 'John Doe', review: 'Great service!', rating: 5 },

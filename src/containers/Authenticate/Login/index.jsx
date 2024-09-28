@@ -5,10 +5,13 @@ import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "../../../feature/authentication";
+import { useLocation } from "react-router-dom";
 
 function App() {
-  const accessToken = useSelector((state) => state.user.accessToken);
-  const dispatch = useDispatch();
+  const location = useLocation()
+  console.log(location)
+  const accessToken = useSelector((state) => state.user.accessToken)
+  const dispatch = useDispatch()
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     username: "",

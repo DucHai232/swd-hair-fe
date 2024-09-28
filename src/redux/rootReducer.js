@@ -13,7 +13,7 @@ import appReducer from '../feature/app';
 const userPersistConfig = {
 	key: 'user',
 	storage: storage,
-	// blacklist: ['']
+	blacklist: ['role']
 	// whitelist: ['isLoggedIn']
 };
 const cutstomerPersistConfig = {
