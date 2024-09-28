@@ -28,6 +28,9 @@
 }
 
 .footerTitle {
+
+
+
   font-size: 1.1rem;
   font-weight: bold;
   color: #ffc300;
@@ -37,6 +40,7 @@
   text-align: center;
   margin-top: 30px;
   color: #fff15c;
+
 }
 
 .footerLinks {
@@ -53,13 +57,59 @@
   color: #ffffff;
   cursor: pointer;
   &:hover {
-    color: #777777;
+
+    color: #fbf5bc;
   }
 }
+
+.footerCopyright {
+  text-align: center;
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+  color: #ffffff;
+}
+
+.footerText {
+  font-size: 1rem;
+  color: #ffffff;
+}
+
+.bookingBox {
+  background-color: #a2a1a2;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  width: 450px;
+  color: white;
+}
+
+.bookingTitle {
+  margin-bottom: 10px;
+  font-size: 18px;
+}
+
+.bookingButton {
+  margin-top: 10px;
+  background: linear-gradient(45deg, #fbf5bc, #dec5cf);
+  color: #323232;
+  font-weight: bold;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.bookingButton:hover {
+  background: linear-gradient(45deg, #f07b9e, #fbbce8);
+  color: #ffffff;
+
+    color: #777777;
+  }
 
 .icon {
   font-size: 24px;
   margin: 0 10px;
   cursor: pointer;
   color: rgb(141, 219, 227);
+
 }
