@@ -1,11 +1,65 @@
-.bg{
-    background: pink;
+.footerContainer {
+  background-color: #323232;
+  padding: 2rem;
 }
-.FooterTitle{
-    padding: 10px ;
-    font-size: 10px;
-    text-align: center;
-    background-color: greenyellow ;
-    font-family: segoe ui, Helvetica, Arial, sans-serif;
-    font-weight: 400;
+
+.footerContent {
+  margin-bottom: auto;
+}
+
+.quoteContainer {
+  flex: 1;
+}
+
+.quote {
+  font-style: italic;
+  text-align: left;
+  color: white;
+}
+
+.footerColumn {
+  display: flex;
+  flex-direction: column;
+}
+
+.footerColumnWrapper {
+  flex: 1;
+  margin: 0 1rem;
+}
+
+.footerTitle {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #ffc300;
+}
+
+.footerCopyright {
+  text-align: center;
+  margin-top: 30px;
+  color: #fff15c;
+}
+
+.footerLinks {
+  list-style: none;
+  padding: 0;
+}
+
+.footerLinkItem {
+  margin-bottom: 0.5rem;
+}
+
+.footerLink {
+  font-size: 1rem;
+  color: #ffffff;
+  cursor: pointer;
+  &:hover {
+    color: #777777;
+  }
+}
+
+.icon {
+  font-size: 24px;
+  margin: 0 10px;
+  cursor: pointer;
+  color: rgb(141, 219, 227);
 }
