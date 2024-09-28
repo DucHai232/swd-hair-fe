@@ -9,44 +9,64 @@ import Mordern from "../../../share/assets/Mordern.png";
 import { Col, Row } from "antd";
 
 const IntroComponent = () => {
-  const [currentImage, setCurrentImage] = useState(girlHair);
-  const [colorCircle, setColorCircle] = useState("#ff0000");
+  const [currentImage, setCurrentImage] = useState(boyHair);
+  const [colorCircle, setColorCircle] = useState("GreenYellow");
+  const [title, setTitle] = useState("Diverse styles");
+  const [titleSpan, setTitleSpan] = useState("defining");
+  const [span, setSpan] = useState("your unique edge");
+  const [description, setDescription] = useState(
+    "We offer services for gentlemen to define their style and express their unique identity with a wide range of diverse haircuts and styles."
+  );
 
   const imgSlider = (imgSrc) => {
     setCurrentImage(imgSrc);
   };
-
   const changeCircleColor = (color) => {
     setColorCircle(color);
+  };
+  const changeTitle = (title) => {
+    setTitle(title);
+  };
+  const changeTitleSpan = (titleSpan) => {
+    setTitleSpan(titleSpan);
+  };
+  const changeSpan = (span) => {
+    setSpan(span);
+  };
+  const changeDescription = (description) => {
+    setDescription(description);
   };
 
   const introContent = [
     {
       img: boyHair,
       imgIcon: ManIcon,
-      color: "#00ff00",
+      color: "GreenYellow",
       Title: "Diverse styles",
-      TitleSpan: "defining",
-      Span:"your unique edge",
-      Description: "We offer services for gentlemen to define their style and express their unique identity with a wide range of diverse haircuts and styles.",
+      TitleSpan: "Defining",
+      Span: "Your unique edge",
+      Description:
+        "We offer services for gentlemen to define their style and express their unique identity with a wide range of diverse haircuts and styles.",
     },
     {
       img: girlHair,
       imgIcon: WomanIcon,
-      color: "#ff0000",
+      color: "#ffc300",
       Title: "It's not just about hair",
-      TitleSpan: "it's ",
-      Span:"a lifestyle",
-      Description: "We understand that hairstyling is not just about beauty, but also a way to relax and showcase the elegance and allure of every lady.",
+      TitleSpan: "It's ",
+      Span: "A lifestyle",
+      Description:
+        "We understand that hairstyling is not just about beauty, but also a way to relax and showcase the elegance and allure of every lady.",
     },
     {
       img: ModernHair,
       imgIcon: Mordern,
-      color: "#0000ff",
+      color: "#df0e0e",
       Title: "It's more than just a hair salon",
-      TitleSpan: " it's a perfect harmony",
-      Span:"harmony",
-      Description: "Hairstyling isn’t just about looking good; it's a blend of relaxation and youthful energy. At our salon, we offer a variety of services tailored to all ages.",
+      TitleSpan: " It's a perfect",
+      Span: "Harmony",
+      Description:
+        "Hairstyling isn’t just about looking good; it's a blend of relaxation and youthful energy. At our salon, we offer a variety of services tailored to all ages.",
     },
   ];
 
@@ -56,21 +76,21 @@ const IntroComponent = () => {
         className={style.circle}
         style={{ backgroundColor: colorCircle }}
       ></div>
+    
       <Row className={style.container}>
         <Col span={12} className={style.textBox}>
           <h2 className={style.h2}>
-            It's not just a barbershop
+            {title}
+            {", "}
+            {titleSpan}
             <br />
-            it's a reflection of your{" "}
-            <span className={style.span}> style and personality</span>
+            <span className={style.span}> {span}</span>
           </h2>
-          <p className={style.p}>
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Optio
-            ratione consequuntur sapiente facere repellendus, sequi praesentium
-            quisquam quia dolorum eveniet earum veritatis! Sint debitis modi
-            facilis excepturi animi fuga optio?
-          </p>
-          <button className={style.button}>Learn more</button>
+          <p className={style.p}>{description}</p>
+          <button className={style.button}>
+            <span className={style.span1}>Discover now!</span>
+            <span className={style.span2}>Let's go {"->"}</span>
+          </button>
         </Col>
         <Col span={12} className={style.imgBox}>
           <img className={style.img} src={currentImage} alt="Hair Style" />
@@ -78,15 +98,19 @@ const IntroComponent = () => {
       </Row>
 
       <ul className={style.thumb}>
-        {introContent.map((data, index) => (
-          <li key={index} className={style.thumbLi}>
+        {introContent.map((data) => (
+          <li className={style.thumbLi}>
             <img
               className={style.imgIcon}
               src={data.imgIcon}
-              style={{ width: "100px", height: "100px" }}
+              style={{ width: "50px", height: "50px" }}
               onClick={() => {
                 imgSlider(data.img);
                 changeCircleColor(data.color);
+                changeTitle(data.Title);
+                changeTitleSpan(data.TitleSpan);
+                changeSpan(data.Span);
+                changeDescription(data.Description);
               }}
             />
           </li>

@@ -1,41 +1,53 @@
 import React from "react";
 import style from "./Services.module.scss";
-import { Card, Row, Col } from "antd"; // Sử dụng Row và Col để sắp xếp các thẻ
-const { Meta } = Card;
+import img from "../../../share/assets/BoyHair.jpg";
+import cutHair from "../../../share/assets/HairCutService.jpg";
+import advanceService from "../../../share/assets/AdvanceService.jpg";
+import ortherService from "../../../share/assets/OrderService.jpg";
 
-const cardData = [
-  {
-    title: "Europe Street beat",
-    description: "www.instagram.com",
-    imgSrc: "https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png",
-  },
-  {
-    title: "Asia Street vibes",
-    description: "www.twitter.com",
-    imgSrc: "https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png",
-  },
-  {
-    title: "America Street culture",
-    description: "www.facebook.com",
-    imgSrc: "https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png",
-  },
-];
+
+import { Row, Col } from "antd";
 
 const Services = () => {
+  const DataCard = [
+    {
+      img: cutHair,
+      title: "Haircut Services",
+      decription: "Includes haircut and post-cut styling services",
+    },
+    {
+      img: advanceService,
+      title: " Advanced Hair Styling Services",
+      decription:
+        "Our services include perming, straightening, coloring, hair restoration, styling, hair treatment, extensions, and bleaching.",
+    },
+    {
+      img: ortherService,
+      title: "Other Services",
+      decription:
+        "We also offer services such as ear cleaning, facial hair shaving, relaxing massages, and beard shaving.",
+    },
+  ];
   return (
-    <Row className={style.container} gutter={[16, 16]}>
-      {cardData.map((card, index) => (
-        <Col xs={24} sm={12} md={8} key={index}>
-          <Card
-            hoverable
-            className={style.card}
-            cover={<img alt={card.title} src={card.imgSrc} />}
-          >
-            <Meta title={card.title} description={card.description} />
-          </Card>
-        </Col>
-      ))}
-    </Row>
+    <>
+      <p className={style.p}>SERVICES</p>
+      <Row className={style.container}>
+        <Col span={3} />
+        {DataCard.map((data) => (
+          <Col span={6}>
+            <div className={style.card}>
+              <div className={style.cardDetail}>
+                <img className={style.img} src={data.img} />
+                <p className={style.p1}>{data.title}</p>
+                <p className={style.p2}>{data.decription}</p>
+              </div>
+              <button className={style.button}>More info</button>
+            </div>
+          </Col>
+        ))}
+        <Col span={3} />
+      </Row>
+    </>
   );
 };
 

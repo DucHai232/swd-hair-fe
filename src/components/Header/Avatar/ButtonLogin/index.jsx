@@ -5,7 +5,8 @@ const ButtonLogin = ({ onClick }) => {
   return (
     <>
       <button onClick={onClick} className={style.button}>
-        Login Now!
+        <span className={style.span1}>Login Now!</span>
+        <span className={style.span2}>Welcome to Harmony</span>
       </button>
     </>
   );
