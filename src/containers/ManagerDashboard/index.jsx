@@ -1,4 +1,4 @@
-import ManagerLayout from "../../components/ManagerLayout/ManagerLayout"
+import ManagerLayout from "../../components/ManagerLayout"
 import DashboardDetail from "./DashboardDetail"
 import StylistManage from "./StylistManage"
 import ServiceManage from "./ServiceManage"
