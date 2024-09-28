@@ -4,8 +4,19 @@ import IntroComponent from "../../components/HomePageBody/IntroComponent/index";
 import Services from "../../components/HomePageBody/Services/index";
 import Trending from "../../components/HomePageBody/Trending/index";
 import Stylist from "../../components/HomePageBody/Stylist/index";
+import { useLocation } from "react-router-dom";
 
 const Home = () => {
+  const location = useLocation()
+  console.log(location)
+  if (location?.state?.requestedPath != location?.pathname) {
+    if (location?.state?.rejectAccess) {
+      alert('reject access')
+    }
+    else {
+      alert('invalid URL')
+    }
+  }
   return (
     <>
       <Header />

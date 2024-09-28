@@ -1,8 +1,11 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "../../../feature/authentication";
+import { useLocation } from "react-router-dom";
 
 function App() {
+  const location = useLocation()
+  console.log(location)
   const accessToken = useSelector((state) => state.user.accessToken)
   const dispatch = useDispatch()
   const [formData, setFormData] = useState({
