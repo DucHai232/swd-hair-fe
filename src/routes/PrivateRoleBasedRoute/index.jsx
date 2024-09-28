@@ -11,9 +11,14 @@ const PrivateRoleBasedRoute  = (props) => {
 	// Send navigate state, included last path
 	const routingState = {
 		requestedPath: path,
+		rejectAccess: false,
 	};
+	console.log(path)
 
-	return canAccessWithRoles ? <Component menuItem={menu}/> : <Navigate to='/login' state={routingState} />;
+	if (!canAccessWithRoles) {
+		routingState.rejectAccess = true
+	}
+	return canAccessWithRoles ? <Component menuItem={menu}/> : <Navigate to='/' state={routingState} />;
 };
 
 
