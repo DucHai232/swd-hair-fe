@@ -19,7 +19,7 @@ export const axiosInstance = axios.create({
 const setUpInterceptor = (store) => {
   // Retry logic
 axiosRetry(axiosInstance, {
-  retries: 5,
+  retries: 3,
   retryDelay: (retryCount) => retryCount * 500,
   shouldResetTimeout: true,
   retryCondition: (error) => {

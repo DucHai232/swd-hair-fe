@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { axiosInstance } from "../services/api.service";
+import endpoints from "../consts/endPoint";
 
 const initialState = {
   error: false,
@@ -10,7 +11,8 @@ const initialState = {
   errorMessage: '',
   accessToken: '',
   username: '',
-  role: []
+  role: [],
+  isLoading: false,
 };
 
 // Async thunk for login
@@ -18,11 +20,11 @@ export const loginUser = createAsyncThunk(
   'user/loginUser',
   async (data, { rejectWithValue }) => {
     try {
-      const response = await axiosInstance.post(`/login`, data);
+      const response = await axiosInstance.post(endpoints.LOGIN, data);
+      console.log(response)
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || 'Login failed');
-
     }
   }
 );
@@ -32,7 +34,7 @@ export const register = createAsyncThunk(
   'user/register',
   async (data, { rejectWithValue }) => {
     try {
-      const response = await axiosInstance.post(`/register`, data);
+      const response = await axiosInstance.post(endpoints.REGISTER, data);
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || 'Register failed');
@@ -65,7 +67,7 @@ const userSlice = createSlice({
     builder
       // Handle pending state
       .addCase(loginUser.pending, (state) => {
-        state.loading = true;
+        state.isLoading = true;
         state.error = false;
       })
       // Handle fulfilled state (successful login)
@@ -75,13 +77,12 @@ const userSlice = createSlice({
         state.accessToken = access_token;
         state.username = user.username;
         state.role = user.role;
-        state.loading = false;
+        state.isLoading = false;
         state.errorMessage = '';
       })
       // Handle rejected state (failed login)
       .addCase(loginUser.rejected, (state, action) => {
-        console.log(action)
-        state.loading = false;
+        state.isLoading = false;
         state.errorMessage = action.payload;
         state.error = true;
       });
