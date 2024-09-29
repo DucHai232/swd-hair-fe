@@ -1,17 +1,18 @@
-import React, { useState } from "react"; // Import useState
 import style from "./Header.module.scss";
 import Logo from "../Header/Logo/index";
 import Navigation from "../../components/Header/Navigation/index";
 import Avatar from "../Header/Avatar/AvatarCustomer/index";
 import ButtonLogin from "../../components/Header/Avatar/ButtonLogin/index";
 import { Col, Row } from "antd";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const Header = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
+  const isLoggedIn = useSelector((state) => state.user.isLoggedIn)
+  const navigate = useNavigate()
+  
   const handleLoginClick = () => {
-    setIsLoggedIn(true);
+    navigate('/login')
   };
 
   return (
