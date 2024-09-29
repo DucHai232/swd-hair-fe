@@ -1,0 +1,28 @@
+@import '../../share/styles/color.scss';
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh; /* Full height of the viewport */
+}
+
+.heading {
+  font-size: 24px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.form {
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.timeline {
+  width: 100%; /* Full width */
+  max-width: 600px; /* Limit the max width */
+  margin: 20px auto;
+}

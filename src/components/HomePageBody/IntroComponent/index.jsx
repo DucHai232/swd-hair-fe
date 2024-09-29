@@ -7,6 +7,7 @@ import ManIcon from "../../../share/assets/Man.png";
 import WomanIcon from "../../../share/assets/Woman.png";
 import Mordern from "../../../share/assets/Mordern.png";
 import { Col, Row } from "antd";
+import { Link } from "react-router-dom";
 
 const IntroComponent = () => {
   const [currentImage, setCurrentImage] = useState(boyHair);
@@ -87,10 +88,12 @@ const IntroComponent = () => {
             <span className={style.span}> {span}</span>
           </h2>
           <p className={style.p}>{description}</p>
+          <Link to='/appointment-booking'>
           <button className={style.button}>
-            <span className={style.span1}>Discover now!</span>
+          <span className={style.span1}>Discover now!</span>
             <span className={style.span2}>Let's go {"->"}</span>
           </button>
+          </Link>
         </Col>
         <Col span={12} className={style.imgBox}>
           <img className={style.img} src={currentImage} alt="Hair Style" />

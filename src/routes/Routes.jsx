@@ -8,6 +8,7 @@ import Home from '../containers/Home';
 import ManagerDashboard from '../containers/ManagerDashboard';
 import PrivateRoleBasedRoute from './PrivateRoleBasedRoute';
 import StylistPage from '../containers/StylistPage';
+import AppointmentBooking from '../containers/AppointmentBooking';
 
 //luồng ruoting chính sẽ là component này
 const AppRoutes = () => {
@@ -49,6 +50,10 @@ const AppRoutes = () => {
       <Route
         path='/stylist-calendar'
         element={<PrivateRoleBasedRoute path="/stylist-calendar" Component={StylistPage} requiredRoles={['stylist']} menu='stylist-calendar'/>}
+      />
+      <Route
+        path='/appointment-booking'
+        element={<PrivateRoleBasedRoute path="/appointment-booking" Component={AppointmentBooking} requiredRoles={['stylist','customer', 'manager','admin']}/>}
       />
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
