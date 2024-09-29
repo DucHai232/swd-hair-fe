@@ -5,6 +5,7 @@ import Navigation from "../../components/Header/Navigation/index";
 import Avatar from "../Header/Avatar/AvatarCustomer/index";
 import ButtonLogin from "../../components/Header/Avatar/ButtonLogin/index";
 import { Col, Row } from "antd";
+import { Link } from "react-router-dom";
 
 const Header = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -25,7 +26,9 @@ const Header = () => {
         {isLoggedIn ? (
           <Avatar className={style.UserPoint} />
         ) : (
-          <ButtonLogin onClick={handleLoginClick} />
+          <Link to="./login">
+            <ButtonLogin onClick={handleLoginClick} />
+          </Link>
         )}
       </Col>
     </Row>

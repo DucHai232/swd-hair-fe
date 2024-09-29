@@ -3,6 +3,7 @@ import Footer from "../../components/Footer/index";
 import IntroComponent from "../../components/HomePageBody/IntroComponent/index";
 import Services from "../../components/HomePageBody/Services/index";
 import Stylist from "../../components/HomePageBody/Stylist/index";
+import News from "../../components/HomePageBody/News/index"
 
 const Home = () => {
   return (
@@ -11,21 +12,7 @@ const Home = () => {
       <IntroComponent />
       <Services />
       <Stylist />
-      <div style={{ backgroundColor: "blue", margin: "20px", height: "50px" }}>
-        Không gian quán
-      </div>
-      <div style={{ backgroundColor: "blue", margin: "20px", height: "50px" }}>
-        feed back
-      </div>
-      <div style={{ backgroundColor: "blue", margin: "20px", height: "50px" }}>
-        cam kết và tóm tắt chính sách
-      </div>
-      <div style={{ backgroundColor: "blue", margin: "20px", height: "50px" }}>
-        tin tức
-      </div>
-      <div style={{ backgroundColor: "blue", margin: "20px", height: "50px" }}>
-        đối tác
-      </div>
+      <News />
       <Footer />
     </>
   );

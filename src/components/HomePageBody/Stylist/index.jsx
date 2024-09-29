@@ -6,7 +6,7 @@ const stylists = [
   {
     _id: "66e657812287bd197205262a",
     username: "sl1",
-    name: "stylist 1",
+    name: "Stylist 1",
     email: "sl1@gmail.com",
     role: ["stylist"],
     salary: 0,
@@ -66,10 +66,21 @@ const stylists = [
 ];
 
 const StylistSlider = () => {
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 3000,
+    slidesToShow: 4, 
+    slidesToScroll: 1,
+    autoplay: true,
+    arrows: true,
+    dotPosition: "bottom",
+  };
+
   return (
     <div className={styles.stylistSlider}>
       <h2>Our Stylists</h2>
-      <Carousel autoplay slidesPerRow={4} dots={true} arrows={true} speed={3000}>
+      <Carousel {...settings} >
         {stylists.map((stylist) => (
           <div key={stylist._id} className={styles.stylistCard}>
             <img src={stylist.image} alt={stylist.name} className={styles.stylistImage} />
