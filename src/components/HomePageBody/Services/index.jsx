@@ -1,11 +1,8 @@
 import React from "react";
 import style from "./Services.module.scss";
-import img from "../../../share/assets/BoyHair.jpg";
 import cutHair from "../../../share/assets/HairCutService.jpg";
 import advanceService from "../../../share/assets/AdvanceService.jpg";
 import ortherService from "../../../share/assets/OrderService.jpg";
-
-
 import { Row, Col } from "antd";
 
 const Services = () => {

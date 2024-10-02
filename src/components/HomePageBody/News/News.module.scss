@@ -1,0 +1,29 @@
+.container{
+    height: 700px;
+    width: 100%;
+    .p{
+        text-align: center ;
+        margin-top: 50px;
+        font-size: 32px;
+        font-weight: 500;
+    }
+    .newsBox{
+        margin: 30px;
+        padding: 20px;
+        border-radius: 20px;
+        border: 2px solid #FFC300;
+        .mainNews{
+            padding-top: 20px;
+            height: 500px;
+            width: 200px;
+        }
+        .subNewsBox{
+            display: flex;
+            flex-wrap: wrap;
+            .subNews{
+                height: 250px;
+                width: 50%;
+            }
+        }
+    }
+}

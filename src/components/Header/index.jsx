@@ -27,7 +27,9 @@ const Header = () => {
         {isLoggedIn ? (
           <Avatar className={style.UserPoint} />
         ) : (
-          <ButtonLogin onClick={handleLoginClick} />
+        
+            <ButtonLogin onClick={handleLoginClick} />
+          
         )}
       </Col>
     </Row>
