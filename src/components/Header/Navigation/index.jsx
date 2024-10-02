@@ -6,7 +6,7 @@ const index = () => {
   const navItems = [
     { name: "Hot", path: "/service" },
     { name: "Services", path: "/service" },
-    { name: "Stylist", path: "/service" },
+    { name: "Stylist", path: "/stylist" },
     { name: "Male", path: "/service" },
     { name: "Female", path: "/service" },
   ];

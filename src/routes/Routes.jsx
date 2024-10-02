@@ -7,6 +7,7 @@ import DisconnectPage from "../containers/DisconnectPage";
 import LayoutHome from "../containers/Home/layout"
 import Home from "../containers/Home";
 import Services from "../containers/Home/Services";
+import Stylists from "../containers/Home/Stylists"
 import ManagerDashboard from "../containers/ManagerDashboard";
 import PrivateRoleBasedRoute from "./PrivateRoleBasedRoute";
 import StylistPage from "../containers/StylistPage";
@@ -17,8 +18,9 @@ const AppRoutes = () => {
   return (
     <Routes>
       <Route path="/" element={<LayoutHome />}>
-        <Route path="" element={<Home />} />
+        <Route path="/" element={<Home />} />
         <Route path="service" element={<Services />} />
+        <Route path="stylist" element={<Stylists />} />
       </Route>
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
