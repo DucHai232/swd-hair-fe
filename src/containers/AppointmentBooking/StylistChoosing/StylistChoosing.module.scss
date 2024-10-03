@@ -1,0 +1,23 @@
+ .heading {
+    font-size: 18px;
+    margin-bottom: 16px;
+  }
+
+  .cardContainer {
+    text-align: center;
+  }
+
+  .selected {
+    border: 4px solid #1890ff; // Highlight selected card
+    border-radius: 12px;
+  }
+  .selectedStylist {
+    margin-top: 20px;
+ font-weight: bold; 
+ font-size: 18px
+  }
+  .title {
+    font-weight: bold; 
+ font-size: 18px;
+ margin-bottom: 20px;
+  }
