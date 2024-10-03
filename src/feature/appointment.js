@@ -11,7 +11,13 @@ const initialState = {
   visitCount: null,
   status: '',
   createdAt: '',
-  updatedAt: ''
+  updatedAt: '',
+  openServiceModal: false,
+  selectedService: [],
+  selectedStylist: '',
+  selectedDay: '',
+  selectedSlot: '',
+  totalPrice: null
 };
 
 const appointmentSlice = createSlice({
@@ -44,6 +50,24 @@ const appointmentSlice = createSlice({
     },
     setStatus: (state, action) => {
       state.status = action.payload;
+    },
+    setOpenServiceModal: (state, action) => {
+      state.openServiceModal = action.payload;
+    },
+    setSelectedService: (state, action) => {
+      state.selectedService = action.payload;
+    },
+    setTotalPrice: (state, action) => {
+      state.totalPrice = action.payload;
+    },
+    setSelectedStylist: (state, action) => {
+      state.selectedStylist = action.payload;
+    },
+    setSelectedDay: (state, action) => {
+      state.selectedDay = action.payload;
+    },
+    setSelectedSlot: (state, action) => {
+      state.selectedSlot = action.payload;
     },
     setCreatedAt: (state, action) => {
       state.createdAt = action.payload;
@@ -88,7 +112,13 @@ export const {
   setStatus,
   setCreatedAt,
   setUpdatedAt,
-  setAppointmentDetails
+  setAppointmentDetails,
+  setOpenServiceModal,
+  setSelectedService,
+  setTotalPrice,
+  setSelectedStylist,
+  setSelectedDay,
+  setSelectedSlot
 } = appointmentSlice.actions;
 
 export default appointmentSlice.reducer;
