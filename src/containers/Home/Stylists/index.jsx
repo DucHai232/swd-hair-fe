@@ -2,6 +2,7 @@ import React from "react";
 import style from "./Stylists.module.scss";
 import cutHair from "../../../share/assets/BoyHair.jpg";
 import { Row, Col } from "antd";
+import { SearchOutlined } from "@ant-design/icons";
 
 const Stylists = () => {
   const DataCard = [
@@ -64,7 +65,12 @@ const Stylists = () => {
   ];
   return (
     <>
-      <p className={style.p}>STYLISTS</p>
+      <div>
+        <p className={style.p}> OUR STYLISTS</p>
+        <div><SearchOutlined size={30} /></div>
+        
+      </div>
+
       <Row>
         <Col span={2} />
         <Col span={20} className={style.container}>
