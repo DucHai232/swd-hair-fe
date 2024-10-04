@@ -13,7 +13,7 @@ const PrivateRoleBasedRoute  = (props) => {
 		requestedPath: path,
 	};
 
-	return canAccessWithRoles ? <Component menuItem={menu}/> : <Navigate to='/login' state={routingState} />;
+	return canAccessWithRoles ? <Component menuItem={menu}/> : <Navigate to='/' state={routingState} />;
 };
 
 

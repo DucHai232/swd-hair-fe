@@ -13,4 +13,6 @@ const store = configureStore({
 
 const persistor = persistStore(store);
 
+//action logout reset state
+
 export { store, persistor };

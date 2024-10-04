@@ -1,0 +1,38 @@
+@import '../../share/styles/color.scss';
+.container {
+  border-radius: 60px;
+  max-width: 80vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh; /* Full height of the viewport */
+  background-color: #ffffff;
+  margin: 4vw 10vw;
+  padding-top: 40px;
+}
+
+.heading {
+  font-size: 24px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.form {
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.timeline {
+  width: 100%; /* Full width */
+  max-width: 50vw; /* Limit the max width */
+  margin: 20px auto;
+  .totalPrice {
+    margin-top: 20px;
+   font-weight: bold; 
+   font-size: 18px
+  }
+}

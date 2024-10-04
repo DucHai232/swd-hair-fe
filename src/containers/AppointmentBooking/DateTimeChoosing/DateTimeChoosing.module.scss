@@ -1,0 +1,51 @@
+// .dateSelectContainer {
+//   padding: 20px;
+// }
+
+.label {
+  font-weight: bold;
+  margin-bottom: 20px;
+  font-size: 18px;
+}
+
+.select {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.swiperContainer {
+  margin: 20 0;
+}
+
+.swiperColumn {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.timeItem {
+  margin-bottom: 20px;
+  width: 100px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+}
+
+.selected {
+  background-color: #1890ff;
+  color: white;
+}
+
+.available {
+  background-color: #ffffff;
+  color: #000000;
+}
+
+.selectedTime {
+  margin-top: 15px;
+  font-size: 16px;
+  font-weight: bold;
+}
