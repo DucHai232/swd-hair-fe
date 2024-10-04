@@ -14,14 +14,14 @@ const services = [
 ];
 
 function ServiceModal() {
-  const [searchTerm, setSearchTerm] = useState('');
+  // const [searchTerm, setSearchTerm] = useState('');
   const selectedServices = useSelector((state) => state.appointment.selectedService);
   const dispatch = useDispatch();
   const openModal = useSelector((state) => state.appointment.openServiceModal);
 
   // Filter services based on search term
-  const filteredServices = services.filter(service => service.name.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  // const filteredServices = services.filter(service => service.name.toLowerCase().includes(searchTerm.toLowerCase())
+  // );
 
   // Toggle service selection
   const toggleSelectService = (service) => {
@@ -54,16 +54,16 @@ function ServiceModal() {
         width={800} // Set a custom width for a better layout
       >
         {/* Search Input */}
-        <Input
+        {/* <Input
           placeholder="Search services"
           prefix={<SearchOutlined />}
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          style={{ marginBottom: '20px' }} />
+          style={{ marginBottom: '20px' }} /> */}
 
         {/* Display List of Services */}
         <Row gutter={[16, 16]}>
-          {filteredServices.map((service) => (
+          {services.map((service) => (
             <Col span={6} key={service.id}>
               <div className={styles.cardContainer}>
                 <Card
