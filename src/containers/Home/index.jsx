@@ -22,7 +22,7 @@ const Home = () => {
   return (
     <>
       <ToastContainer />
-      {/* <Menu /> */}
+      <Menu />
       <IntroComponent />
       <Services />
       <Stylist />

@@ -55,12 +55,14 @@ const userSlice = createSlice({
       state.isFirstLogin = action.payload;
     },
     signout: (state) => {
-      state.accessToken = '';
-      state.username = '';
+      state.ok = false,
       state.isLoggedIn = false;
       state.isFirstLogin = false;
+      state.errorMessage = '';
+      state.accessToken = '';
+      state.username = '';
       state.role = [];
-      state.error = false;
+      state.isLoading = false;
     },
   },
   extraReducers: (builder) => {

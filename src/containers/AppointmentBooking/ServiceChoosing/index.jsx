@@ -1,4 +1,4 @@
-import { Button } from 'antd'
+import { Button, Table } from 'antd'
 import React from 'react'
 import { setOpenServiceModal } from '../../../feature/appointment'
 import { useDispatch, useSelector } from 'react-redux'
@@ -9,26 +9,60 @@ const ServiceChoosing = () => {
   const openModal = useSelector((state) => state.appointment.openServiceModal)
   const selectedServices = useSelector((state) => state.appointment.selectedService)
   const totalPrice = useSelector((state) => state.appointment.totalPrice)
+
   const handleOpenModal = async () => {
     await dispatch(setOpenServiceModal(!openModal))
-
   }
+
+  // Columns definition for Ant Design Table
+  const columns = [
+    {
+      title: 'Service Name',
+      dataIndex: 'name',
+      key: 'name',
+    },
+    {
+      title: 'Price',
+      dataIndex: 'price',
+      key: 'price',
+      render: (price) => `$${price}`, // Format price with $
+    },
+  ];
+
+  // Convert selectedServices to table data format
+  const dataSource = selectedServices.map((service, index) => ({
+    key: index,
+    name: service.name,
+    price: service.price,
+  }));
+
   return (
     <>
-      <div className={styles.totalPrice}>
+      <div className={styles.header}>
         STEP 2: Choose Your Service
       </div>
       <Button className={styles.chooseServicebtn} type="primary" onClick={handleOpenModal}>
         Choose a Service
       </Button>
-      {/* chuyển thành bảng */}
+
+      {selectedServices.length > 0 ? (
+        <Table
+          className={styles.serviceTable}
+          dataSource={dataSource}
+          columns={columns}
+          pagination={false}
+        />
+      ) : (
+        <div className={styles.noServiceMessage}>
+          No service selected yet.
+        </div>
+      )}
+
       <div className={styles.totalPrice}>
-        {selectedServices.length != 0 && `Selected Service: ${selectedServices.map((service) => `${service?.name}, `)}`}
+        {totalPrice !== 0 && totalPrice && `Total price: $${totalPrice}`}
       </div>
-      <div className={styles.totalPrice}>
-        {totalPrice != 0 && totalPrice && `Total price: ${totalPrice}`}
-      </div></>
+    </>
   )
 }
 
-export default ServiceChoosing
+export default ServiceChoosing;
