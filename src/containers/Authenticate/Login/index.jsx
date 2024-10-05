@@ -2,7 +2,7 @@ import { Button, Form, Input, Spin } from "antd";
 import styles from "./Login.module.scss";
 import hair_salon_2 from "../../../assets/hair_salon_2.jpg";
 import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUser, setFirstLogin } from "../../../feature/authentication";
 import { toast, ToastContainer } from "react-toastify";
@@ -14,26 +14,14 @@ function Login() {
   const errorMessage = useSelector((state) => state.user.errorMessage);
   const dispatch = useDispatch();
   const userRole = useSelector((state) => state.user.role);
+  const isFirstLogin = useSelector((state) => state.user.isFirstLogin);
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     username: "",
     password: "",
   });
 
-  // Handle navigate roles
-  const handleNavigateRole = () => {
-    if (userRole.includes("manager")) {
-      navigate("/manager-dashboard");
-    } else if (userRole.includes("staff")) {
-      navigate("/staff-dashboard");
-    } else if (userRole.includes("stylist")) {
-      navigate("/stylist-dashboard");
-    } else if (userRole.includes("admin")) {
-      navigate("/admin-dashboard");
-    } else {
-      navigate("/");
-    }
-  };
+
 
   // Handle change for username input
   const handleUsernameChange = (e) => {
@@ -52,11 +40,32 @@ function Login() {
     await dispatch(loginUser(formData));
     if (!error) {
       dispatch(setFirstLogin(true));
-      handleNavigateRole();
     } else {
       toast.error(errorMessage);
     }
   };
+
+  useEffect(() => {
+  const handleNavigateRole = () => {
+    if (userRole.includes("manager")) {
+      navigate("/manager-dashboard");
+    } else if (userRole.includes("staff")) {
+      navigate("/staff-dashboard");
+    } else if (userRole.includes("stylist")) {
+      navigate("/stylist-appointment");
+    } else if (userRole.includes("admin")) {
+      navigate("/admin-dashboard");
+    } else if (userRole.includes("customer")){
+      navigate("/");
+    } else {
+    navigate("/login");
+  }
+  };
+  if (isFirstLogin) {
+    handleNavigateRole()
+  }
+
+  }, [isFirstLogin, navigate, userRole]);
 
   return (
     <>
