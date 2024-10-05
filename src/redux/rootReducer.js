@@ -53,6 +53,9 @@ const combinedReducer = combineReducers({
 });
 
 const rootReducer = (state, action) => {
-  return combinedReducer(state, action);
+	if (action.type === 'LOGOUT') {
+		state = {};
+	}
+	return combinedReducer(state, action);
 };
 export default rootReducer;

@@ -1,8 +1,27 @@
-.totalPrice {
-  margin-top: 20px;
- font-weight: bold; 
- font-size: 18px
+// ServiceChoosing.module.scss
+
+.header {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 20px;
 }
+
 .chooseServicebtn {
-  margin-top: 12px;
+  margin-bottom: 20px;
+}
+
+.serviceTable {
+  margin-top: 20px;
+}
+
+.noServiceMessage {
+  margin-top: 20px;
+  color: #888;
+  text-align: center;
+}
+
+.totalPrice {
+  font-size: 18px;
+  font-weight: bold;
+  margin-top: 20px;
 }
