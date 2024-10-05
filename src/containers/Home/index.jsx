@@ -7,11 +7,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { setFirstLogin } from "../../feature/authentication";
 import { useEffect } from "react";
 import Menu from "../../components/Header/Avatar/Menu/index";
+import { useFirstLogin } from "../../hook/useFirstLogin";
 
 const Home = () => {
   const dispatch = useDispatch();
-  const username = useSelector((state) => state.user.username);
-  const isFirstLogin = useSelector((state) => state.user.isFirstLogin);
+  const {username,isFirstLogin} = useFirstLogin()
 
   useEffect(() => {
     if (isFirstLogin) {

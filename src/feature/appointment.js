@@ -13,11 +13,14 @@ const initialState = {
   createdAt: '',
   updatedAt: '',
   openServiceModal: false,
+  customerName: '',
+  customerPhone: '',
   selectedService: [],
   selectedStylist: '',
   selectedDay: '',
   selectedSlot: '',
-  totalPrice: null
+  totalPrice: null,
+  
 };
 
 const appointmentSlice = createSlice({
@@ -53,6 +56,12 @@ const appointmentSlice = createSlice({
     },
     setOpenServiceModal: (state, action) => {
       state.openServiceModal = action.payload;
+    },
+    setCustomerName: (state, action) => {
+      state.customerName = action.payload;
+    },
+    setCustomerPhone: (state, action) => {
+      state.customerPhone = action.payload;
     },
     setSelectedService: (state, action) => {
       state.selectedService = action.payload;
@@ -118,7 +127,9 @@ export const {
   setTotalPrice,
   setSelectedStylist,
   setSelectedDay,
-  setSelectedSlot
+  setSelectedSlot,
+  setCustomerName,
+  setCustomerPhone
 } = appointmentSlice.actions;
 
 export default appointmentSlice.reducer;

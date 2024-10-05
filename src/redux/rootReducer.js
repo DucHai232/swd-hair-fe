@@ -13,7 +13,7 @@ import appReducer from "../feature/app";
 const userPersistConfig = {
   key: "user",
   storage: storage,
-  // whitelist: ['isLoggedIn']
+  blacklist: [ 'isLoading']
 };
 const customerPersistConfig = {
   key: "customer",
@@ -36,9 +36,9 @@ const voucherPersistConfig = {
   storage: storage,
 };
 const appointmentPersistConfig = {
-  key: "appointment",
-  storage: storage,
-  // blacklist: ['selectedService', 'openServiceModal', 'totalPrice']
+	key: 'appointment',
+	storage: storage,
+	blacklist: [ 'openServiceModal']
 };
 
 const combinedReducer = combineReducers({

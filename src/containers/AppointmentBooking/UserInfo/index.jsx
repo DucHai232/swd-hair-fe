@@ -1,42 +1,29 @@
 import React from 'react';
-import { Form, Input, Button } from 'antd';
+import { Input } from 'antd';
 import styles from './UserInfo.module.scss';
+import { useDispatch, useSelector } from 'react-redux';
+import { setCustomerName } from '../../../feature/appointment';
+import { setCustomerPhone } from '../../../feature/appointment';
 
 const UserInfo = () => {
-  const [form] = Form.useForm();
-
-  const onFinish = (values) => {
-    console.log('User Info Submitted:', values);
-  };
+  const dispatch = useDispatch()
+  const customerName = useSelector((state) => state.appointment.customerName)
+  const customerPhone = useSelector((state) => state.appointment.customerPhone)
+  const submitName = (e) => {
+    console.log(e)
+    dispatch(setCustomerName(e.target.value))
+  }
+  const submitPhone = (e) => {
+    dispatch(setCustomerPhone(e.target.value))
+  }
 
   return (
     <>
       <h2 className={styles.title}>STEP 1: Enter Your Information</h2>
-      <Form
-        form={form}
-        name="user-info"
-        layout="vertical"
-        onFinish={onFinish}
-      >
-        <Form.Item
-        className={styles.formitem}
-          label="Name"
-          name="name"
-          rules={[{ required: true, message: 'Please enter your name' }]}
-        >
-          <Input placeholder="Enter your name" />
-        </Form.Item>
-
-        <Form.Item
-        className={styles.formitem}
-          label="Phone Number"
-          name="phone"
-          rules={[{ required: true, message: 'Please enter your phone number' }]}
-        >
-          <Input placeholder="Enter your phone number" />
-        </Form.Item>
-
-      </Form>
+      <p className={styles.label}>Name: </p>
+      <Input className={styles.formitem} value={customerName} onChange={submitName} placeholder="Enter your name" />
+      <p className={styles.label}>Phone Number: </p>
+      <Input className={styles.formitem} value={customerPhone} type='number' inputmode="numeric" onChange={submitPhone} placeholder="Enter your phone number"/>
     </>
   );
 };
