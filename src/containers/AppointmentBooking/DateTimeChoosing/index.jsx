@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 import { Select, Button } from 'antd';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/swiper-bundle.min.css';

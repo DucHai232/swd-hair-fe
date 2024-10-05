@@ -38,7 +38,7 @@ const voucherPersistConfig = {
 const appointmentPersistConfig = {
 	key: 'appointment',
 	storage: storage,
-	// blacklist: ['selectedService', 'openServiceModal', 'totalPrice']
+	blacklist: [ 'openServiceModal']
 };
 
 const combinedReducer = combineReducers({

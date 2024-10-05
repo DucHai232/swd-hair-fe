@@ -1,4 +1,4 @@
-import { Navigate, Route, Routes} from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import ForgotPassword from "../containers/Authenticate/ForgotPassword";
 import Login from "../containers/Authenticate/Login";
 import Register from "../containers/Authenticate/Register";
@@ -21,21 +21,32 @@ const AppRoutes = () => {
         <Route path="/" element={<Home />} />
         <Route path="service" element={<Services />} />
         <Route path="stylist" element={<Stylists />} />
+        <Route
+          path="/user-profile"
+          element={
+            <PrivateRoleBasedRoute
+              path="/user-profile"
+              Component={UserProfile}
+              requiredRoles={["admin", "staff", "customer", "stylist", "manager"]}
+            />
+          }
+        />
+        <Route
+          path="/appointment-booking"
+          element={
+            <PrivateRoleBasedRoute
+              path="/appointment-booking"
+              Component={AppointmentBooking}
+              requiredRoles={["stylist", "customer", "manager", "admin"]}
+            />
+          }
+        />
       </Route>
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
       <Route path="/forgot-password" element={<ForgotPassword />} />
       <Route path="/disconnect" element={<DisconnectPage />} />
-      <Route
-        path="/user-profile"
-        element={
-          <PrivateRoleBasedRoute
-            path="/user-profile"
-            Component={UserProfile}
-            requiredRoles={["admin", "staff", "customer", "stylist", "manager"]}
-          />
-        }
-      />
+
       <Route
         path="/manager-dashboard"
         element={
@@ -113,16 +124,7 @@ const AppRoutes = () => {
           />
         }
       />
-      <Route
-        path="/appointment-booking"
-        element={
-          <PrivateRoleBasedRoute
-            path="/appointment-booking"
-            Component={AppointmentBooking}
-            requiredRoles={["stylist", "customer", "manager", "admin"]}
-          />
-        }
-      />
+
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );
