@@ -9,6 +9,7 @@ import stylistReducer from "../feature/stylist";
 import voucherReducer from "../feature/voucher";
 import appointmentReducer from "../feature/appointment";
 import appReducer from "../feature/app";
+import managerReducer from "../feature/manager";
 
 const userPersistConfig = {
   key: "user",
@@ -17,6 +18,10 @@ const userPersistConfig = {
 };
 const customerPersistConfig = {
   key: "customer",
+  storage: storage,
+};
+const managerPersistConfig = {
+  key: "manager",
   storage: storage,
 };
 const servicePersistConfig = {
@@ -45,6 +50,7 @@ const combinedReducer = combineReducers({
   app: appReducer,
   user: persistReducer(userPersistConfig, userReducer),
   cutstomer: persistReducer(customerPersistConfig, customerReducer),
+  manager: persistReducer(managerPersistConfig, managerReducer),
   serviceReducer: persistReducer(servicePersistConfig, serviceReducer),
   staff: persistReducer(staffPersistConfig, staffReducer),
   stylist: persistReducer(stylistPersistConfig, stylistReducer),

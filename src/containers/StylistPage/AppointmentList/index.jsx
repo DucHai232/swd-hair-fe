@@ -55,11 +55,6 @@ const AppointmentList = () => {
       key: 'service',
     },
     {
-      title: 'Stylist',
-      dataIndex: ['stylistId', 'name'], // Accessing stylist information
-      key: 'stylist',
-    },
-    {
       title: 'Is Favorited',
       dataIndex: ['customerId', 'isFavorited'], // Accessing the isFavorited flag
       key: 'isFavorited',
