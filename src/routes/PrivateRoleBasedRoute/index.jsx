@@ -1,4 +1,3 @@
-
 import { useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
 
@@ -11,6 +10,7 @@ const PrivateRoleBasedRoute  = (props) => {
 	// Send navigate state, included last path
 	const routingState = {
 		requestedPath: path,
+		rejectAccess: !canAccessWithRoles
 	};
 
 	return canAccessWithRoles ? <Component menuItem={menu}/> : <Navigate to='/' state={routingState} />;
