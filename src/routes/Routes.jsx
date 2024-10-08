@@ -9,7 +9,6 @@ import Home from "../containers/Home";
 import Services from "../containers/Home/Services";
 import Stylists from "../containers/Home/Stylists"
 import PrivateRoleBasedRoute from "./PrivateRoleBasedRoute";
-import StylistPage from "../containers/StylistPage";
 import AppointmentBooking from "../containers/AppointmentBooking";
 import ManagerLayout from "../containers/ManagerDashboard/ManagerLayout";
 import StylistLayout from "../containers/StylistPage/StylistLayout";
