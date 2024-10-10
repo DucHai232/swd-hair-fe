@@ -2,29 +2,28 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   error: false,
-  errorMessage: '',
-  appointmentId: '',
-  customerId: '',
-  stylistId: '',
-  service: '',
-  appointmentDate: '',
+  errorMessage: "",
+  appointmentId: "",
+  customerId: "",
+  stylistId: "",
+  service: "",
+  appointmentDate: "",
   visitCount: null,
-  status: '',
-  createdAt: '',
-  updatedAt: '',
+  status: "",
+  createdAt: "",
+  updatedAt: "",
   openServiceModal: false,
-  customerName: '',
-  customerPhone: '',
+  customerName: "",
+  customerPhone: "",
   selectedService: [],
-  selectedStylist: '',
-  selectedDay: '',
-  selectedSlot: '',
+  selectedStylist: "",
+  selectedDay: "",
+  selectedSlot: "",
   totalPrice: null,
-  
 };
 
 const appointmentSlice = createSlice({
-  name: 'appointment',
+  name: "appointment",
   initialState,
   reducers: {
     setError: (state, action) => {
@@ -94,7 +93,7 @@ const appointmentSlice = createSlice({
         visitCount,
         status,
         createdAt,
-        updatedAt
+        updatedAt,
       } = action.payload;
       state.appointmentId = appointmentId;
       state.customerId = customerId;
@@ -129,7 +128,7 @@ export const {
   setSelectedDay,
   setSelectedSlot,
   setCustomerName,
-  setCustomerPhone
+  setCustomerPhone,
 } = appointmentSlice.actions;
 
 export default appointmentSlice.reducer;
