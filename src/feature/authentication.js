@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { axiosInstance } from "../services/api.service";
-import endpoints from "@/consts/endpoint";
+import endpoints from "../consts/endpoint.js";
 
 const initialState = {
   error: false,
