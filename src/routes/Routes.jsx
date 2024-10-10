@@ -1,17 +1,18 @@
-import { Navigate, Route, Routes} from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import ForgotPassword from "../containers/Authenticate/ForgotPassword";
 import Login from "../containers/Authenticate/Login";
 import Register from "../containers/Authenticate/Register";
 import UserProfile from "../containers/Authenticate/UserProfile";
 import DisconnectPage from "../containers/DisconnectPage";
-import LayoutHome from "../containers/Home/layout"
+import LayoutHome from "../containers/Home/layout";
 import Home from "../containers/Home";
 import Services from "../containers/Home/Services";
-import Stylists from "../containers/Home/Stylists"
+import Stylists from "../containers/Home/Stylists";
 import ManagerDashboard from "../containers/ManagerDashboard";
 import PrivateRoleBasedRoute from "./PrivateRoleBasedRoute";
 import StylistPage from "../containers/StylistPage";
 import AppointmentBooking from "../containers/AppointmentBooking";
+import Vouchers from "../containers/Customer/Vouchers";
 
 //luồng ruoting chính sẽ là component này
 const AppRoutes = () => {
@@ -21,6 +22,7 @@ const AppRoutes = () => {
         <Route path="/" element={<Home />} />
         <Route path="service" element={<Services />} />
         <Route path="stylist" element={<Stylists />} />
+        <Route path="/vouchers" element={<Vouchers />} />
       </Route>
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
