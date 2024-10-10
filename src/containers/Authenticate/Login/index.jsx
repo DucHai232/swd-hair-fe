@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUser, setFirstLogin } from "../../../feature/authentication";
 import { toast, ToastContainer } from "react-toastify";
-import endpoints from "../../../consts/endPoint";
+import endpoints from "../../../consts/endpoint.js";
 
 function Login() {
   const isLoading = useSelector((state) => state.user.isLoading);
