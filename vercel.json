@@ -1,7 +1,15 @@
 {
+  "build": {
+    "env": {
+      "NODE_ENV": "production"
+    },
+    "commands": {
+      "build": "npm run build"
+    }
+  },
   "rewrites": [
     {
-      "source": "/(.*)", 
+      "source": "/(.*)",
       "destination": "/index.html"
     }
   ]
