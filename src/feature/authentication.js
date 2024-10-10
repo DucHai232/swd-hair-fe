@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { axiosInstance } from "../services/api.service";
-import endpoints from "../consts/endPoint";
+import endpoints from "@/consts/endpoint";
 
 const initialState = {
   error: false,
@@ -56,12 +56,11 @@ const userSlice = createSlice({
       state.isFirstLogin = action.payload;
     },
     signout: (state) => {
-      state.ok = false,
-      state.isLoggedIn = false;
+      (state.ok = false), (state.isLoggedIn = false);
       state.isFirstLogin = false;
-      state.errorMessage = '';
-      state.accessToken = '';
-      state.username = '';
+      state.errorMessage = "";
+      state.accessToken = "";
+      state.username = "";
       state.role = [];
       state.isLoading = false;
     },
