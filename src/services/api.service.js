@@ -54,7 +54,6 @@ const setUpInterceptor = (store) => {
       return config;
     },
     (error) => {
-      // Handle request errors
       return Promise.reject(error);
     }
   );

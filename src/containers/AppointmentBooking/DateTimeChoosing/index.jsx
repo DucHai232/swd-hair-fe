@@ -1,5 +1,5 @@
-import { Select, Button, Typography, message, Col, Row } from "antd";
-import { Swiper, SwiperSlide } from "swiper/react";
+import { Select, Button, Typography, Col, Row } from "antd";
+import { Swiper } from "swiper/react";
 import "swiper/swiper-bundle.min.css";
 import "swiper/swiper.min.css";
 import styles from "./DateTimeChoosing.module.scss";

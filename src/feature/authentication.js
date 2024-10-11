@@ -13,6 +13,7 @@ const initialState = {
   username: "",
   role: [],
   isLoading: false,
+  accessTokenExpired: false,
 };
 
 // Async thunk for login
@@ -21,7 +22,6 @@ export const loginUser = createAsyncThunk(
   async (data, { rejectWithValue }) => {
     try {
       const response = await axiosInstance.post(endpoints.LOGIN, data);
-      console.log(response);
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || "Login failed");
@@ -64,6 +64,9 @@ const userSlice = createSlice({
       state.role = [];
       state.isLoading = false;
     },
+    setAccessTokenExpired(state, action) {
+      state.accessTokenExpired = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -91,5 +94,5 @@ const userSlice = createSlice({
   },
 });
 
-export const { setIsLoggedIn, setFirstLogin, signout } = userSlice.actions;
+export const { setIsLoggedIn, setFirstLogin, signout, setAccessTokenExpired } = userSlice.actions;
 export default userSlice.reducer;
