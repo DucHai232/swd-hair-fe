@@ -1,8 +1,5 @@
 import { Col, Input, Row, Typography } from "antd";
 import styles from "./UserInfo.module.scss";
-import { useDispatch, useSelector } from "react-redux";
-import { setCustomerName } from "../../../feature/appointment";
-import { setCustomerPhone } from "../../../feature/appointment";
 
 const UserInfo = ({ formBooking, setFormBooking }) => {
   // const dispatch = useDispatch();
