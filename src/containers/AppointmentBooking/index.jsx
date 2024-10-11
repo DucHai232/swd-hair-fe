@@ -15,9 +15,14 @@ import {
 import { createBookingAppointment } from "../../services/appointment.service";
 import { useState } from "react";
 import PaymentBooking from "./PaymentBooking";
+import { useDispatch } from "react-redux";
+import { setAccessTokenExpired, signout } from "../../feature/authentication";
+import { useNavigate } from "react-router-dom";
 
 const AppointmentBooking = () => {
-  const [form] = Form.useForm();
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+  const [form] = Form.useForm()
   const [formBooking, setFormBooking] = useState({
     customerName: "",
     customerPhone: "",
@@ -29,6 +34,8 @@ const AppointmentBooking = () => {
   const [isPayment, setIsPayment] = useState(false);
   const [responseAppointment, setResponseAppoinment] = useState({});
   const handleBooking = async () => {
+    // Regex for 10 to 11 digit phone number
+  const phoneRegex = /^\d{10,11}$/;
     const {
       customerName,
       customerPhone,
@@ -38,20 +45,24 @@ const AppointmentBooking = () => {
       selectedSlot,
     } = formBooking;
     if (!customerName || !customerPhone) {
-      message.warning("Vui lòng điền thông tin của bạn");
+      message.warning("Please fill in your information");
+      return;
+    }
+    if (!phoneRegex.test(customerPhone)) {
+      message.warning("Invalid phone number, please enter correct number (10 or 11 digits)");
       return;
     }
     if (selectedServices.length === 0) {
-      message.warning("Vui lòng chọn dịch vụ bạn muốn");
+      message.warning("Please select the service");
       return;
     }
     if (!selectedStylist) {
-      message.warning("Vui lòng chọn thợ cắt tóc bạn muốn");
+      message.warning("Please choose the barber you want");
       return;
     }
 
     if (!selectedDay || !selectedSlot) {
-      message.warning("Vui lòng chọn ngày giờ bạn muốn");
+      message.warning("Please select your preferred date and time");
       return;
     }
 
@@ -107,7 +118,16 @@ const AppointmentBooking = () => {
           setIsPayment(true);
         } catch (error) {
           setIsPayment(false);
-          message.error(error.response.data.message || "Đặt lịch thất bại");
+          if (error.status == 401) {
+            message.error('Login session has expired please login again'),
+            dispatch(signout()),
+            dispatch(setAccessTokenExpired(true))
+            navigate('/login')
+          } else {
+            message.error(error.response.data.message || "Đặt lịch thất bại");
+          }
+          
+
         }
       },
       onCancel() {
