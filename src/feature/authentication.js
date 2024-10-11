@@ -8,43 +8,44 @@ const initialState = {
   ok: false,
   isLoggedIn: false,
   isFirstLogin: false,
-  errorMessage: '',
-  accessToken: '',
-  username: '',
+  errorMessage: "",
+  accessToken: "",
+  username: "",
   role: [],
   isLoading: false,
 };
 
 // Async thunk for login
 export const loginUser = createAsyncThunk(
-  'user/loginUser',
+  "user/loginUser",
   async (data, { rejectWithValue }) => {
     try {
       const response = await axiosInstance.post(endpoints.LOGIN, data);
-      console.log(response)
+      console.log(response);
       return response.data;
     } catch (error) {
-      return rejectWithValue(error.response?.data?.message || 'Login failed');
+      return rejectWithValue(error.response?.data?.message || "Login failed");
     }
   }
 );
 
 // Async thunk for register
 export const register = createAsyncThunk(
-  'user/register',
+  "user/register",
   async (data, { rejectWithValue }) => {
     try {
       const response = await axiosInstance.post(endpoints.REGISTER, data);
       return response.data;
     } catch (error) {
-      return rejectWithValue(error.response?.data?.message || 'Register failed');
-
+      return rejectWithValue(
+        error.response?.data?.message || "Register failed"
+      );
     }
   }
 );
 
 const userSlice = createSlice({
-  name: 'user',
+  name: "user",
   initialState,
   reducers: {
     setIsLoggedIn(state, action) {
@@ -55,12 +56,14 @@ const userSlice = createSlice({
       state.isFirstLogin = action.payload;
     },
     signout: (state) => {
-      state.accessToken = '';
-      state.username = '';
+      state.ok = false,
       state.isLoggedIn = false;
       state.isFirstLogin = false;
+      state.errorMessage = '';
+      state.accessToken = '';
+      state.username = '';
       state.role = [];
-      state.error = false;
+      state.isLoading = false;
     },
   },
   extraReducers: (builder) => {
@@ -78,7 +81,7 @@ const userSlice = createSlice({
         state.username = user.username;
         state.role = user.role;
         state.isLoading = false;
-        state.errorMessage = '';
+        state.errorMessage = "";
       })
       // Handle rejected state (failed login)
       .addCase(loginUser.rejected, (state, action) => {
@@ -86,12 +89,8 @@ const userSlice = createSlice({
         state.errorMessage = action.payload;
         state.error = true;
       });
-  }
+  },
 });
 
-export const {
-  setIsLoggedIn,
-  setFirstLogin,
-  signout,
-} = userSlice.actions;
+export const { setIsLoggedIn, setFirstLogin, signout } = userSlice.actions;
 export default userSlice.reducer;

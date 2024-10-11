@@ -2,21 +2,27 @@ import { Button, Form, Input, Spin } from "antd";
 import styles from "./Login.module.scss";
 import hair_salon_2 from "../../../assets/hair_salon_2.jpg";
 import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUser, setFirstLogin } from "../../../feature/authentication";
 import { toast, ToastContainer } from "react-toastify";
+import endpoints from "../../../consts/endPoint";
 
-function App() {
-  const isLoading = useSelector((state) => state.user.isLoading)
-  const error = useSelector((state) => state.user.error)
-  const errorMessage = useSelector((state) => state.user.errorMessage)
-  const dispatch = useDispatch()
+function Login() {
+  const isLoading = useSelector((state) => state.user.isLoading);
+  const error = useSelector((state) => state.user.error);
+  const errorMessage = useSelector((state) => state.user.errorMessage);
+  const dispatch = useDispatch();
+  const userRole = useSelector((state) => state.user.role);
+  const isFirstLogin = useSelector((state) => state.user.isFirstLogin);
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     username: "",
     password: "",
   });
+
+
+
   // Handle change for username input
   const handleUsernameChange = (e) => {
     setFormData({ ...formData, username: e.target.value });
@@ -28,15 +34,38 @@ function App() {
     setFormData({ ...formData, password: e.target.value });
     console.log("password:", e.target.value);
   };
-  const handleLogin = async() => {
+
+  // Handle login
+  const handleLogin = async () => {
     await dispatch(loginUser(formData));
     if (!error) {
-      dispatch(setFirstLogin(true))
-      navigate("/home");
+      dispatch(setFirstLogin(true));
     } else {
-      toast.error(errorMessage)
+      toast.error(errorMessage);
     }
   };
+
+  useEffect(() => {
+  const handleNavigateRole = () => {
+    if (userRole.includes("manager")) {
+      navigate("/manager-dashboard");
+    } else if (userRole.includes("staff")) {
+      navigate("/staff-dashboard");
+    } else if (userRole.includes("stylist")) {
+      navigate("/stylist-appointment");
+    } else if (userRole.includes("admin")) {
+      navigate("/admin-dashboard");
+    } else if (userRole.includes("customer")){
+      navigate("/");
+    } else {
+    navigate("/login");
+  }
+  };
+  if (isFirstLogin) {
+    handleNavigateRole()
+  }
+
+  }, [isFirstLogin, navigate, userRole]);
 
   return (
     <>
@@ -44,7 +73,11 @@ function App() {
         <div className={styles.background}>
           <div className={styles.loginContainer}>
             <div className={styles.imageContainer}>
-              <img src={hair_salon_2} alt="hair_salon" className={styles.image} />
+              <img
+                src={hair_salon_2}
+                alt="hair_salon"
+                className={styles.image}
+              />
             </div>
 
             <div className={styles.formContainer}>
@@ -94,13 +127,15 @@ function App() {
                 </Button>
 
                 <div className={styles.forgotPasswordContainer}>
-                  <Link>Forgot Password?</Link>
+                  <Link to={endpoints.VERIFY_OTP_CHANGE_PASSWORD}>
+                    Forgot Password?
+                  </Link>
                 </div>
 
                 <span className={styles.signupContainer}>
                   Dont have an account yet?{" "}
                   <strong>
-                    <Link to="/register">Sign up here!</Link>
+                    <Link to={endpoints.REGISTER}>Sign up here!</Link>
                   </strong>
                 </span>
               </Form>
@@ -113,4 +148,4 @@ function App() {
   );
 }
 
-export default App;
+export default Login;

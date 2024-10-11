@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   stylistname: '',
+  sidebarItem: 'stylist-appointment',
 };
 
 const stylistSlice = createSlice({
@@ -11,10 +12,14 @@ const stylistSlice = createSlice({
     setStylistName: (state, action) => {
       state.stylistname = action.payload;
     },
+    setSidebarItem: (state, action) => {
+      state.sidebarItem = action.payload;
+    },
   },
 });
 
 export const {
-  setStylistName
+  setStylistName,
+  setSidebarItem
 } = stylistSlice.actions;
 export default stylistSlice.reducer;

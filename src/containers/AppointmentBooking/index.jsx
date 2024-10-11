@@ -1,30 +1,35 @@
-import React, { useEffect, useState } from 'react';
 import { Input, Button, Timeline, Form, DatePicker } from 'antd';
 import Header from '../../components/Header';
 import styles from './AppointmentBooking.module.scss'; // Import SCSS module
 import Footer from '../../components/Footer';
-import ChooseService from './ChooseService';
+import ServiceModal from './ServiceModal';
+import ServiceChoosing from './ServiceChoosing';
+import StylistChoosing from './StylistChoosing';
+import DateTimeChoosing from './DateTimeChoosing';
+import { useSelector } from 'react-redux';
+import UserInfo from './UserInfo';
+import { CalendarOutlined, CheckCircleOutlined, ClockCircleOutlined, ExclamationCircleOutlined, ScissorOutlined, UserOutlined } from '@ant-design/icons';
 
 const AppointmentBooking = () => {
-  const [openModal, setOpenModal] = useState(false);
-  const [appointments, setAppointments] = useState([]);
+  // const [appointments, setAppointments] = useState([]);
   const [form] = Form.useForm();
+  const customerName = useSelector((state) => state.appointment.customerName)
+  const customerPhone = useSelector((state) => state.appointment.customerPhone)
+  const selectedService = useSelector((state) => state.appointment.selectedService)
+  const selectedStylist = useSelector((state) => state.appointment.selectedStylist)
+  const selectedDay = useSelector((state) => state.appointment.selectedDay)
+  const selectedSlot = useSelector((state) => state.appointment.selectedSlot)
+  // const dispatch = useDispatch()
 
   const handleBooking = (values) => {
-    const { name, service, date } = values;
-    const formattedDate = date.format('YYYY-MM-DD');
-    setAppointments([...appointments, `${name} booked ${service} on ${formattedDate}`]);
+    // const { name, service, date } = values;
+    // const formattedDate = date.format('YYYY-MM-DD');
+    // setAppointments([...appointments, `${name} booked ${service} on ${formattedDate}`]);
     form.resetFields();
   };
 
-  const handleOpenModal = async() => {
-    await setOpenModal(!openModal);
-    
-  }
-
   return (
     <>
-      <Header />
       <div className={styles.container}>
         <h2 className={styles.heading}>Book an Appointment</h2>
         <Form form={form} onFinish={handleBooking} layout="inline" className={styles.form}>
@@ -32,31 +37,27 @@ const AppointmentBooking = () => {
             className={styles.timeline}
             items={[
               {
-                children: <Form.Item
-                  name="name"
-                  rules={[{ required: true, message: 'Please enter your name' }]}
-                >
-                  <Input placeholder="Your Name" />
-                </Form.Item>,
+                color: customerName == '' || customerPhone == '' ? 'red' : 'green',
+                dot: customerName == '' || customerPhone == '' ? <ExclamationCircleOutlined style={{ fontSize: '16px' }} /> : <CheckCircleOutlined style={{ fontSize: '16px' }} />,
+                children: <UserInfo/>,
               },
               {
-                children: 
-                <>
-                  <Button type="primary" onClick={handleOpenModal}>
-                    Choose a Service
-                  </Button>
-                  
-                </>
+                color: selectedService == '' ? 'red' : 'green',
+                dot: selectedService == '' ? <ExclamationCircleOutlined style={{ fontSize: '16px' }} /> : <ScissorOutlined style={{ fontSize: '16px' }} />,
+                children: <ServiceChoosing/>
               },
               {
-                children: <Form.Item
-                  name="date"
-                  rules={[{ required: true, message: 'Please choose a date' }]}
-                >
-                  <DatePicker placeholder="Select Date" />
-                </Form.Item>,
+                color: selectedStylist == '' ? 'red' : 'green',
+                dot: selectedStylist == '' ? <ExclamationCircleOutlined style={{ fontSize: '16px' }} /> : <UserOutlined style={{ fontSize: '16px' }} />,
+                children: <StylistChoosing/>,
               },
               {
+                color: selectedSlot == '' ? 'red' : 'green',
+                dot: selectedSlot == '' ? <ExclamationCircleOutlined style={{ fontSize: '16px' }} /> : <ClockCircleOutlined style={{ fontSize: '16px' }} />,
+                children: <DateTimeChoosing/>,
+              },
+              {
+                dot: <CalendarOutlined style={{ fontSize: '16px' }} />,
                 children: <Form.Item>
                   <Button type="primary" htmlType="submit">
                     Book Appointment
@@ -67,9 +68,7 @@ const AppointmentBooking = () => {
           />
         </Form>
       </div>
-      <Footer />
-      {  console.log("openModal", openModal)}
-      <ChooseService props={openModal}/>
+      <ServiceModal />
     </>
   );
 };
