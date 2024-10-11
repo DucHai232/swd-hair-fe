@@ -9,14 +9,14 @@ import { useEffect } from "react";
 
 //component này để xử lý disconnect, token hết hạn,...
 const App = () => {
-  const location = useLocation();
+  // const location = useLocation();
 
-  useEffect(() => {
-    if (location.pathname !== "/") {
-      window.history.replaceState(null, null, "/");
-    }
-  }, [location]);
-  setUpInterceptor(store);
+  // useEffect(() => {
+  //   if (location.pathname !== "/") {
+  //     window.history.replaceState(null, null, "/");
+  //   }
+  // }, [location]);
+  // setUpInterceptor(store);
   const isOnline = useSelector((state) => state.app.onLineStatus);
   return (
     <div className="App">{isOnline ? <AppRoutes /> : <DisconnectPage />}</div>

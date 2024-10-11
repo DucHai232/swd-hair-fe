@@ -1,5 +1,4 @@
 .container {
-  z-index: 1000;
   margin-bottom: 100px;
 }
 
@@ -13,8 +12,7 @@
     display: flex;
     flex-wrap: wrap;
     .card {
-        margin-left: 4%;
-        margin-bottom: 4%;
+        margin: 20px auto;
         width: 25%;
         height: 400px;
         border-radius: 20px;

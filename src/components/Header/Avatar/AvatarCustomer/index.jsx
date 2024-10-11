@@ -9,7 +9,8 @@ const Index = () => {
   const [isMenuVisible, setIsMenuVisible] = useState(false);
   const menuRef = useRef(null); // Tham chiếu đến component Menu
 
-  const toggleMenu = () => {
+  const toggleMenu = (e) => {
+    e.stopPropagation(); // Ngăn chặn sự kiện click lan tỏa ra ngoài
     setIsMenuVisible(!isMenuVisible);
   };
 
@@ -23,14 +24,14 @@ const Index = () => {
   useEffect(() => {
     // Thêm event listener khi menu mở
     if (isMenuVisible) {
-      document.addEventListener("mousedown", handleClickOutside);
+      document.addEventListener("click", handleClickOutside);
     } else {
-      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("click", handleClickOutside);
     }
 
     // Cleanup event listener khi component unmount hoặc menu đóng
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("click", handleClickOutside);
     };
   }, [isMenuVisible]);
 
@@ -44,13 +45,15 @@ const Index = () => {
           size={30}
           className={style.Avatar}
           shape="square"
-          onClick={toggleMenu}
+          onClick={toggleMenu} // Bấm vào avatar sẽ bật/tắt menu
         >
           U
         </Avatar>
         {isMenuVisible && (
-          <div className={style.MenuBox} ref={menuRef}>
+          <div className={style.MenuBox} ref={menuRef} onClick={(e) => e.stopPropagation()}>
+            {/* Menu sẽ không bị đóng khi nhấp vào bên trong */}
             <Menu/>
+            {/* Thêm các thẻ p hoặc phần tử khác bên trong menu */}
           </div>
         )}
         <p className={style.Point}>| 0 Point</p>

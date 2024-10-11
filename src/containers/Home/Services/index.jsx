@@ -60,8 +60,7 @@ const Services = () => {
     <>
       <p className={style.p}>SERVICES</p>
       <Row className={style.container}>
-        <Col span={3} />
-        <Col className={style.cardBox} span={18}>
+        <Col className={style.cardBox} span={24}>
           {DataCard.map((data) => (
             <div className={style.card}>
               <div className={style.cardDetail}>
@@ -81,7 +80,6 @@ const Services = () => {
             </div>
           ))}
         </Col>
-        <Col span={3} />
       </Row>
     </>
   );
