@@ -1,0 +1,126 @@
+.info {
+  display: flex;
+  align-items: center;
+}
+
+.title {
+  font-size: 16px;
+}
+
+.text {
+  border-bottom: 1px dashed #9b9b9b;
+  max-width: 40%;
+  letter-spacing: 1px;
+}
+
+.mb12 {
+  margin-bottom: 12px;
+}
+
+.nameService {
+  font-size: 16px;
+  font-weight: 400;
+}
+
+.priceService {
+  font-size: 16px;
+  font-weight: bold;
+  color: black;
+}
+
+.card {
+  width: 60%;
+  background: #f8f8f8;
+  border: 1px solid tomato;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1);
+}
+
+.total {
+  margin-top: 12px;
+  border-top: 1px dashed tomato;
+  padding: 6px;
+}
+
+.flexCenter {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.cardVoucher {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #ffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1);
+  margin-bottom: 12px;
+  .cardBody {
+    .bgVoucherPercent {
+      background-color: red;
+      display: flex;
+      flex-direction: column;
+      padding: 6px;
+      color: #fff;
+      font-size: 20px;
+      justify-content: center;
+      align-items: center;
+      border-radius: 10px 0 0 10px;
+    }
+    .bgVoucherMoney {
+      background-color: rgb(255, 184, 18);
+      display: flex;
+      flex-direction: column;
+      padding: 6px;
+      color: #fff;
+      font-size: 20px;
+      justify-content: center;
+      align-items: center;
+      border-radius: 10px 0 0 10px;
+    }
+    .desVoucher {
+      padding: 8px;
+      .bgDiscount {
+        background: tomato;
+        color: #fff;
+        text-align: center;
+        height: 25px;
+      }
+      .desTop {
+        font-size: 12px;
+      }
+      .expireDay {
+        margin-top: 12px;
+        margin-bottom: 12px;
+        width: 100%;
+        justify-content: flex-start;
+        color: rgb(255, 57, 57);
+        font-style: italic;
+        font-size: 12px;
+      }
+      .btnVoucher {
+        justify-content: flex-end;
+        button {
+          background-color: red;
+          padding: 6px;
+          border: none;
+          color: #fff;
+          cursor: pointer;
+        }
+      }
+      .btnDisableVoucher {
+        justify-content: flex-end;
+        button {
+          background-color: #ccc;
+          padding: 6px;
+          border: none;
+          color: Black;
+          cursor: not-allowed;
+        }
+      }
+    }
+  }
+}

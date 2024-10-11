@@ -1,33 +1,9 @@
 import { Modal, Card, Row, Col, Button, message } from "antd";
 import styles from "./ServiceModal.module.scss";
+import { getServices } from "../../../services/service.service";
+import { useEffect, useState } from "react";
 
 // Sample data for services with prices
-const services = [
-  {
-    id: 1,
-    name: "Haircut",
-    price: 20,
-    image: "https://via.placeholder.com/150",
-  },
-  {
-    id: 2,
-    name: "Shampoo",
-    price: 10,
-    image: "https://via.placeholder.com/150",
-  },
-  {
-    id: 3,
-    name: "Coloring",
-    price: 50,
-    image: "https://via.placeholder.com/150",
-  },
-  {
-    id: 4,
-    name: "Styling",
-    price: 30,
-    image: "https://via.placeholder.com/150",
-  },
-];
 
 function ServiceModal({
   selectedServices,
@@ -35,21 +11,29 @@ function ServiceModal({
   setOpenModal,
   handleChooseServices,
 }) {
+  const [dataServices, setDataServices] = useState([]);
+  const loadServices = async () => {
+    try {
+      const response = await getServices();
+      setDataServices(response?.data?.services);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const toggleSelectService = (service) => {
     const isSelected = selectedServices?.some(
-      (selected) => selected.id === service.id
+      (selected) => selected._id === service._id
     );
     let updatedServices;
     if (isSelected) {
       updatedServices = selectedServices?.filter(
-        (selected) => selected.id !== service.id
+        (selected) => selected._id !== service._id
       );
     } else {
       updatedServices = [...selectedServices, service];
     }
     handleChooseServices(updatedServices);
   };
-
   const handleConfirmChooseService = () => {
     if (selectedServices.length === 0) {
       message.warning("Bạn chưa chọn dịch vụ nào");
@@ -57,7 +41,9 @@ function ServiceModal({
     }
     setOpenModal(false);
   };
-
+  useEffect(() => {
+    loadServices();
+  }, []);
   return (
     <>
       <Modal
@@ -65,19 +51,25 @@ function ServiceModal({
         open={openModal}
         onCancel={() => setOpenModal(false)}
         footer={null}
-        width={800}
+        width={1000}
       >
         <Row gutter={[16, 16]}>
-          {services.map((service) => (
-            <Col span={6} key={service.id}>
+          {dataServices.map((service) => (
+            <Col span={6} key={service._id}>
               <div className={styles.cardContainer}>
                 <Card
                   hoverable
-                  cover={<img alt={service.name} src={service.image} />}
+                  cover={
+                    <img
+                      alt={service.name}
+                      src={service.image}
+                      style={{ height: "150px", objectFit: "cover" }}
+                    />
+                  }
                   onClick={() => toggleSelectService(service)}
                   className={`${
                     selectedServices?.some(
-                      (selected) => selected.id === service.id
+                      (selected) => selected._id === service._id
                     )
                       ? styles.selected
                       : ""
