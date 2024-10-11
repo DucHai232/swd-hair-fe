@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUser, setFirstLogin } from "../../../feature/authentication";
 import { toast, ToastContainer } from "react-toastify";
-import endpoints from "../../../consts/endPoint";
+import endpoints from "../../../consts/endpoint.js";
 
 function Login() {
   const isLoading = useSelector((state) => state.user.isLoading);
@@ -21,18 +21,14 @@ function Login() {
     password: "",
   });
 
-
-
   // Handle change for username input
   const handleUsernameChange = (e) => {
     setFormData({ ...formData, username: e.target.value });
-    console.log("username:", e.target.value);
   };
 
   // Handle change for password input
   const handlePasswordChange = (e) => {
     setFormData({ ...formData, password: e.target.value });
-    console.log("password:", e.target.value);
   };
 
   // Handle login
@@ -46,25 +42,24 @@ function Login() {
   };
 
   useEffect(() => {
-  const handleNavigateRole = () => {
-    if (userRole.includes("manager")) {
-      navigate("/manager-dashboard");
-    } else if (userRole.includes("staff")) {
-      navigate("/staff-dashboard");
-    } else if (userRole.includes("stylist")) {
-      navigate("/stylist-appointment");
-    } else if (userRole.includes("admin")) {
-      navigate("/admin-dashboard");
-    } else if (userRole.includes("customer")){
-      navigate("/");
-    } else {
-    navigate("/login");
-  }
-  };
-  if (isFirstLogin) {
-    handleNavigateRole()
-  }
-
+    const handleNavigateRole = () => {
+      if (userRole.includes("manager")) {
+        navigate("/manager-dashboard");
+      } else if (userRole.includes("staff")) {
+        navigate("/staff-dashboard");
+      } else if (userRole.includes("stylist")) {
+        navigate("/stylist-appointment");
+      } else if (userRole.includes("admin")) {
+        navigate("/admin-dashboard");
+      } else if (userRole.includes("customer")) {
+        navigate("/");
+      } else {
+        navigate("/login");
+      }
+    };
+    if (isFirstLogin) {
+      handleNavigateRole();
+    }
   }, [isFirstLogin, navigate, userRole]);
 
   return (

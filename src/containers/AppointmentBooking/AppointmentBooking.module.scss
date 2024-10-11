@@ -1,4 +1,4 @@
-@import '../../share/styles/color.scss';
+@import "../../share/styles/color.scss";
 .container {
   border-radius: 60px;
   max-width: 80vw;
@@ -6,10 +6,9 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: 100vh; /* Full height of the viewport */
   background-color: #ffffff;
   margin: 4vw 10vw;
-  padding-top: 40px;
+  padding: 48px;
 }
 
 .heading {
@@ -19,7 +18,6 @@
 }
 
 .form {
-
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -32,7 +30,7 @@
   margin: 20px auto;
   .totalPrice {
     margin-top: 20px;
-   font-weight: bold; 
-   font-size: 18px
+    font-weight: bold;
+    font-size: 18px;
   }
 }

@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { axiosInstance } from "../services/api.service";
-import endpoints from "../consts/endPoint";
+import endpoints from "../consts/endpoint.js";
 
 const initialState = {
   error: false,
@@ -13,6 +13,7 @@ const initialState = {
   username: "",
   role: [],
   isLoading: false,
+  accessTokenExpired: false,
 };
 
 // Async thunk for login
@@ -21,7 +22,6 @@ export const loginUser = createAsyncThunk(
   async (data, { rejectWithValue }) => {
     try {
       const response = await axiosInstance.post(endpoints.LOGIN, data);
-      console.log(response);
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || "Login failed");
@@ -56,14 +56,16 @@ const userSlice = createSlice({
       state.isFirstLogin = action.payload;
     },
     signout: (state) => {
-      state.ok = false,
-      state.isLoggedIn = false;
+      (state.ok = false), (state.isLoggedIn = false);
       state.isFirstLogin = false;
-      state.errorMessage = '';
-      state.accessToken = '';
-      state.username = '';
+      state.errorMessage = "";
+      state.accessToken = "";
+      state.username = "";
       state.role = [];
       state.isLoading = false;
+    },
+    setAccessTokenExpired(state, action) {
+      state.accessTokenExpired = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -92,5 +94,5 @@ const userSlice = createSlice({
   },
 });
 
-export const { setIsLoggedIn, setFirstLogin, signout } = userSlice.actions;
+export const { setIsLoggedIn, setFirstLogin, signout, setAccessTokenExpired } = userSlice.actions;
 export default userSlice.reducer;

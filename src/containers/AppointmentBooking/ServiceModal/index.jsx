@@ -1,104 +1,94 @@
-import { useState } from 'react';
-import { Modal, Input, Card, Row, Col, Button } from 'antd';
-import { SearchOutlined } from '@ant-design/icons';
-import { useDispatch, useSelector } from 'react-redux';
-import { setOpenServiceModal, setSelectedService, setTotalPrice } from '../../../feature/appointment';
-import styles from './ServiceModal.module.scss'
+import { Modal, Card, Row, Col, Button, message } from "antd";
+import styles from "./ServiceModal.module.scss";
+import { getServices } from "../../../services/service.service";
+import { useEffect, useState } from "react";
 
 // Sample data for services with prices
-const services = [
-  { id: 1, name: 'Haircut', price: 20, image: 'https://via.placeholder.com/150' },
-  { id: 2, name: 'Shampoo', price: 10, image: 'https://via.placeholder.com/150' },
-  { id: 3, name: 'Coloring', price: 50, image: 'https://via.placeholder.com/150' },
-  { id: 4, name: 'Styling', price: 30, image: 'https://via.placeholder.com/150' },
-];
 
-function ServiceModal() {
-  // const [searchTerm, setSearchTerm] = useState('');
-  const selectedServices = useSelector((state) => state.appointment.selectedService);
-  const dispatch = useDispatch();
-  const openModal = useSelector((state) => state.appointment.openServiceModal);
-
-  // Filter services based on search term
-  // const filteredServices = services.filter(service => service.name.toLowerCase().includes(searchTerm.toLowerCase())
-  // );
-
-  // Toggle service selection
+function ServiceModal({
+  selectedServices,
+  openModal,
+  setOpenModal,
+  handleChooseServices,
+}) {
+  const [dataServices, setDataServices] = useState([]);
+  const loadServices = async () => {
+    try {
+      const response = await getServices();
+      setDataServices(response?.data?.services);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const toggleSelectService = (service) => {
-    const isSelected = selectedServices.some(selected => selected.id === service.id);
+    const isSelected = selectedServices?.some(
+      (selected) => selected._id === service._id
+    );
     let updatedServices;
     if (isSelected) {
-      updatedServices = selectedServices.filter(selected => selected.id !== service.id);
+      updatedServices = selectedServices?.filter(
+        (selected) => selected._id !== service._id
+      );
     } else {
       updatedServices = [...selectedServices, service];
     }
-    dispatch(setSelectedService(updatedServices)); // Dispatch selected services to Redux store
+    handleChooseServices(updatedServices);
   };
-
-  // Calculate total price
-  const totalPrice = selectedServices.reduce((sum, service) => sum + service.price, 0);
-
-  // Close Modal
-  const handleCancel = async () => {
-    await dispatch(setOpenServiceModal(false));
-    await dispatch(setTotalPrice(totalPrice));
+  const handleConfirmChooseService = () => {
+    if (selectedServices.length === 0) {
+      message.warning("Bạn chưa chọn dịch vụ nào");
+      return;
+    }
+    setOpenModal(false);
   };
-
+  useEffect(() => {
+    loadServices();
+  }, []);
   return (
     <>
       <Modal
         title="Choose a Service"
         open={openModal}
-        onCancel={handleCancel}
+        onCancel={() => setOpenModal(false)}
         footer={null}
-        width={800} // Set a custom width for a better layout
+        width={1000}
       >
-        {/* Search Input */}
-        {/* <Input
-          placeholder="Search services"
-          prefix={<SearchOutlined />}
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          style={{ marginBottom: '20px' }} /> */}
-
-        {/* Display List of Services */}
         <Row gutter={[16, 16]}>
-          {services.map((service) => (
-            <Col span={6} key={service.id}>
+          {dataServices.map((service) => (
+            <Col span={6} key={service._id}>
               <div className={styles.cardContainer}>
                 <Card
                   hoverable
-                  cover={<img alt={service.name} src={service.image} />}
+                  cover={
+                    <img
+                      alt={service.name}
+                      src={service.image}
+                      style={{ height: "150px", objectFit: "cover" }}
+                    />
+                  }
                   onClick={() => toggleSelectService(service)}
-                  className={`${selectedServices.some(selected => selected.id === service.id) ? styles.selected : ''}`}
+                  className={`${
+                    selectedServices?.some(
+                      (selected) => selected._id === service._id
+                    )
+                      ? styles.selected
+                      : ""
+                  }`}
                 >
                   <Card.Meta
                     title={service.name}
-                    description={`$${service.price}`} />
+                    description={`$${service.price}`}
+                  />
                 </Card>
               </div>
             </Col>
           ))}
         </Row>
 
-        {/* Total Price */}
-        <div className={styles.totalPrice}>
-          Total: ${totalPrice}
-        </div>
-
-        {/* Selected service */}
-        {/* {selectedServices.map((service) => (<div className={styles.totalPrice} key={service.id}>
-              Selected Service: ${selectedServices?.name}
-            </div>))} */}
-        <div className={styles.totalPrice}>
-          Selected Service: {selectedServices.map((service) => `${service?.name}, `)}
-        </div>
-
-        {/* Confirm Selection Button */}
         <Button
           type="primary"
           className={styles.button}
-          onClick={handleCancel} // You can also add further actions here
+          onClick={handleConfirmChooseService}
         >
           Confirm Selection
         </Button>

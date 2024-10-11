@@ -7,7 +7,15 @@
 }
 
 .chooseServicebtn {
-  margin-bottom: 20px;
+  margin-top: 24px;
+  background-color: #ffff;
+  color: #ffc300;
+  border: 1px solid #ffc300;
+  &:hover {
+    transition: 0.3s;
+    background-color: #ffc300 !important;
+    color: #fff;
+  }
 }
 
 .serviceTable {
