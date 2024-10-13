@@ -14,80 +14,13 @@ const DateTimeChoosing = ({ formBooking, setFormBooking }) => {
   const [dataSchedule, setDataSchedule] = useState([]);
   const [timeSlots, setTimeSlots] = useState([]);
   const next7Days = generateNext7Days();
-  // const timeSlots = [
-  //   [
-  //     { time: "8h00", available: true },
-  //     { time: "8h20", available: true },
-  //     { time: "8h40", available: true },
-  //   ],
-  //   [
-  //     { time: "9h00", available: false },
-  //     { time: "9h20", available: true },
-  //     { time: "9h40", available: true },
-  //   ],
-  //   [
-  //     { time: "10h00", available: false },
-  //     { time: "10h20", available: false },
-  //     { time: "10h40", available: false },
-  //   ],
-  //   [
-  //     { time: "11h00", available: true },
-  //     { time: "11h20", available: false },
-  //     { time: "11h40", available: false },
-  //   ],
-  //   [
-  //     { time: "12h00", available: true },
-  //     { time: "12h20", available: false },
-  //     { time: "12h40", available: false },
-  //   ],
-  //   [
-  //     { time: "13h00", available: false },
-  //     { time: "13h20", available: true },
-  //     { time: "13h40", available: false },
-  //   ],
-  //   [
-  //     { time: "14h00", available: true },
-  //     { time: "14h20", available: true },
-  //     { time: "14h40", available: false },
-  //   ],
-  //   [
-  //     { time: "15h00", available: false },
-  //     { time: "15h20", available: false },
-  //     { time: "15h40", available: false },
-  //   ],
-  //   [
-  //     { time: "16h00", available: true },
-  //     { time: "16h20", available: false },
-  //     { time: "16h40", available: false },
-  //   ],
-  //   [
-  //     { time: "17h00", available: false },
-  //     { time: "17h20", available: true },
-  //     { time: "17h40", available: true },
-  //   ],
-  //   [
-  //     { time: "18h00", available: true },
-  //     { time: "18h20", available: false },
-  //     { time: "18h40", available: true },
-  //   ],
-  //   [
-  //     { time: "19h00", available: true },
-  //     { time: "19h20", available: true },
-  //     { time: "19h40", available: true },
-  //   ],
-  //   [
-  //     { time: "20h00", available: true },
-  //     { time: "20h20", available: false },
-  //     { time: "20h40", available: false },
-  //   ],
-  // ];
   const handleDayChange = (value) => {
     setFormBooking((prev) => ({
       ...prev,
       selectedDay: value,
     }));
   };
-  const handleTimeSelect = (time) => {
+  const handleSlotSelect = (time) => {
     setFormBooking((prev) => ({
       ...prev,
       selectedSlot: time,
@@ -111,13 +44,15 @@ const DateTimeChoosing = ({ formBooking, setFormBooking }) => {
       (slot) => slot.date === selectedDay
     )[0]?.timeSlots;
     setTimeSlots(getTimesSlot);
+    console.log(timeSlots)
   };
   useEffect(() => {
-    loadScheduleOfStylist();
-  }, [selectedStylist]);
-  useEffect(() => {
-    loadTimeSlots();
-  }, [selectedDay]);
+    const loadStylistSchedule = async() => {
+      await loadScheduleOfStylist();
+      await loadTimeSlots();
+    }
+    loadStylistSchedule();
+  }, [selectedDay, selectedStylist]);
   return (
     <div className={styles.dateSelectContainer}>
       <Typography.Title level={4}>
@@ -154,7 +89,7 @@ const DateTimeChoosing = ({ formBooking, setFormBooking }) => {
                     : styles.available
                 }`}
                 disabled={!hour.available}
-                onClick={() => hour.available && handleTimeSelect(hour.time)}
+                onClick={() => hour.available && handleSlotSelect(hour.time)}
               >
                 {hour.time}
               </Button>

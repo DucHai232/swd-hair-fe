@@ -2,6 +2,8 @@ import { Modal, Card, Row, Col, Button, message } from "antd";
 import styles from "./ServiceModal.module.scss";
 import { getServices } from "../../../services/service.service";
 import { useEffect, useState } from "react";
+import { signout } from "../../../feature/authentication";
+import { useDispatch } from "react-redux";
 
 // Sample data for services with prices
 
@@ -11,13 +13,15 @@ function ServiceModal({
   setOpenModal,
   handleChooseServices,
 }) {
+  const dispatch = useDispatch()
   const [dataServices, setDataServices] = useState([]);
   const loadServices = async () => {
     try {
       const response = await getServices();
       setDataServices(response?.data?.services);
     } catch (error) {
-      console.log(error);
+      dispatch(signout())
+      console.log(error)
     }
   };
   const toggleSelectService = (service) => {
