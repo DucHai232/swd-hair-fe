@@ -1,10 +1,11 @@
 import { Navigate, Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import ForgotPassword from "../containers/Authenticate/ForgotPassword";
 import Login from "../containers/Authenticate/Login";
 import Register from "../containers/Authenticate/Register";
 import UserProfile from "../containers/Authenticate/UserProfile";
 import DisconnectPage from "../containers/DisconnectPage";
-import LayoutHome from "../containers/Home/layout"
+import LayoutHome from "../containers/Home/layout";
 import Home from "../containers/Home";
 import Services from "../containers/Home/Services";
 import Stylists from "../containers/Home/Stylists"
