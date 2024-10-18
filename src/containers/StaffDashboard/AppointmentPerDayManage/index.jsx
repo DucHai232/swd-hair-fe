@@ -1,3 +1,5 @@
+// AppointmentPerDayManage.jsx
+
 import { useState } from "react";
 import {
   Table,
@@ -12,16 +14,9 @@ import {
   message,
 } from "antd";
 import moment from "moment";
-import styles from "./AppointmentManage.module.scss";
+import styles from "./AppointmentPerDayManage.module.scss";
 
 const { Option } = Select;
-
-const STATUS_OPTIONS = ["Pending", "Completed", "Cancelled"];
-const COLOR_MAP = {
-  Completed: "green",
-  Pending: "blue",
-  Cancelled: "red",
-};
 
 // Dummy Data
 const initialData = [
@@ -40,39 +35,41 @@ const initialData = [
     customer: "Jane Roe",
     stylist: "Tom Brown",
     service: "Hair Coloring",
-    appointmentDate: "2024-10-10",
+    appointmentDate: "2024-10-05",
     visitCount: 1,
     status: "Pending",
     createdAt: "2024-09-28",
   },
 ];
 
-const AppointmentManage = () => {
+const AppointmentPerDayManage = () => {
   const [data, setData] = useState(initialData);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [editingRecord, setEditingRecord] = useState(null);
   const [form] = Form.useForm();
+  const [selectedDate, setSelectedDate] = useState(moment());
 
   // Show modal to add/edit appointment
   const showModal = (record = null) => {
     setIsModalVisible(true);
     setEditingRecord(record);
-    record
-      ? form.setFieldsValue({
-          ...record,
-          appointmentDate: moment(record.appointmentDate),
-        })
-      : form.resetFields();
+    if (record) {
+      form.setFieldsValue({
+        ...record,
+        appointmentDate: moment(record.appointmentDate),
+      });
+    } else {
+      form.resetFields();
+    }
   };
 
-  // Close modal and reset form
+  // Close modal
   const handleCancel = () => {
     setIsModalVisible(false);
     setEditingRecord(null);
-    form.resetFields();
   };
 
-  // Handle form submit (add or update)
+  // Handle form when submitting
   const handleOk = () => {
     form.validateFields().then((values) => {
       const newData = {
@@ -105,35 +102,51 @@ const AppointmentManage = () => {
     message.success("Appointment deleted successfully!");
   };
 
-  // Render status tag
-  const renderStatus = (status) => (
-    <Tag color={COLOR_MAP[status]}>{status}</Tag>
-  );
-
-  // Action column render
-  const renderActions = (record) => (
-    <Space size="middle">
-      <a onClick={() => showModal(record)}>Edit</a>
-      <a onClick={() => handleDelete(record.key)}>Delete</a>
-    </Space>
+  // Filter appointments by selected date
+  const filteredData = data.filter((item) =>
+    moment(item.appointmentDate).isSame(selectedDate, "day")
   );
 
   const columns = [
-    { title: "Customer Name", dataIndex: "customer", key: "customer" },
-    { title: "Stylist Name", dataIndex: "stylist", key: "stylist" },
-    { title: "Service", dataIndex: "service", key: "service" },
+    {
+      title: "Customer Name",
+      dataIndex: "customer",
+      key: "customer",
+    },
+    {
+      title: "Stylist Name",
+      dataIndex: "stylist",
+      key: "stylist",
+    },
+    {
+      title: "Service",
+      dataIndex: "service",
+      key: "service",
+    },
     {
       title: "Appointment Date",
       dataIndex: "appointmentDate",
       key: "appointmentDate",
       render: (text) => moment(text).format("YYYY-MM-DD"),
     },
-    { title: "Visit Count", dataIndex: "visitCount", key: "visitCount" },
+    {
+      title: "Visit Count",
+      dataIndex: "visitCount",
+      key: "visitCount",
+    },
     {
       title: "Status",
       dataIndex: "status",
       key: "status",
-      render: renderStatus,
+      render: (status) => {
+        let color =
+          status === "Completed"
+            ? "green"
+            : status === "Pending"
+            ? "blue"
+            : "red";
+        return <Tag color={color}>{status}</Tag>;
+      },
     },
     {
       title: "Created At",
@@ -141,15 +154,39 @@ const AppointmentManage = () => {
       key: "createdAt",
       render: (text) => moment(text).format("YYYY-MM-DD"),
     },
-    { title: "Action", key: "action", render: renderActions },
+    {
+      title: "Action",
+      key: "action",
+      render: (record) => (
+        <Space size="middle">
+          <a onClick={() => showModal(record)}>Edit</a>
+          <a onClick={() => handleDelete(record.key)}>Delete</a>
+        </Space>
+      ),
+    },
   ];
 
   return (
     <div className={styles.appointmentTable}>
+      <h2>Manage Appointments for {selectedDate.format("YYYY-MM-DD")}</h2>
+      <DatePicker
+        value={selectedDate}
+        onChange={(date) => {
+          setSelectedDate(date);
+          // Reset modal when changing date
+          setEditingRecord(null);
+          form.resetFields();
+        }}
+        style={{ marginBottom: 20 }}
+      />
       <Button type="primary" onClick={() => showModal()}>
         Create Appointment
       </Button>
-      <Table columns={columns} dataSource={data} style={{ marginTop: 20 }} />
+      <Table
+        columns={columns}
+        dataSource={filteredData}
+        style={{ marginTop: 20 }}
+      />
 
       <Modal
         title={editingRecord ? "Edit Appointment" : "Create Appointment"}
@@ -201,11 +238,9 @@ const AppointmentManage = () => {
             rules={[{ required: true, message: "Please select status!" }]}
           >
             <Select>
-              {STATUS_OPTIONS.map((option) => (
-                <Option key={option} value={option}>
-                  {option}
-                </Option>
-              ))}
+              <Option value="Pending">Pending</Option>
+              <Option value="Completed">Completed</Option>
+              <Option value="Cancelled">Cancelled</Option>
             </Select>
           </Form.Item>
         </Form>
@@ -214,4 +249,4 @@ const AppointmentManage = () => {
   );
 };
 
-export default AppointmentManage;
+export default AppointmentPerDayManage;

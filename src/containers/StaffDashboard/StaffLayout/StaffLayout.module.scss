@@ -1,0 +1,30 @@
+.logo {
+  color: white;
+  text-align: center;
+  padding: 10px;
+  font-size: 1.5rem;
+}
+
+.sidebar {
+  min-height: 100vh;
+  background: #001529;
+}
+
+.collapseButton {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 1;
+}
+
+.ant-layout-sider {
+  background: #001529;
+}
+
+.ant-menu-item:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.ant-menu-item-selected {
+  background: rgba(255, 255, 255, 0.2);
+}

@@ -1,0 +1,25 @@
+.back-button {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  color: #ac8859;
+  background-color: rgba(255, 255, 255, 0.7);
+  font-weight: bold;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  display: inline-flex;
+  align-items: center;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.9);
+    color: #8c6e48;
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(172, 136, 89, 0.4);
+  }
+}
