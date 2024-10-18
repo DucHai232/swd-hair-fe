@@ -1,14 +1,13 @@
 import { useEffect, useState } from "react";
 import { Layout, Menu, Modal } from "antd";
 import {
-  HomeOutlined,
   LogoutOutlined,
   ScissorOutlined,
   CalendarOutlined,
   MessageOutlined,
 } from "@ant-design/icons";
 import styles from "./StaffLayout.module.scss";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { signout, setFirstLogin } from "../../../feature/authentication";
 import { toast, ToastContainer } from "react-toastify";
@@ -21,7 +20,6 @@ import AppointmentPerDayManage from "../AppointmentPerDayManage";
 import SDashboardDetail from "../SDashboardDetail";
 
 const { Sider, Content } = Layout;
-
 
 const StaffLayout = () => {
   const navigate = useNavigate();
@@ -69,43 +67,34 @@ const StaffLayout = () => {
             {collapsed ? "Salon" : "Hair Salon"}
           </div>
           <Menu theme="dark" selectedKeys={[sidebarItem]} mode="inline">
-            <Menu.Item
-              key="details"
-              icon={<HomeOutlined />}
-              onClick={handleSidebarChange}
-            >
-              <Link to="/staff-dashboard-detail">Dashboard</Link>
-            </Menu.Item>
-            <Menu.Item
+            <Menu.SubMenu
               key="appointments"
               icon={<CalendarOutlined />}
+              title="Appointments"
               onClick={handleSidebarChange}
             >
-              <Link to="/staff-appointments">Appointment Management</Link>
-            </Menu.Item>
-            <Menu.Item
-              key="appointmentsPerDay"
-              icon={<CalendarOutlined />}
-              onClick={handleSidebarChange}
-            >
-              <Link to="/staff-appointments-per-day">
-                Appointment Per Day Management
-              </Link>
-            </Menu.Item>
+              <Menu.Item key="appointments">All Appointments</Menu.Item>
+              <Menu.Item key="appointmentsPerDay">
+                Appointment Per Day
+              </Menu.Item>
+            </Menu.SubMenu>
+
             <Menu.Item
               key="feedback"
               icon={<MessageOutlined />}
               onClick={handleSidebarChange}
             >
-              <Link to="/staff-feedback">Feedback Management</Link>
+              Feedback
             </Menu.Item>
+
             <Menu.Item
               key="stylist"
               icon={<ScissorOutlined />}
               onClick={handleSidebarChange}
             >
-              <Link to="/staff-stylist">Stylist Management</Link>
+              Stylist
             </Menu.Item>
+
             <Menu.Item
               key="logout"
               icon={<LogoutOutlined />}

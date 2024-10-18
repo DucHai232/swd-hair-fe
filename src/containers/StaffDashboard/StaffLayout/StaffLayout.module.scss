@@ -1,24 +1,32 @@
 .logo {
   color: white;
   text-align: center;
-  padding: 10px;
-  font-size: 1.5rem;
+  padding: 20px; // Tăng padding để logo có nhiều không gian hơn
+  font-size: 1.8rem; // Tăng kích thước chữ của logo
 }
 
 .sidebar {
   min-height: 100vh;
   background: #001529;
+  width: 250px; // Tăng chiều rộng của sidebar lên 250px
+  transition: width 0.3s; // Thêm hiệu ứng mượt mà khi sidebar mở rộng hoặc thu gọn
 }
 
 .collapseButton {
   position: absolute;
   top: 10px;
-  left: 10px;
+  left: 20px; // Tăng khoảng cách từ bên trái để không chạm vào cạnh sidebar
   z-index: 1;
 }
 
 .ant-layout-sider {
   background: #001529;
+  width: 250px; // Điều chỉnh chiều rộng của sider theo sidebar
+}
+
+.ant-menu-item {
+  padding-left: 24px; // Tạo khoảng cách từ mép trái cho mục menu
+  font-size: 1.1rem; // Tăng kích thước chữ cho các mục menu
 }
 
 .ant-menu-item:hover {
