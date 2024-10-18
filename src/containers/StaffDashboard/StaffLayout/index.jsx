@@ -74,9 +74,7 @@ const StaffLayout = () => {
               onClick={handleSidebarChange}
             >
               <Menu.Item key="appointments">All Appointments</Menu.Item>
-              <Menu.Item key="appointmentsPerDay">
-                Appointment Per Day
-              </Menu.Item>
+              <Menu.Item key="appointmentsPerDay">Appointment in Day</Menu.Item>
             </Menu.SubMenu>
 
             <Menu.Item
