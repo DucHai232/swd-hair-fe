@@ -10,11 +10,11 @@ import Menu from "../../components/Header/Avatar/Menu/index";
 import { useLocation } from "react-router-dom";
 
 const Home = () => {
-  const location = useLocation()
+  const location = useLocation();
   const dispatch = useDispatch();
-  const username = useSelector(state => state.user.username)
-  const isLoggedIn = useSelector(state => state.user.isLoggedIn)
-  const isFirstLogin = useSelector(state => state.user.isFirstLogin)
+  const username = useSelector((state) => state.user.username);
+  const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
+  const isFirstLogin = useSelector((state) => state.user.isFirstLogin);
 
   useEffect(() => {
     //check first entry page for display toast
@@ -24,15 +24,13 @@ const Home = () => {
     }
     if (location.state?.rejectAccess && !isLoggedIn) {
       toast.error(`Please login to use this feature`);
-    }
-    else if (location.state || location.state?.rejectAccess) {
+    } else if (location.state || location.state?.rejectAccess) {
       toast.error(`Reject access`);
     }
   }, [dispatch, isFirstLogin, isLoggedIn, location.state, username]);
   return (
     <>
       <ToastContainer />
-      <Menu />
       <IntroComponent />
       <Services />
       <Stylist />

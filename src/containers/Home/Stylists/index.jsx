@@ -72,7 +72,6 @@ const Stylists = () => {
       </div>
 
       <Row>
-        <Col span={2} />
         <Col span={20} className={style.container}>
           <div className={style.cardBox}>
             {DataCard.map((data) => (
@@ -89,7 +88,6 @@ const Stylists = () => {
             ))}
           </div>
         </Col>
-        <Col span={2} />
       </Row>
     </>
   );

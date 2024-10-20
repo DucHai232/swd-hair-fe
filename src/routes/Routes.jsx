@@ -4,7 +4,7 @@ import Login from "../containers/Authenticate/Login";
 import Register from "../containers/Authenticate/Register";
 import UserProfile from "../containers/Authenticate/UserProfile";
 import DisconnectPage from "../containers/DisconnectPage";
-import LayoutHome from "../containers/Home/layout"
+import LayoutHome from "../containers/Home/layout";
 import Home from "../containers/Home";
 import Services from "../containers/Home/Services";
 import Stylists from "../containers/Home/Stylists"
@@ -12,7 +12,7 @@ import PrivateRoleBasedRoute from "./PrivateRoleBasedRoute";
 import AppointmentBooking from "../containers/AppointmentBooking";
 import ManagerLayout from "../containers/ManagerDashboard/ManagerLayout";
 import StylistLayout from "../containers/StylistPage/StylistLayout";
-
+import Vouchers from "../containers/Customer/Vouchers";
 //luồng ruoting chính sẽ là component này
 const AppRoutes = () => {
   return (
@@ -21,6 +21,7 @@ const AppRoutes = () => {
         <Route path="/" element={<Home />} />
         <Route path="service" element={<Services />} />
         <Route path="stylist" element={<Stylists />} />
+        <Route path="/vouchers" element={<Vouchers />} />
         <Route
           path="/user-profile"
           element={

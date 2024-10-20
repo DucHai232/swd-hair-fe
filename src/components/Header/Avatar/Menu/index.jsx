@@ -1,6 +1,6 @@
 import React from "react";
 import style from "./Menu.module.scss";
-import { Avatar } from "antd";
+import { Avatar, Button } from "antd";
 import BoyHair from "../../../../share/assets/BoyHair.jpg";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
@@ -28,7 +28,7 @@ const handleLogOut = () => {
       <p>Point</p>
       <p>Profile</p>
       <p>Apointment History</p>
-      <p onClick={() => handleLogOut()}>LogOut</p>
+      <Button onClick={() => handleLogOut()}>LogOut</Button>
     </div>
   );
 };
