@@ -2,13 +2,12 @@ import { Button, Form, Input } from "antd";
 import styles from "./Register.module.scss";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { register } from "../../../feature/authentication";
 import hair_salon_2 from "../../../assets/hair_salon_2.jpg";
+import { useRegisterMutation } from "../../../services/hairsalon.service.js"; // Import register mutation
 
 function Register() {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [register, { isLoading, error }] = useRegisterMutation(); // useRegisterMutation hook
   const [formData, setFormData] = useState({
     username: "",
     email: "",
@@ -16,14 +15,21 @@ function Register() {
     confirmPassword: "",
   });
 
+  // Handle input changes
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  // Handle registration form submission
   const handleRegister = async (values) => {
-    const res = await dispatch(register(values));
-    if (res) {
-      navigate("/home");
+    try {
+      const res = await register(values).unwrap();
+      if (res) {
+        navigate("/home");
+      }
+    } catch (err) {
+      console.error("Registration failed: ", err);
+      // You can use toast or another notification system to show errors
     }
   };
 
@@ -48,14 +54,12 @@ function Register() {
             initialValues={{ remember: true }}
             autoComplete="off"
             className={styles.form}
-            onFinish={handleRegister}
+            onFinish={handleRegister} // Use onFinish to handle form submission
           >
             <Form.Item
               name="username"
               label="Username"
-              rules={[
-                { required: true, message: "Please input your username!" },
-              ]}
+              rules={[{ required: true, message: "Please input your username!" }]}
             >
               <Input
                 placeholder="Enter your username"
@@ -79,9 +83,7 @@ function Register() {
             <Form.Item
               name="password"
               label="Password"
-              rules={[
-                { required: true, message: "Please input your password!" },
-              ]}
+              rules={[{ required: true, message: "Please input your password!" }]}
             >
               <Input.Password
                 placeholder="Enter your password"
@@ -93,9 +95,7 @@ function Register() {
             <Form.Item
               name="confirmPassword"
               label="Confirm Password"
-              rules={[
-                { required: true, message: "Please confirm your password!" },
-              ]}
+              rules={[{ required: true, message: "Please confirm your password!" }]}
             >
               <Input.Password
                 placeholder="Confirm your password"
@@ -108,6 +108,7 @@ function Register() {
               type="primary"
               htmlType="submit"
               className={styles.fullWidthButton}
+              loading={isLoading} // Show loading spinner when the request is in progress
             >
               Register
             </Button>

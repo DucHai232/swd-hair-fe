@@ -19,15 +19,15 @@ import ServiceManage from '../ServiceManage';
 import StylistManage from '../StylistManage';
 import StylistPerform from '../StylistPerform';
 import StaffManage from '../StaffManage';
-import { setSidebarItem } from '../../../feature/manager';
 import { useNavigate } from 'react-router-dom';
+import { setSidebarItem } from '../../../feature/stylist';
 
 
 const { Sider, Content } = Layout;
 
 const ManagerLayout = () => {
   const navigate = useNavigate()
-  const sidebarItem = useSelector((state) => state.manager.sidebarItem)
+  const sidebarItem = useSelector((state) => state.rootReducer.manager.sidebarItem)
   const [collapsed, setCollapsed] = useState(false);
   const [confirmModalOpen, setConfirmModalOpen] = useState(false);
   const dispatch = useDispatch()

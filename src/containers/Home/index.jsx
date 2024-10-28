@@ -12,9 +12,9 @@ import { useLocation } from "react-router-dom";
 const Home = () => {
   const location = useLocation();
   const dispatch = useDispatch();
-  const username = useSelector((state) => state.user.username);
-  const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
-  const isFirstLogin = useSelector((state) => state.user.isFirstLogin);
+  const username = useSelector((state) => state.rootReducer.user.username);
+  const isLoggedIn = useSelector((state) => state.rootReducer.user.isLoggedIn);
+  const isFirstLogin = useSelector((state) => state.rootReducer.user.isFirstLogin);
 
   useEffect(() => {
     //check first entry page for display toast

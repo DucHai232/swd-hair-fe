@@ -2,65 +2,52 @@ import { Button, Form, Input, Spin } from "antd";
 import styles from "./Login.module.scss";
 import hair_salon_2 from "../../../assets/hair_salon_2.jpg";
 import { Link, useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { loginUser, setFirstLogin } from "../../../feature/authentication";
+import { useState } from "react";
 import { toast, ToastContainer } from "react-toastify";
 import endpoints from "../../../consts/endpoint.js";
+import { useLoginMutation } from "../../../services/hairsalon.service.js";
+import { setAccessToken, setRole, setUsername } from "../../../feature/authentication.js";
+import { useDispatch } from "react-redux";
 
 function Login() {
-  const isLoading = useSelector((state) => state.user.isLoading);
-  const error = useSelector((state) => state.user.error);
-  const errorMessage = useSelector((state) => state.user.errorMessage);
-  const dispatch = useDispatch();
-  const userRole = useSelector((state) => state.user.role);
-  const isFirstLogin = useSelector((state) => state.user.isFirstLogin);
+  const dispatch = useDispatch()
+  const [login, { isLoading }] = useLoginMutation();
   const navigate = useNavigate();
-  const [formData, setFormData] = useState({
-    username: "",
-    password: "",
-  });
+  const [form] = Form.useForm(); // Ant Design form instance
 
-  // Handle change for username input
-  const handleUsernameChange = (e) => {
-    setFormData({ ...formData, username: e.target.value });
-  };
+  // Handle login after form validation
+  const handleLogin = async (values) => {
+    try {
+      
+      const userData = await login(values).unwrap()
+        console.log(userData);
+        dispatch(setAccessToken(userData?.access_token));
+        dispatch(setRole(userData?.user?.role));
+        dispatch(setUsername(userData?.user?.username));
+        if (userData.user.role && userData.user.role.length > 0) {
+          // Navigate based on role
+          if (userData.user.role.includes("manager")) {
+            navigate("/manager-dashboard");
+          } else if (userData.user.role.includes("staff")) {
+            navigate("/staff-dashboard");
+          } else if (userData.user.role.includes("stylist")) {
+            navigate("/stylist-appointment");
+          } else if (userData.user.role.includes("admin")) {
+            navigate("/admin-dashboard");
+          } else if (userData.user.role.includes("customer")) {
+            navigate("/");
+          }
+        } else {
+          throw new Error("Invalid user role.");
+        }
 
-  // Handle change for password input
-  const handlePasswordChange = (e) => {
-    setFormData({ ...formData, password: e.target.value });
-  };
 
-  // Handle login
-  const handleLogin = async () => {
-    await dispatch(loginUser(formData));
-    if (!error) {
-      dispatch(setFirstLogin(true));
-    } else {
-      toast.error(errorMessage);
+
+      
+    } catch (err) {
+      toast.error(err?.data?.message || "Login failed. Please try again.");
     }
   };
-
-  useEffect(() => {
-    const handleNavigateRole = () => {
-      if (userRole.includes("manager")) {
-        navigate("/manager-dashboard");
-      } else if (userRole.includes("staff")) {
-        navigate("/staff-dashboard");
-      } else if (userRole.includes("stylist")) {
-        navigate("/stylist-appointment");
-      } else if (userRole.includes("admin")) {
-        navigate("/admin-dashboard");
-      } else if (userRole.includes("customer")) {
-        navigate("/");
-      } else {
-        navigate("/login");
-      }
-    };
-    if (isFirstLogin) {
-      handleNavigateRole();
-    }
-  }, [isFirstLogin, navigate, userRole]);
 
   return (
     <>
@@ -84,30 +71,26 @@ function Login() {
               </div>
 
               <Form
+                form={form}
                 layout="vertical"
                 name="login"
                 initialValues={{ remember: true }}
                 autoComplete="off"
                 className={styles.form}
+                onFinish={handleLogin} // Trigger login on successful validation
               >
                 <Form.Item
                   name="username"
-                  onChange={handleUsernameChange}
                   label="Username"
-                  rules={[
-                    { required: true, message: "Please input your username!" },
-                  ]}
+                  rules={[{ required: true, message: "Please input your username!" }]}
                 >
                   <Input placeholder="Enter your username" />
                 </Form.Item>
 
                 <Form.Item
                   name="password"
-                  onChange={handlePasswordChange}
                   label="Password"
-                  rules={[
-                    { required: true, message: "Please input your password!" },
-                  ]}
+                  rules={[{ required: true, message: "Please input your password!" }]}
                 >
                   <Input.Password placeholder="Enter your password" />
                 </Form.Item>
@@ -116,7 +99,6 @@ function Login() {
                   type="primary"
                   htmlType="submit"
                   className={styles.fullWidthButton}
-                  onClick={() => handleLogin(formData)}
                 >
                   Login
                 </Button>
@@ -128,7 +110,7 @@ function Login() {
                 </div>
 
                 <span className={styles.signupContainer}>
-                  Dont have an account yet?{" "}
+                  Don&apos;t have an account yet?{" "}
                   <strong>
                     <Link to={endpoints.REGISTER}>Sign up here!</Link>
                   </strong>

@@ -1,98 +1,57 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { createAsyncThunk } from "@reduxjs/toolkit";
-import { axiosInstance } from "../services/api.service";
-import endpoints from "../consts/endpoint.js";
 
 const initialState = {
-  error: false,
-  ok: false,
   isLoggedIn: false,
   isFirstLogin: false,
-  errorMessage: "",
   accessToken: "",
   username: "",
-  role: [],
-  isLoading: false,
-  accessTokenExpired: false,
+  role: "",
+  accessTokenExpired: false
 };
-
-// Async thunk for login
-export const loginUser = createAsyncThunk(
-  "user/loginUser",
-  async (data, { rejectWithValue }) => {
-    try {
-      const response = await axiosInstance.post(endpoints.LOGIN, data);
-      return response.data;
-    } catch (error) {
-      return rejectWithValue(error.response?.data?.message || "Login failed");
-    }
-  }
-);
-
-// Async thunk for register
-export const register = createAsyncThunk(
-  "user/register",
-  async (data, { rejectWithValue }) => {
-    try {
-      const response = await axiosInstance.post(endpoints.REGISTER, data);
-      return response.data;
-    } catch (error) {
-      return rejectWithValue(
-        error.response?.data?.message || "Register failed"
-      );
-    }
-  }
-);
 
 const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
     setIsLoggedIn(state, action) {
-      const isLoggedIn = action.payload;
-      state.isLoggedIn = isLoggedIn;
+      state.isLoggedIn = action.payload;
     },
     setFirstLogin(state, action) {
       state.isFirstLogin = action.payload;
     },
-    signout: (state) => {
-      (state.ok = false), (state.isLoggedIn = false);
+    setAccessToken(state, action) {
+      state.accessToken = action.payload;
+    },
+    setUsername(state, action) {
+      state.username = action.payload;
+    },
+    setRole(state, action) {
+      state.role = action.payload;
+    },
+    setLoading(state, action) {
+      state.isLoading = action.payload;
+    },
+    setAccessTokenExpired(state, action) {
+      state.accessToken = action.payload;
+    },
+    signout(state) {
+      state.isLoggedIn = false;
       state.isFirstLogin = false;
-      state.errorMessage = "";
       state.accessToken = "";
       state.username = "";
       state.role = [];
-      state.isLoading = false;
     },
-    setAccessTokenExpired(state, action) {
-      state.accessTokenExpired = action.payload;
-    },
-  },
-  extraReducers: (builder) => {
-    builder
-      // Handle pending state
-      .addCase(loginUser.pending, (state) => {
-        state.isLoading = true;
-        state.error = false;
-      })
-      // Handle fulfilled state (successful login)
-      .addCase(loginUser.fulfilled, (state, action) => {
-        const { access_token, user } = action.payload;
-        state.isLoggedIn = true;
-        state.accessToken = access_token;
-        state.username = user.username;
-        state.role = user.role;
-        state.isLoading = false;
-        state.errorMessage = "";
-      })
-      // Handle rejected state (failed login)
-      .addCase(loginUser.rejected, (state, action) => {
-        state.isLoading = false;
-        state.errorMessage = action.payload;
-        state.error = true;
-      });
   },
 });
 
-export const { setIsLoggedIn, setFirstLogin, signout, setAccessTokenExpired } = userSlice.actions;
+export const {
+  setIsLoggedIn,
+  setFirstLogin,
+  setAccessToken,
+  setUsername,
+  setRole,
+  signout,
+  setAccessTokenExpired
+} = userSlice.actions;
+
 export default userSlice.reducer;
