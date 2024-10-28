@@ -104,10 +104,11 @@
 }
 
 .img {
-  margin: 0 0 0 30%;
+  margin: 0 0 0 20%;
   border-radius: 100px;
   width: 450px;
   height: 610px;
+  z-index: 9;
 }
 
 .thumb {

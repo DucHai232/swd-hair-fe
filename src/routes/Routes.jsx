@@ -13,7 +13,7 @@ import AppointmentBooking from "../containers/AppointmentBooking";
 import ManagerLayout from "../containers/ManagerDashboard/ManagerLayout";
 import StylistLayout from "../containers/StylistPage/StylistLayout";
 import StaffLayout from "../containers/StaffDashboard/StaffLayout";
-
+import Vouchers from "../containers/Customer/Vouchers";
 //luồng ruoting chính sẽ là component này
 const AppRoutes = () => {
   return (
@@ -22,6 +22,7 @@ const AppRoutes = () => {
         <Route path="/" element={<Home />} />
         <Route path="service" element={<Services />} />
         <Route path="stylist" element={<Stylists />} />
+        <Route path="/vouchers" element={<Vouchers />} />
         <Route
           path="/user-profile"
           element={
