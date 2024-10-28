@@ -17,7 +17,7 @@ import FeedbackManage from "../FeedbackManage";
 import StylistManage from "../StylistManage";
 import AppointmentPerDayManage from "../AppointmentPerDayManage";
 import SDashboardDetail from "../SDashboardDetail";
-import { setSidebarItem } from "../../../feature/stylist";
+import { setSidebarItem } from "../../../feature/staff";
 
 const { Sider, Content } = Layout;
 
@@ -28,7 +28,7 @@ const StaffLayout = () => {
   const [confirmModalOpen, setConfirmModalOpen] = useState(false);
   const dispatch = useDispatch();
   const { username, isFirstLogin } = useFirstLogin();
-
+  console.log(sidebarItem)
   const showModal = () => {
     setConfirmModalOpen(true);
   };
@@ -66,7 +66,7 @@ const StaffLayout = () => {
           <div className={styles.logo}>
             {collapsed ? "Salon" : "Hair Salon"}
           </div>
-          <Menu theme="dark" selectedKeys={[sidebarItem]} mode="inline">
+          <Menu theme="dark" defaultSelectedKeys={sidebarItem} selectedKeys={[sidebarItem]} mode="inline">
             <Menu.SubMenu
               key="appointments"
               icon={<CalendarOutlined />}
@@ -108,7 +108,7 @@ const StaffLayout = () => {
             {sidebarItem === "appointments" && <AppointmentManage />}
             {sidebarItem === "appointmentsPerDay" && (
               <AppointmentPerDayManage />
-            )}{" "}
+            )}
             {sidebarItem === "feedback" && <FeedbackManage />}
             {sidebarItem === "stylist" && <StylistManage />}
           </Content>

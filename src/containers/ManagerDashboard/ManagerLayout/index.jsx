@@ -20,7 +20,7 @@ import StylistManage from '../StylistManage';
 import StylistPerform from '../StylistPerform';
 import StaffManage from '../StaffManage';
 import { useNavigate } from 'react-router-dom';
-import { setSidebarItem } from '../../../feature/stylist';
+import { setSidebarItem } from '../../../feature/manager';
 
 
 const { Sider, Content } = Layout;
@@ -32,7 +32,7 @@ const ManagerLayout = () => {
   const [confirmModalOpen, setConfirmModalOpen] = useState(false);
   const dispatch = useDispatch()
   const { username, isFirstLogin } = useFirstLogin()
-
+  console.log(sidebarItem)
   const showModal = () => {
     setConfirmModalOpen(true);
   };
