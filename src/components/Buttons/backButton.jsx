@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import "./BackButton.scss";
 
 const BackButton = ({
-  path,
+  path = "/",
   label = "Home",
   className = "back-button",
   style,

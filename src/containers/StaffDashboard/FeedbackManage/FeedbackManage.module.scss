@@ -1,0 +1,80 @@
+.feedbackTable {
+  padding: 20px;
+  background-color: #f9f9f9;
+}
+
+.feedbackTable .ant-table {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.feedbackTable .ant-btn-primary {
+  background-color: #1890ff;
+  border-color: #1890ff;
+  border-radius: 4px;
+  font-weight: 500;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #40a9ff;
+    border-color: #40a9ff;
+  }
+}
+
+.feedbackTable .ant-table-thead > tr > th {
+  background-color: #fafafa;
+  font-weight: 600;
+}
+
+.feedbackTable .ant-table-tbody > tr > td {
+  padding: 12px;
+  font-size: 14px;
+}
+
+.feedbackTable .ant-modal {
+  border-radius: 8px;
+}
+
+.feedbackTable .ant-modal-header {
+  background-color: #f0f2f5;
+  border-radius: 8px 8px 0 0;
+  padding: 16px;
+}
+
+.feedbackTable .ant-modal-title {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.feedbackTable .ant-modal-footer {
+  padding: 10px 16px;
+}
+
+.feedbackTable .ant-modal-content {
+  border-radius: 8px;
+}
+
+.feedbackTable .ant-form-item {
+  margin-bottom: 16px;
+}
+
+.feedbackTable .ant-input,
+.feedbackTable .ant-textarea,
+.feedbackTable .ant-rate {
+  border-radius: 4px;
+  padding: 8px;
+}
+
+.feedbackTable .ant-btn {
+  border-radius: 4px;
+}
+
+.feedbackTable .ant-space-item > a {
+  color: #1890ff;
+
+  &:hover {
+    color: #40a9ff;
+    text-decoration: underline;
+  }
+}

@@ -1,5 +1,9 @@
 import { Row, Col, Button } from "antd";
-import { FacebookOutlined, InstagramOutlined } from "@ant-design/icons";
+import {
+  FacebookOutlined,
+  InstagramOutlined,
+  YoutubeOutlined,
+} from "@ant-design/icons";
 import styles from "./Footer.module.scss";
 
 export const footerLinks = [
@@ -15,7 +19,11 @@ export const footerLinks = [
     title: "Services",
     links: [
       {
-        name: "Service hours: Monday to Sunday, 8:30 am - 8:30 pm",
+        name: (
+          <>
+            Service hours: <br /> 8:30 am - 8:30 pm
+          </>
+        ),
         isText: true,
       },
       { name: "Hair Coloring", url: "/services/coloring" },
@@ -33,7 +41,7 @@ export const footerLinks = [
   {
     title: "Contact Us",
     links: [
-      { name: "Telephone: +123456789", isText: true },
+      { name: "Telephone: (+84)766710603", isText: true },
       { name: "Email: contact@hairharmony.com", isText: true },
     ],
   },
@@ -52,7 +60,7 @@ const BookingBox = () => (
 );
 
 const FooterColumn = ({ title, links, isContact }) => (
-  <div className={isContact ? styles.contactColumn : styles.footerColumn}>
+  <div className={styles.footerColumn}>
     <h3 className={styles.footerTitle}>{title}</h3>
     <ul className={styles.footerLinks}>
       {links.map((link, index) => (
@@ -75,6 +83,9 @@ const FooterColumn = ({ title, links, isContact }) => (
         <span className={styles.icon}>
           <InstagramOutlined />
         </span>
+        <span className={styles.icon}>
+          <YoutubeOutlined />
+        </span>
       </div>
     )}
   </div>
@@ -84,13 +95,13 @@ const Footer = () => {
   return (
     <footer className={styles.footerContainer}>
       <Row justify="space-around" className={styles.footerContent}>
-        <Col className={styles.quoteContainer}>
+        <Col xs={24} sm={24} md={8}>
           <BookingBox />
         </Col>
-        <Col span={12}>
+        <Col xs={24} sm={24} md={16}>
           <Row justify="space-between">
             {footerLinks.map((column, index) => (
-              <Col key={index} className={styles.footerColumnWrapper}>
+              <Col xs={24} sm={12} md={6} key={index}>
                 <FooterColumn
                   title={column.title}
                   links={column.links}
@@ -102,7 +113,8 @@ const Footer = () => {
         </Col>
       </Row>
       <p className={styles.footerCopyright}>
-        © 2024 HairHarmony | Nguyen Xien - Phuoc Thien, Long Thanh My, Thu Duc | All rights reserved
+        © 2024 HairHarmony | Nguyen Xien - Phuoc Thien, Long Thanh My, Thu Duc |
+        All rights reserved
       </p>
     </footer>
   );

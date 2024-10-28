@@ -7,11 +7,12 @@ import DisconnectPage from "../containers/DisconnectPage";
 import LayoutHome from "../containers/Home/layout";
 import Home from "../containers/Home";
 import Services from "../containers/Home/Services";
-import Stylists from "../containers/Home/Stylists"
+import Stylists from "../containers/Home/Stylists";
 import PrivateRoleBasedRoute from "./PrivateRoleBasedRoute";
 import AppointmentBooking from "../containers/AppointmentBooking";
 import ManagerLayout from "../containers/ManagerDashboard/ManagerLayout";
 import StylistLayout from "../containers/StylistPage/StylistLayout";
+import StaffLayout from "../containers/StaffDashboard/StaffLayout";
 import Vouchers from "../containers/Customer/Vouchers";
 //luồng ruoting chính sẽ là component này
 const AppRoutes = () => {
@@ -28,7 +29,13 @@ const AppRoutes = () => {
             <PrivateRoleBasedRoute
               path="/user-profile"
               Component={UserProfile}
-              requiredRoles={["admin", "staff", "customer", "stylist", "manager"]}
+              requiredRoles={[
+                "admin",
+                "staff",
+                "customer",
+                "stylist",
+                "manager",
+              ]}
             />
           }
         />
@@ -65,6 +72,16 @@ const AppRoutes = () => {
             path="/stylist-appointment"
             Component={StylistLayout}
             requiredRoles={["stylist"]}
+          />
+        }
+      />
+      <Route
+        path="/staff-dashboard"
+        element={
+          <PrivateRoleBasedRoute
+            path="/staff-dashboard"
+            Component={StaffLayout}
+            requiredRoles={["staff"]}
           />
         }
       />
