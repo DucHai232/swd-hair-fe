@@ -20,7 +20,7 @@ const { Sider, Content } = Layout;
 
 const StylistLayout = () => {
   const navigate = useNavigate()
-  const sidebarItem = useSelector(state => state.stylist.sidebarItem)
+  const sidebarItem = useSelector(state => state.rootReducer.stylist.sidebarItem)
   const [collapsed, setCollapsed] = useState(false);
   const [confirmModalOpen, setConfirmModalOpen] = useState(false);
   const dispatch = useDispatch()

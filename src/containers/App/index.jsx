@@ -17,7 +17,7 @@ const App = () => {
   //   }
   // }, [location]);
   setUpInterceptor(store);
-  const isOnline = useSelector((state) => state.app.onLineStatus);
+  const isOnline = useSelector((state) => state.rootReducer.app.onLineStatus);
   return (
     <div className="App">{isOnline ? <AppRoutes /> : <DisconnectPage />}</div>
   );

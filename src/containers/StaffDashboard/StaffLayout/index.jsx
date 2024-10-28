@@ -11,19 +11,19 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { signout, setFirstLogin } from "../../../feature/authentication";
 import { toast, ToastContainer } from "react-toastify";
-import { setSidebarItem } from "../../../feature/manager";
 import { useFirstLogin } from "../../../hook/useFirstLogin";
 import AppointmentManage from "../AppointmentManage";
 import FeedbackManage from "../FeedbackManage";
 import StylistManage from "../StylistManage";
 import AppointmentPerDayManage from "../AppointmentPerDayManage";
 import SDashboardDetail from "../SDashboardDetail";
+import { setSidebarItem } from "../../../feature/stylist";
 
 const { Sider, Content } = Layout;
 
 const StaffLayout = () => {
   const navigate = useNavigate();
-  const sidebarItem = useSelector((state) => state.manager.sidebarItem);
+  const sidebarItem = useSelector((state) => state.rootReducer.manager.sidebarItem);
   const [collapsed, setCollapsed] = useState(false);
   const [confirmModalOpen, setConfirmModalOpen] = useState(false);
   const dispatch = useDispatch();

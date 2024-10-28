@@ -2,16 +2,6 @@ import { Col, Input, Row, Typography } from "antd";
 import styles from "./UserInfo.module.scss";
 
 const UserInfo = ({ formBooking, setFormBooking }) => {
-  // const dispatch = useDispatch();
-  // const customerName = useSelector((state) => state.appointment.customerName);
-  // const customerPhone = useSelector((state) => state.appointment.customerPhone);
-  // const submitName = (e) => {
-  //   // console.log(e);
-  //   dispatch(setCustomerName(e.target.value));
-  // };
-  // const submitPhone = (e) => {
-  //   dispatch(setCustomerPhone(e.target.value));
-  // };
   const handleChangeUser = (e) => {
     const value = e.target.value;
     const name = e.target.name;

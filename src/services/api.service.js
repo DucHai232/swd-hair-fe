@@ -15,6 +15,28 @@ export const axiosInstance = axios.create({
   timeoutErrorMessage: "Connection is timeout exceeded",
 });
 
+export const axiosBaseQuery =
+  ({ baseUrl } = { baseUrl: '' }) =>
+  async ({ url, method, data, params }) => {
+    try {
+      const result = await axiosInstance({
+        url: baseUrl + url,
+        method,
+        data,
+        params,
+      });
+      return { data: result.data };
+    } catch (axiosError) {
+      let err = axiosError.response?.data || axiosError;
+      return {
+        error: {
+          status: axiosError.response?.status || 500,
+          data: err,
+        },
+      };
+    }
+  };
+  
 // Set up interceptors
 const setUpInterceptor = (store) => {
   // Retry logic
