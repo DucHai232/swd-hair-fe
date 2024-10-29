@@ -1,20 +1,20 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  staffname: '',
+  sidebarItem: '',
 };
 
 const staffSlice = createSlice({
   name: 'staff',
   initialState,
   reducers: {
-    setStaffName: (state, action) => {
-      state.staffname = action.payload;
+    setSidebarItem: (state, action) => {
+      state.sidebarItem = action.payload;
     },
   },
 });
 
 export const {
-  setStaffName
+  setSidebarItem
 } = staffSlice.actions;
 export default staffSlice.reducer;

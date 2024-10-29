@@ -23,12 +23,11 @@ const { Sider, Content } = Layout;
 
 const StaffLayout = () => {
   const navigate = useNavigate();
-  const sidebarItem = useSelector((state) => state.rootReducer.manager.sidebarItem);
+  const sidebarItem = useSelector((state) => state.rootReducer.staff.sidebarItem);
   const [collapsed, setCollapsed] = useState(false);
   const [confirmModalOpen, setConfirmModalOpen] = useState(false);
   const dispatch = useDispatch();
   const { username, isFirstLogin } = useFirstLogin();
-  console.log(sidebarItem)
   const showModal = () => {
     setConfirmModalOpen(true);
   };
