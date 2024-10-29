@@ -6,7 +6,9 @@ import {
   Drawer,
   Empty,
   Image,
+  Input,
   message,
+  Modal,
   Result,
   Row,
   Typography,
@@ -22,13 +24,17 @@ import { RiDiscountPercentFill, RiMoneyDollarCircleFill } from "react-icons/ri";
 import { TbRosetteDiscountCheckFilled } from "react-icons/tb";
 import { getVoucherUser } from "../../../services/voucher.service";
 import { convertToDateString } from "../../../utils/util";
+import { IoIosArrowForward } from "react-icons/io";
+import { applyCoupon } from "../../../services/coupon.service";
 const PaymentBooking = ({ responseAppointment, setIsPayment }) => {
   const [isPay, setIsPay] = useState(true);
   const [dataVoucher, setDataVoucher] = useState([]);
   const [priceDiscount, setPriceDiscount] = useState(0);
   const [openDiscount, setOpenDiscount] = useState(false);
   const [addedVoucher, setAddedVoucher] = useState(null);
-
+  const [isCodeVoucher, setIsCodeVoucher] = useState(false);
+  const [code, setCode] = useState(null);
+  const [discountCoupon, setDiscountCoupon] = useState(0);
   // Function xử lý
   const loadVoucher = async () => {
     try {
@@ -46,11 +52,44 @@ const PaymentBooking = ({ responseAppointment, setIsPayment }) => {
     } else {
       setPriceDiscount(voucher.discountMoney);
     }
+    setDiscountCoupon(0);
     setAddedVoucher(voucher._id);
     setOpenDiscount(false);
     message.success(`${voucher.voucherName} đã được thêm`);
   };
-
+  const handleApplyCoupon = async (e) => {
+    if (e.key === "Enter") {
+      try {
+        const payload = {
+          code: code,
+        };
+        const response = await applyCoupon(payload);
+        message.success(response?.data?.message);
+        setDiscountCoupon(response?.data?.data?.discount);
+        setPriceDiscount(0);
+        setAddedVoucher(null);
+        setCode(null);
+      } catch (error) {
+        message.error(
+          error.response?.data?.message || "Không áp dụng được mã giảm giá"
+        );
+      }
+    }
+  };
+  const handleApplyVoucher = () => {
+    Modal.confirm({
+      title: "Xác nhận",
+      content: "Bạn có muốn áp dụng voucher này không?",
+      okText: "Có",
+      cancelText: "Không",
+      onOk: () => {
+        console.log("Voucher đã được áp dụng!");
+      },
+      onCancel: () => {
+        console.log("Người dùng đã hủy bỏ việc áp dụng voucher");
+      },
+    });
+  };
   // Function render
   const renderService = (data) => {
     return (
@@ -134,23 +173,45 @@ const PaymentBooking = ({ responseAppointment, setIsPayment }) => {
   const renderCalculator = () => {
     return (
       <Row className={styles.total}>
-        <Col
-          span={16}
-          className={styles.flexCenter}
-          onClick={() => setOpenDiscount(true)}
-        >
-          <MdDiscount size={18} style={{ color: "tomato" }} />
-
-          <span
-            style={{
-              fontSize: "16px",
-              cursor: "pointer",
-              color: "blue",
-              borderBottom: "1px solid blue",
-            }}
-          >
-            Thêm mã giảm giá
-          </span>
+        <Col span={16}>
+          <Row className={styles.flexCenter}>
+            <Col
+              className={styles.flexCenter}
+              span={10}
+              onClick={() => setOpenDiscount(true)}
+            >
+              <MdDiscount size={16} style={{ color: "tomato" }} />
+              <span
+                style={{
+                  fontSize: "14px",
+                  cursor: "pointer",
+                  color: "blue",
+                  borderBottom: "1px solid blue",
+                }}
+              >
+                Voucher của bạn
+              </span>
+            </Col>
+            <Col
+              style={{ cursor: "pointer" }}
+              className={styles.flexCenter}
+              onClick={() => setIsCodeVoucher(true)}
+            >
+              Nhập mã giảm giá <IoIosArrowForward size={16} />
+            </Col>
+          </Row>
+          {isCodeVoucher && (
+            <Row style={{ marginTop: "12px" }}>
+              <Col span={18}>
+                <Input
+                  value={code}
+                  placeholder="Nhập mã giảm giá"
+                  onChange={(e) => setCode(e.target.value)}
+                  onKeyDown={(e) => handleApplyCoupon(e)}
+                />
+              </Col>
+            </Row>
+          )}
         </Col>
         <Col span={8}>
           <Row>
@@ -170,7 +231,7 @@ const PaymentBooking = ({ responseAppointment, setIsPayment }) => {
               </span>
             </Col>
           </Row>
-          {priceDiscount !== 0 && (
+          {priceDiscount !== 0 && discountCoupon === 0 && (
             <>
               <Row>
                 <Col className={styles.flexCenter} span={14}>
@@ -192,13 +253,18 @@ const PaymentBooking = ({ responseAppointment, setIsPayment }) => {
                   </span>
                 </Col>
               </Row>
+            </>
+          )}
+
+          {discountCoupon !== 0 && (
+            <>
               <Row>
                 <Col className={styles.flexCenter} span={14}>
-                  <TbRosetteDiscountCheckFilled
+                  <MdOutlineDoNotDisturbOnTotalSilence
                     size={18}
                     style={{ color: "tomato" }}
                   />{" "}
-                  <span>Còn lại:</span>{" "}
+                  <span>Giảm giá:</span>{" "}
                 </Col>
                 <Col span={10}>
                   <span
@@ -208,11 +274,38 @@ const PaymentBooking = ({ responseAppointment, setIsPayment }) => {
                       fontWeight: "bold",
                     }}
                   >
-                    {responseAppointment.totalPrice - priceDiscount}$
+                    {(responseAppointment.totalPrice * discountCoupon) / 100}$
                   </span>
                 </Col>
               </Row>
             </>
+          )}
+
+          {/* Phần còn lại */}
+          {(priceDiscount !== 0 || discountCoupon !== 0) && (
+            <Row>
+              <Col className={styles.flexCenter} span={14}>
+                <TbRosetteDiscountCheckFilled
+                  size={18}
+                  style={{ color: "tomato" }}
+                />{" "}
+                <span>Còn lại:</span>{" "}
+              </Col>
+              <Col span={10}>
+                <span
+                  style={{
+                    color: "red",
+                    fontSize: "16px",
+                    fontWeight: "bold",
+                  }}
+                >
+                  {responseAppointment.totalPrice -
+                    (priceDiscount ||
+                      (responseAppointment.totalPrice * discountCoupon) / 100)}
+                  $
+                </span>
+              </Col>
+            </Row>
           )}
         </Col>
       </Row>
@@ -259,9 +352,7 @@ const PaymentBooking = ({ responseAppointment, setIsPayment }) => {
               <Content style={{ padding: "6px 0" }}>
                 <Row gutter={[12, 12]} className={styles.info}>
                   <Col span={2} className={styles.info}>
-                    <InfoCircleOutlined
-                      style={{ fontSize: "24px", color: "blue" }}
-                    />
+                    <InfoCircleOutlined style={{ fontSize: "20px" }} />
                   </Col>
                   <Col span={22}>
                     {" "}
@@ -281,13 +372,30 @@ const PaymentBooking = ({ responseAppointment, setIsPayment }) => {
                     Số điện thoại:{" "}
                   </Col>
                   <Col span={18} className={styles.text}>
-                    +84{responseAppointment.customerPhone}
+                    {responseAppointment.customerPhone}
                   </Col>
                 </Row>
               </Content>
             }
-            actions={[]}
-            headStyle={{ borderBottom: "1px solid tomato" }}
+            actions={[
+              <Button
+                type="danger"
+                key={1}
+                style={{
+                  cursor:
+                    discountCoupon !== 0 || priceDiscount !== 0
+                      ? "pointer"
+                      : "not-allowed",
+                }}
+                onClick={() => handleApplyVoucher()}
+              >
+                Áp dụng
+              </Button>,
+              <Button type="primary" key={2}>
+                Thanh toán
+              </Button>,
+            ]}
+            headStyle={{ borderBottom: "1px dashed tomato" }}
           >
             {responseAppointment.services.map((service) =>
               renderService(service)

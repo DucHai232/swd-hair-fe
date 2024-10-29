@@ -1,18 +1,37 @@
 import React from "react";
 import style from "./Menu.module.scss";
-import { Avatar, Button } from "antd";
+import { Avatar, Button, Col, Row } from "antd";
 import BoyHair from "../../../../share/assets/BoyHair.jpg";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { signout } from "../../../../feature/authentication";
 
 const Menu = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-const handleLogOut = () => {
-  navigate('/login')
-  dispatch(signout())
-}
+  const user = useSelector((state) => state.rootReducer.user);
+  const handleLogOut = () => {
+    navigate("/login");
+    dispatch(signout());
+  };
+  const dataProfile = [
+    {
+      title: "Account balance",
+      value: 1000,
+    },
+    {
+      title: "Point",
+      value: 100,
+    },
+    {
+      title: "Setting Profile",
+      value: "",
+    },
+    {
+      title: "Apointment History",
+      value: "",
+    },
+  ];
   return (
     <div className={style.container}>
       <div className={style.nameBox}>
@@ -22,12 +41,30 @@ const handleLogOut = () => {
           className={style.avatar}
           shape="square"
         />
-        <p className={style.name}>Trần Khai Minh Pháp</p>
+        <p className={style.name}>{user?.username}</p>
       </div>
-      <p>Số dư tài khoản</p>
-      <p>Point</p>
-      <p>Profile</p>
-      <p>Apointment History</p>
+      {dataProfile.map((item, index) => (
+        <Row style={{ margin: "10px 0px" }} key={index}>
+          <Col
+            span={20}
+            style={{
+              cursor: item.value ? "default" : "pointer",
+              backgroundColor: item.value ? "none" : "white",
+              padding: item.value ? "" : "10px 20px",
+              borderRadius: item.value ? "none" : "5px",
+              border: item.value ? "none" : "1px solid #ECECEC",
+              boxShadow: item.value
+                ? "none"
+                : "0px 0px 10px rgba(0, 0, 0, 0.1)",
+            }}
+          >
+            {item.title}
+          </Col>
+          <Col span={4} style={{ textAlign: "right", fontWeight: "bold" }}>
+            {item.value}
+          </Col>
+        </Row>
+      ))}
       <Button onClick={() => handleLogOut()}>LogOut</Button>
     </div>
   );

@@ -3,6 +3,7 @@ import style from "./Avatar.module.scss";
 import { Avatar } from "antd";
 import { useNavigate } from "react-router-dom";
 import Menu from "../Menu";
+import { UserOutlined } from "@ant-design/icons";
 
 const Index = () => {
   const navigate = useNavigate();
@@ -46,17 +47,17 @@ const Index = () => {
           className={style.Avatar}
           shape="square"
           onClick={toggleMenu} // Bấm vào avatar sẽ bật/tắt menu
-        >
-          U
-        </Avatar>
+          icon={<UserOutlined />}
+        ></Avatar>
         {isMenuVisible && (
-          <div className={style.MenuBox} ref={menuRef} onClick={(e) => e.stopPropagation()}>
-            {/* Menu sẽ không bị đóng khi nhấp vào bên trong */}
-            <Menu/>
-            {/* Thêm các thẻ p hoặc phần tử khác bên trong menu */}
+          <div
+            className={style.MenuBox}
+            ref={menuRef}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <Menu />
           </div>
         )}
-        <p className={style.Point}>| 0 Point</p>
       </div>
     </div>
   );

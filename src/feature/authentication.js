@@ -6,7 +6,8 @@ const initialState = {
   accessToken: "",
   username: "",
   role: "",
-  accessTokenExpired: false
+  avatar: "",
+  accessTokenExpired: false,
 };
 
 const userSlice = createSlice({
@@ -25,6 +26,9 @@ const userSlice = createSlice({
     setUsername(state, action) {
       state.username = action.payload;
     },
+    setAvatar(state, action) {
+      state.avatar = action.payload;
+    },
     setRole(state, action) {
       state.role = action.payload;
     },
@@ -39,19 +43,21 @@ const userSlice = createSlice({
       state.isFirstLogin = false;
       state.accessToken = "";
       state.username = "";
+      state.avatar = "";
       state.role = [];
     },
   },
 });
 
 export const {
+  setAvatar,
   setIsLoggedIn,
   setFirstLogin,
   setAccessToken,
   setUsername,
   setRole,
   signout,
-  setAccessTokenExpired
+  setAccessTokenExpired,
 } = userSlice.actions;
 
 export default userSlice.reducer;
