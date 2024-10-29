@@ -6,7 +6,7 @@ import { useState } from "react";
 import { toast, ToastContainer } from "react-toastify";
 import endpoints from "../../../consts/endpoint.js";
 import { useLoginMutation } from "../../../services/hairsalon.service.js";
-import { setAccessToken, setRole, setUsername } from "../../../feature/authentication.js";
+import { setAccessToken, setFirstLogin, setIsLoggedIn, setRole, setUsername } from "../../../feature/authentication.js";
 import { useDispatch } from "react-redux";
 
 function Login() {
@@ -20,10 +20,12 @@ function Login() {
     try {
       
       const userData = await login(values).unwrap()
-        console.log(userData);
+      console.log(userData)
         dispatch(setAccessToken(userData?.access_token));
         dispatch(setRole(userData?.user?.role));
         dispatch(setUsername(userData?.user?.username));
+        dispatch(setIsLoggedIn(true));
+        dispatch(setFirstLogin(true));
         if (userData.user.role && userData.user.role.length > 0) {
           // Navigate based on role
           if (userData.user.role.includes("manager")) {

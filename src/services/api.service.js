@@ -69,7 +69,7 @@ const setUpInterceptor = (store) => {
   axiosInstance.interceptors.request.use(
     async (config) => {
       const appState = await store.getState();
-      const accessToken = await appState?.user?.accessToken;
+      const accessToken = await appState?.rootReducer?.user?.accessToken;
       if (accessToken) {
         config.headers["Authorization"] = `Bearer ${accessToken}`;
       }

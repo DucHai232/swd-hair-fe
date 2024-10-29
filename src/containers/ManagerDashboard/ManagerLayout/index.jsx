@@ -32,7 +32,6 @@ const ManagerLayout = () => {
   const [confirmModalOpen, setConfirmModalOpen] = useState(false);
   const dispatch = useDispatch()
   const { username, isFirstLogin } = useFirstLogin()
-  console.log(sidebarItem)
   const showModal = () => {
     setConfirmModalOpen(true);
   };
