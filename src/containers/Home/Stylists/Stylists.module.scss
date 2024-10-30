@@ -11,7 +11,8 @@
   padding: auto;
 }
 
-.cardBox{
+.cardBox {
+  justify-self: center;
   display: flex;
   flex-wrap: wrap;
   .cardBorder {
@@ -26,43 +27,42 @@
     border-radius: 24px;
     overflow: hidden;
     transition: all 0.48s cubic-bezier(0.23, 1, 0.32, 1);
-  
+
     &::before {
       content: "";
       position: absolute;
       height: 300%;
       width: 300%;
       border-radius: inherit;
-      background: linear-gradient(to right, #FFC300, #FFC300);
+      background: linear-gradient(to right, #ffc300, #ffc300);
       transform-origin: center;
       animation: moving 4.8s linear infinite paused;
       transition: all 0.88s cubic-bezier(0.23, 1, 0.32, 1);
     }
-  
+
     &:hover {
-      box-shadow:
-        0rem 6px 13px rgba(10, 60, 255, 0.1),
+      box-shadow: 0rem 6px 13px rgba(10, 60, 255, 0.1),
         0rem 24px 24px rgba(10, 60, 255, 0.09),
         0rem 55px 33px rgba(58, 73, 129, 0.05),
         0rem 97px 39px rgba(10, 60, 255, 0.01),
         0rem 152px 43px rgba(10, 60, 255, 0);
       scale: 1.05;
       color: #000000;
-      .content{
+      .content {
         margin: 420px 0px 0px 10px;
         width: 328px;
-        border: 2px dashed #FFC300;
+        border: 2px dashed #ffc300;
         background-color: rgb(44, 39, 39);
         .heading,
-          .para {
-            color: #e5ff00;
-          }
+        .para {
+          color: #e5ff00;
+        }
       }
       .button {
         transform: translate(-50%, -200%);
         opacity: 1;
       }
-  
+
       &::before {
         animation-play-state: running;
         z-index: -1;
@@ -70,7 +70,7 @@
       }
     }
   }
-  
+
   .card {
     display: flex;
     position: relative;
@@ -80,14 +80,14 @@
     overflow: hidden;
     background: #ffffff;
     transition: all 0.48s cubic-bezier(0.23, 1, 0.32, 1);
-    .content{
+    .content {
       position: absolute;
       color: black;
       z-index: 1;
       margin: 420px 0px 0px 10px;
       width: 328px;
       border-radius: 20px;
-      background-color: #FFC300;
+      background-color: #ffc300;
       .heading {
         font-weight: 500;
         text-align: center;
@@ -97,7 +97,7 @@
         z-index: 1;
         transition: all 0.48s cubic-bezier(0.23, 1, 0.32, 1);
       }
-    
+
       .para {
         text-align: center;
         padding: 0 10px 10px 10px;
@@ -107,12 +107,12 @@
         transition: all 0.48s cubic-bezier(0.23, 1, 0.32, 1);
       }
     }
-  
+
     .img {
       height: 500px;
       width: 100%;
       border-radius: 20px;
-      transition: all 0.48s cubic-bezier(0.23, 1, 0.32, 1);  
+      transition: all 0.48s cubic-bezier(0.23, 1, 0.32, 1);
       z-index: 1;
     }
 
@@ -122,7 +122,7 @@
       width: 60%;
       border-radius: 1rem;
       border: none;
-      background-color: #FFC300;
+      background-color: #ffc300;
       color: black;
       font-size: 1rem;
       padding: 0.5rem 1rem;
@@ -143,5 +143,3 @@
     transform: rotate(360deg);
   }
 }
-
-  

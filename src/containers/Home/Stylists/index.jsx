@@ -67,14 +67,22 @@ const Stylists = () => {
     <>
       <div>
         <p className={style.p}> OUR STYLISTS</p>
-        <div><SearchOutlined size={30} /></div>
-        
+        <div>
+          <SearchOutlined size={30} />
+        </div>
       </div>
 
       <Row>
-        <Col span={20} className={style.container}>
-          <div className={style.cardBox}>
-            {DataCard.map((data) => (
+        <div className={style.cardBox}>
+          {DataCard.map((data, index) => (
+            <Col
+              className={style.container}
+              key={index}
+              xs={24}
+              sm={24}
+              md={12}
+              lg={8}
+            >
               <div className={style.cardBorder}>
                 <div className={style.card}>
                   <img className={style.img} src={data.img1} />
@@ -85,9 +93,9 @@ const Stylists = () => {
                   <button className={style.button}>Booking Now!</button>
                 </div>
               </div>
-            ))}
-          </div>
-        </Col>
+            </Col>
+          ))}
+        </div>
       </Row>
     </>
   );

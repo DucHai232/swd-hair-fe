@@ -1,5 +1,5 @@
-import styles from './Stylist.module.scss'; // Import SCSS module
-import { Carousel } from 'antd';
+import styles from "./Stylist.module.scss"; // Import SCSS module
+import { Carousel } from "antd";
 
 // Sample stylist data
 const stylists = [
@@ -13,7 +13,8 @@ const stylists = [
     commissionRate: 0,
     totalSalry: 0,
     banned: false,
-    image: "https://www.1900hairsalon.com/wp-content/uploads/2023/11/uon-toc.jpg",
+    image:
+      "https://www.1900hairsalon.com/wp-content/uploads/2023/11/uon-toc.jpg",
     createdAt: "2024-09-15T03:41:53.661Z",
     updatedAt: "2024-09-17T03:23:17.538Z",
     favoriteStylists: ["66e7a7056d6b95b778156f1f"],
@@ -29,7 +30,8 @@ const stylists = [
     totalSalry: 0,
     favoriteStylists: [],
     banned: false,
-    image: "https://www.1900hairsalon.com/wp-content/uploads/2023/11/uon-toc.jpg",
+    image:
+      "https://www.1900hairsalon.com/wp-content/uploads/2023/11/uon-toc.jpg",
     createdAt: "2024-09-16T03:33:25.216Z",
     updatedAt: "2024-09-16T03:33:25.216Z",
   },
@@ -44,7 +46,8 @@ const stylists = [
     totalSalry: 0,
     favoriteStylists: [],
     banned: false,
-    image: "https://www.1900hairsalon.com/wp-content/uploads/2023/11/uon-toc.jpg",
+    image:
+      "https://www.1900hairsalon.com/wp-content/uploads/2023/11/uon-toc.jpg",
     createdAt: "2024-09-16T03:33:25.216Z",
     updatedAt: "2024-09-16T03:33:25.216Z",
   },
@@ -59,10 +62,11 @@ const stylists = [
     totalSalry: 0,
     favoriteStylists: [],
     banned: false,
-    image: "https://www.1900hairsalon.com/wp-content/uploads/2023/11/uon-toc.jpg",
+    image:
+      "https://www.1900hairsalon.com/wp-content/uploads/2023/11/uon-toc.jpg",
     createdAt: "2024-09-16T03:33:25.216Z",
     updatedAt: "2024-09-16T03:33:25.216Z",
-  }
+  },
 ];
 
 const StylistSlider = () => {
@@ -70,7 +74,7 @@ const StylistSlider = () => {
     dots: true,
     infinite: true,
     speed: 3000,
-    slidesToShow: 4, 
+    slidesToShow: 4,
     slidesToScroll: 1,
     autoplay: true,
     arrows: true,
@@ -80,10 +84,14 @@ const StylistSlider = () => {
   return (
     <div className={styles.stylistSlider}>
       <h2>Our Stylists</h2>
-      <Carousel {...settings} >
+      <Carousel {...settings}>
         {stylists.map((stylist) => (
           <div key={stylist._id} className={styles.stylistCard}>
-            <img src={stylist.image} alt={stylist.name} className={styles.stylistImage} />
+            <img
+              src={stylist.image}
+              alt={stylist.name}
+              className={styles.stylistImage}
+            />
             <h3>{stylist.name}</h3>
             <p>Email: {stylist.email}</p>
             <p>Username: {stylist.username}</p>
