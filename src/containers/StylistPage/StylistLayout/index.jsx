@@ -13,7 +13,6 @@ import { useFirstLogin } from '../../../hook/useFirstLogin';
 import { toast, ToastContainer } from 'react-toastify';
 import { setFirstLogin, signout } from '../../../feature/authentication';
 import AppointmentList from '../AppointmentList';
-import StylistCalendar from '../Calendar';
 import { setSidebarItem } from '../../../feature/stylist';
 
 const { Sider, Content } = Layout;
@@ -59,9 +58,6 @@ const StylistLayout = () => {
             <Menu.Item key="stylist-appointment" icon={<SolutionOutlined />} onClick={handleSidebarChange}>
               Appointment List
             </Menu.Item>
-            <Menu.Item key="stylist-calendar" icon={<CalendarOutlined />} onClick={handleSidebarChange}>
-              Stylist Calendar
-            </Menu.Item>
             <Menu.Item key="3" icon={<SettingOutlined />}>
               Settings
             </Menu.Item>
@@ -73,7 +69,6 @@ const StylistLayout = () => {
         <Layout>
           <Content style={{ padding: '24px' }}>
             {sidebarItem == 'stylist-appointment' && <AppointmentList />}
-            {sidebarItem == 'stylist-calendar' && <StylistCalendar />}
           </Content>
         </Layout>
       </Layout>

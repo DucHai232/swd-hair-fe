@@ -1,100 +1,48 @@
 import React from 'react';
 import { Badge, Calendar } from 'antd';
-const getListData = (value) => {
-  let listData = []; // Specify the type of listData
-  switch (value.date()) {
-    case 8:
-      listData = [
-        {
-          type: 'warning',
-          content: 'This is warning event.',
-        },
-        {
-          type: 'success',
-          content: 'This is usual event.',
-        },
-      ];
-      break;
-    case 10:
-      listData = [
-        {
-          type: 'warning',
-          content: 'This is warning event.',
-        },
-        {
-          type: 'success',
-          content: 'This is usual event.',
-        },
-        {
-          type: 'error',
-          content: 'This is error event.',
-        },
-      ];
-      break;
-    case 15:
-      listData = [
-        {
-          type: 'warning',
-          content: 'This is warning event',
-        },
-        {
-          type: 'success',
-          content: 'This is very long usual event......',
-        },
-        {
-          type: 'error',
-          content: 'This is error event 1.',
-        },
-        {
-          type: 'error',
-          content: 'This is error event 2.',
-        },
-        {
-          type: 'error',
-          content: 'This is error event 3.',
-        },
-        {
-          type: 'error',
-          content: 'This is error event 4.',
-        },
-      ];
-      break;
-    default:
-  }
-  return listData || [];
-};
-const getMonthData = (value) => {
-  if (value.month() === 8) {
-    return 1394;
-  }
-};
+import moment from 'moment';
+import { useScheduleStylistQuery } from "../../../services/hairsalon.service";
+
 const StylistCalendar = () => {
-  const monthCellRender = (value) => {
-    const num = getMonthData(value);
-    return num ? (
-      <div className="notes-month">
-        <section>{num}</section>
-        <span>Backlog number</span>
-      </div>
-    ) : null;
-  };
+  const { data: schedule, isLoading } = useScheduleStylistQuery();
+
   const dateCellRender = (value) => {
-    const listData = getListData(value);
+    // Filter schedule data for appointments matching the current date
+    const listData = schedule?.data.filter((item) => 
+      moment(item.appointmentDate).isSame(value, 'day')
+    );
+
     return (
       <ul className="events">
-        {listData.map((item) => (
-          <li key={item.content}>
-            <Badge status={item.type} text={item.content} />
+        {listData?.map((item) => (
+          <li key={item.appointmentName}>
+            <Badge
+              status={item.status === "Completed" ? "success" : "warning"}
+              text={`${item.appointmentName} at ${item.appointmentTime}`}
+            />
           </li>
         ))}
       </ul>
     );
   };
+
+  const monthCellRender = (value) => {
+    // Optionally implement month view logic here, if needed
+    return null;
+  };
+
   const cellRender = (current, info) => {
     if (info.type === 'date') return dateCellRender(current);
     if (info.type === 'month') return monthCellRender(current);
     return info.originNode;
   };
-  return <Calendar cellRender={cellRender} />;
+
+  return (
+    <Calendar 
+      cellRender={cellRender} 
+      loading={isLoading} 
+    />
+  );
 };
+
 export default StylistCalendar;

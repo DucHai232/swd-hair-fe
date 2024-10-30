@@ -138,6 +138,44 @@ const hairsalonApi = createApi({
         method: 'DELETE',
       }),
     }),
+    dataDashboard: builder.mutation({
+      query: (date) => ({
+        url: endpoints.GET_DASHBOARD,
+        method: 'POST',
+        data: date,
+      }),
+    }),
+    getAllStylist: builder.query({
+      query: () => ({
+        url: endpoints.VIEW_STYLISTS,
+        method: "GET",
+      }),
+    }),
+    getStylistVerify: builder.query({
+      query: () => ({
+        url: endpoints.GET_STYLIST_VERIFY,
+        method: "GET",
+      }),
+    }),
+    deleteSoftService: builder.mutation({
+      query: (serviceId) => ({
+        url: endpoints.DELETE_SOFT_SERVICE,
+        method: 'PUT',
+        data: serviceId,
+      }),
+    }),
+    getStaff: builder.query({
+      query: () => ({
+        url: endpoints.GET_STAFF,
+        method: 'GET',
+      }),
+    }),
+    scheduleStylist: builder.query({
+      query: () => ({
+        url: endpoints.SCHEDULE_STYLIST,
+        method: 'GET',
+      }),
+    }),
   }),
 });
 
@@ -162,6 +200,12 @@ export const {
   useViewVoucherQuery,
   useUpdateVoucherMutation,
   useDeleteVoucherMutation,
+  useDataDashboardMutation,
+  useGetAllStylistQuery,
+  useGetStylistVerifyQuery,
+  useDeleteSoftServiceMutation,
+  useGetStaffQuery,
+  useScheduleStylistQuery
 } = hairsalonApi;
 
 export default hairsalonApi;

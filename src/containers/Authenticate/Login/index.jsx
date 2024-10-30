@@ -2,7 +2,6 @@ import { Button, Form, Input, Spin } from "antd";
 import styles from "./Login.module.scss";
 import hair_salon_2 from "../../../assets/hair_salon_2.jpg";
 import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
 import { toast, ToastContainer } from "react-toastify";
 import endpoints from "../../../consts/endpoint.js";
 import { useLoginMutation } from "../../../services/hairsalon.service.js";

@@ -12,13 +12,18 @@ const endpoints = {
   CREATE_SERVICE: '/create-service',
   VIEW_SERVICE: '/view-service',
   UPDATE_SERVICE: '/update-service',
-  DELETE_SERVICE: '/delete-service',
+  DELETE_SOFT_SERVICE: '/delete-soft-service',
   UPDATE_USER: '/update-user',
   GET_USER_ROLE: '/get-user-role',
   CREATE_VOUCHER: '/create-voucher',
   VIEW_VOUCHER: '/view-voucher',
   UPDATE_VOUCHER: '/update-voucher',
   DELETE_VOUCHER: '/delete-voucher',
+  GET_DASHBOARD: '/get-dashboard',
+  GET_STYLIST_VERIFY: '/get-stylist-verify',
+  VIEW_STYLISTS: "/get-all-stylists",
+  GET_STAFF: "/get-staff",
+  SCHEDULE_STYLIST: "/schedule-stylist",
 }
 
 export default endpoints
