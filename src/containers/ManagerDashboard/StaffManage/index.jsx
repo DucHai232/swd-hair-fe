@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Table, Button, Space, Modal, Form, Input } from 'antd';
+import { useGetStaffQuery } from '../../../services/hairsalon.service';
 
 const staffData = [
   {
@@ -24,6 +25,7 @@ const staffData = [
 ];
 
 const StaffManage = () => {
+  const  {data: staffs}  = useGetStaffQuery()
   const [dataSource, setDataSource] = useState(staffData);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [editingStaff, setEditingStaff] = useState(null);
