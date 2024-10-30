@@ -1,19 +1,19 @@
-.container{
-    right: 0;
-    padding: 20px;
-    background-color: red;
-    width: 200px;
-    border-radius: 10px;
-    .nameBox{
-        display: flex;
-        .avatar{
-            color: #000;
-            margin-right: 10px;
-        }
-        .name{
-            margin: auto 0;
-            font-size: 16px;
-            color: #000;
-        }
+.container {
+  right: 0;
+  padding: 20px;
+  background-color: #ffc300;
+  width: 200px;
+  border-radius: 10px;
+  .nameBox {
+    display: flex;
+    .avatar {
+      color: #000;
+      margin-right: 10px;
     }
+    .name {
+      margin: auto 0;
+      font-size: 16px;
+      color: #000;
+    }
+  }
 }

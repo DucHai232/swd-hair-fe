@@ -5,11 +5,18 @@ import { Link, useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import endpoints from "../../../consts/endpoint.js";
 import { useLoginMutation } from "../../../services/hairsalon.service.js";
-import { setAccessToken, setFirstLogin, setIsLoggedIn, setRole, setUsername } from "../../../feature/authentication.js";
+import {
+  setAccessToken,
+  setAvatar,
+  setFirstLogin,
+  setIsLoggedIn,
+  setRole,
+  setUsername,
+} from "../../../feature/authentication.js";
 import { useDispatch } from "react-redux";
 
 function Login() {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const [login, { isLoading }] = useLoginMutation();
   const navigate = useNavigate();
   const [form] = Form.useForm(); // Ant Design form instance
@@ -17,34 +24,29 @@ function Login() {
   // Handle login after form validation
   const handleLogin = async (values) => {
     try {
-      
-      const userData = await login(values).unwrap()
-      console.log(userData)
-        dispatch(setAccessToken(userData?.access_token));
-        dispatch(setRole(userData?.user?.role));
-        dispatch(setUsername(userData?.user?.username));
-        dispatch(setIsLoggedIn(true));
-        dispatch(setFirstLogin(true));
-        if (userData.user.role && userData.user.role.length > 0) {
-          // Navigate based on role
-          if (userData.user.role.includes("manager")) {
-            navigate("/manager-dashboard");
-          } else if (userData.user.role.includes("staff")) {
-            navigate("/staff-dashboard");
-          } else if (userData.user.role.includes("stylist")) {
-            navigate("/stylist-appointment");
-          } else if (userData.user.role.includes("admin")) {
-            navigate("/admin-dashboard");
-          } else if (userData.user.role.includes("customer")) {
-            navigate("/");
-          }
-        } else {
-          throw new Error("Invalid user role.");
+      const userData = await login(values).unwrap();
+      dispatch(setAccessToken(userData?.access_token));
+      dispatch(setRole(userData?.user?.role));
+      dispatch(setUsername(userData?.user?.username));
+      dispatch(setAvatar(userData?.user?.avatar));
+      dispatch(setIsLoggedIn(true));
+      dispatch(setFirstLogin(true));
+      if (userData.user.role && userData.user.role.length > 0) {
+        // Navigate based on role
+        if (userData.user.role.includes("manager")) {
+          navigate("/manager-dashboard");
+        } else if (userData.user.role.includes("staff")) {
+          navigate("/staff-dashboard");
+        } else if (userData.user.role.includes("stylist")) {
+          navigate("/stylist-appointment");
+        } else if (userData.user.role.includes("admin")) {
+          navigate("/admin-dashboard");
+        } else if (userData.user.role.includes("customer")) {
+          navigate("/");
         }
-
-
-
-      
+      } else {
+        throw new Error("Invalid user role.");
+      }
     } catch (err) {
       toast.error(err?.data?.message || "Login failed. Please try again.");
     }
@@ -83,7 +85,9 @@ function Login() {
                 <Form.Item
                   name="username"
                   label="Username"
-                  rules={[{ required: true, message: "Please input your username!" }]}
+                  rules={[
+                    { required: true, message: "Please input your username!" },
+                  ]}
                 >
                   <Input placeholder="Enter your username" />
                 </Form.Item>
@@ -91,7 +95,9 @@ function Login() {
                 <Form.Item
                   name="password"
                   label="Password"
-                  rules={[{ required: true, message: "Please input your password!" }]}
+                  rules={[
+                    { required: true, message: "Please input your password!" },
+                  ]}
                 >
                   <Input.Password placeholder="Enter your password" />
                 </Form.Item>
