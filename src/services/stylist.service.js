@@ -11,3 +11,13 @@ export const getStylists = async () => {
     throw error;
   }
 };
+
+export const getAllStylists = async () => {
+  try {
+    const response = await axiosInstance.get(`/get-all-stylists`);
+    return response.data;
+  } catch (error) {
+    console.log("Error in service/auth: ", error);
+    throw error;
+  }
+};

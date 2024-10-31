@@ -1,166 +1,152 @@
-// AppointmentPerDayManage.jsx
-
-import { useState } from "react";
-import {
-  Table,
-  Tag,
-  Space,
-  Button,
-  Modal,
-  Form,
-  Input,
-  DatePicker,
-  Select,
-  message,
-} from "antd";
+import { useState, useEffect } from "react";
+import { Table, Tag, DatePicker, Button, message, Space } from "antd";
 import moment from "moment";
 import styles from "./AppointmentPerDayManage.module.scss";
-
-const { Option } = Select;
-
-// Dummy Data
-const initialData = [
-  {
-    key: "1",
-    customer: "John Doe",
-    stylist: "Anna Smith",
-    service: "Haircut",
-    appointmentDate: "2024-10-05",
-    visitCount: 3,
-    status: "Completed",
-    createdAt: "2024-09-30",
-  },
-  {
-    key: "2",
-    customer: "Jane Roe",
-    stylist: "Tom Brown",
-    service: "Hair Coloring",
-    appointmentDate: "2024-10-05",
-    visitCount: 1,
-    status: "Pending",
-    createdAt: "2024-09-28",
-  },
-];
+import {
+  getAppointments,
+  approveAppointment,
+  rejectAppointment,
+  completeAppointment,
+} from "../../../services/appointment.service";
 
 const AppointmentPerDayManage = () => {
-  const [data, setData] = useState(initialData);
-  const [isModalVisible, setIsModalVisible] = useState(false);
-  const [editingRecord, setEditingRecord] = useState(null);
-  const [form] = Form.useForm();
+  const [data, setData] = useState([]);
   const [selectedDate, setSelectedDate] = useState(moment());
+  const [noData, setNoData] = useState(false); // State to track if there is no data
 
-  // Show modal to add/edit appointment
-  const showModal = (record = null) => {
-    setIsModalVisible(true);
-    setEditingRecord(record);
-    if (record) {
-      form.setFieldsValue({
-        ...record,
-        appointmentDate: moment(record.appointmentDate),
-      });
-    } else {
-      form.resetFields();
+  // Fetch appointments for the selected date from the API
+  const fetchAppointments = async (date) => {
+    try {
+      const response = await getAppointments(); // Assuming this gets all appointments
+      const appointments = response.data;
+
+      // Log the fetched appointments
+      console.log("Fetched Appointments:", appointments);
+
+      // Filter appointments for the selected date
+      const formattedAppointments = appointments
+        .filter((appointment) => {
+          const appointmentDate = moment(appointment.appointmentDate);
+          console.log(
+            "Checking appointment date:",
+            appointmentDate.format("YYYY-MM-DD"),
+            "against selected date:",
+            date.format("YYYY-MM-DD")
+          );
+          return appointmentDate.isSame(date, "day");
+        })
+        .map((appointment) => ({
+          key: appointment._id,
+          customer: appointment.customerName,
+          stylist: appointment.stylistId,
+          service: appointment.services[0]?.name || "N/A",
+          appointmentDate: moment(appointment.appointmentDate).format(
+            "YYYY-MM-DD"
+          ),
+          appointmentTime: appointment.appointmentTime,
+          visitCount: appointment.visitCount,
+          status: appointment.status,
+          createdAt: moment(appointment.createdAt).format("YYYY-MM-DD"),
+          totalPrice: appointment.totalPrice,
+          isPayment: appointment.isPayment,
+        }));
+
+      setData(formattedAppointments);
+
+      // Check if there are no appointments for the selected date
+      setNoData(formattedAppointments.length === 0);
+    } catch (error) {
+      message.error("Failed to fetch appointments: " + error.message);
+      console.error("Error fetching appointments:", error);
     }
   };
 
-  // Close modal
-  const handleCancel = () => {
-    setIsModalVisible(false);
-    setEditingRecord(null);
-  };
+  useEffect(() => {
+    fetchAppointments(selectedDate); // Fetch appointments for the initially selected date
+  }, [selectedDate]);
 
-  // Handle form when submitting
-  const handleOk = () => {
-    form.validateFields().then((values) => {
-      const newData = {
-        ...values,
-        appointmentDate: moment(values.appointmentDate).format("YYYY-MM-DD"),
-      };
-      if (editingRecord) {
-        setData((prevData) =>
-          prevData.map((item) =>
-            item.key === editingRecord.key ? { ...item, ...newData } : item
-          )
-        );
-        message.success("Appointment updated successfully!");
-      } else {
-        const newAppointment = {
-          key: (data.length + 1).toString(),
-          ...newData,
-          createdAt: moment().format("YYYY-MM-DD"),
-        };
-        setData([...data, newAppointment]);
-        message.success("Appointment created successfully!");
+  // Render status tag
+  const renderStatus = (status) => (
+    <Tag
+      color={
+        status === "Completed"
+          ? "green"
+          : status === "Approved"
+          ? "orange"
+          : status === "Pending"
+          ? "blue"
+          : status === "Rejected"
+          ? "red"
+          : "gray"
       }
-      handleCancel();
-    });
-  };
-
-  // Delete appointment
-  const handleDelete = (key) => {
-    setData(data.filter((item) => item.key !== key));
-    message.success("Appointment deleted successfully!");
-  };
-
-  // Filter appointments by selected date
-  const filteredData = data.filter((item) =>
-    moment(item.appointmentDate).isSame(selectedDate, "day")
+    >
+      {status}
+    </Tag>
   );
 
+  // Handle status updates
+  const handleStatusUpdate = async (appointmentId, action) => {
+    try {
+      if (action === "approve") {
+        await approveAppointment(appointmentId);
+        message.success("Appointment approved successfully!");
+      } else if (action === "reject") {
+        await rejectAppointment(appointmentId);
+        message.success("Appointment rejected successfully!");
+      } else if (action === "complete") {
+        await completeAppointment(appointmentId);
+        message.success("Appointment marked as completed successfully!");
+      }
+      fetchAppointments(selectedDate); // Reload appointments for the selected date
+    } catch (error) {
+      message.error("Failed to update appointment status: " + error.message);
+      console.error("Error updating appointment status:", error);
+    }
+  };
+
   const columns = [
-    {
-      title: "Customer Name",
-      dataIndex: "customer",
-      key: "customer",
-    },
-    {
-      title: "Stylist Name",
-      dataIndex: "stylist",
-      key: "stylist",
-    },
-    {
-      title: "Service",
-      dataIndex: "service",
-      key: "service",
-    },
+    { title: "Customer Name", dataIndex: "customer", key: "customer" },
+    { title: "Stylist ID", dataIndex: "stylist", key: "stylist" },
+    { title: "Service", dataIndex: "service", key: "service" },
     {
       title: "Appointment Date",
       dataIndex: "appointmentDate",
       key: "appointmentDate",
-      render: (text) => moment(text).format("YYYY-MM-DD"),
     },
     {
-      title: "Visit Count",
-      dataIndex: "visitCount",
-      key: "visitCount",
+      title: "Appointment Time",
+      dataIndex: "appointmentTime",
+      key: "appointmentTime",
     },
+    { title: "Visit Count", dataIndex: "visitCount", key: "visitCount" },
     {
       title: "Status",
       dataIndex: "status",
       key: "status",
-      render: (status) => {
-        let color =
-          status === "Completed"
-            ? "green"
-            : status === "Pending"
-            ? "blue"
-            : "red";
-        return <Tag color={color}>{status}</Tag>;
-      },
+      render: renderStatus,
     },
-    {
-      title: "Created At",
-      dataIndex: "createdAt",
-      key: "createdAt",
-      render: (text) => moment(text).format("YYYY-MM-DD"),
-    },
+    { title: "Created At", dataIndex: "createdAt", key: "createdAt" },
+    { title: "Total Price", dataIndex: "totalPrice", key: "totalPrice" },
     {
       title: "Action",
       key: "action",
       render: (record) => (
         <Space size="middle">
-          <a onClick={() => showModal(record)}>Edit</a>
-          <a onClick={() => handleDelete(record.key)}>Delete</a>
+          {record.status === "Pending" && (
+            <>
+              <a onClick={() => handleStatusUpdate(record.key, "approve")}>
+                Approve
+              </a>
+              <a onClick={() => handleStatusUpdate(record.key, "reject")}>
+                Reject
+              </a>
+            </>
+          )}
+          {record.status === "Approved" && (
+            <a onClick={() => handleStatusUpdate(record.key, "complete")}>
+              Complete
+            </a>
+          )}
         </Space>
       ),
     },
@@ -172,79 +158,26 @@ const AppointmentPerDayManage = () => {
       <DatePicker
         value={selectedDate}
         onChange={(date) => {
-          setSelectedDate(date);
-          // Reset modal when changing date
-          setEditingRecord(null);
-          form.resetFields();
+          if (date) {
+            setSelectedDate(date);
+            fetchAppointments(date); // Fetch appointments for the new selected date
+          }
         }}
         style={{ marginBottom: 20 }}
       />
-      <Button type="primary" onClick={() => showModal()}>
-        Create Appointment
-      </Button>
-      <Table
-        columns={columns}
-        dataSource={filteredData}
-        style={{ marginTop: 20 }}
-      />
-
-      <Modal
-        title={editingRecord ? "Edit Appointment" : "Create Appointment"}
-        visible={isModalVisible}
-        onOk={handleOk}
-        onCancel={handleCancel}
+      <Button
+        type="primary"
+        onClick={() => fetchAppointments(selectedDate)} // Fetch appointments for the selected date
       >
-        <Form form={form} layout="vertical">
-          <Form.Item
-            name="customer"
-            label="Customer Name"
-            rules={[{ required: true, message: "Please input customer name!" }]}
-          >
-            <Input />
-          </Form.Item>
-          <Form.Item
-            name="stylist"
-            label="Stylist Name"
-            rules={[{ required: true, message: "Please input stylist name!" }]}
-          >
-            <Input />
-          </Form.Item>
-          <Form.Item
-            name="service"
-            label="Service"
-            rules={[{ required: true, message: "Please input service!" }]}
-          >
-            <Input />
-          </Form.Item>
-          <Form.Item
-            name="appointmentDate"
-            label="Appointment Date"
-            rules={[
-              { required: true, message: "Please select appointment date!" },
-            ]}
-          >
-            <DatePicker style={{ width: "100%" }} />
-          </Form.Item>
-          <Form.Item
-            name="visitCount"
-            label="Visit Count"
-            rules={[{ required: true, message: "Please input visit count!" }]}
-          >
-            <Input type="number" />
-          </Form.Item>
-          <Form.Item
-            name="status"
-            label="Status"
-            rules={[{ required: true, message: "Please select status!" }]}
-          >
-            <Select>
-              <Option value="Pending">Pending</Option>
-              <Option value="Completed">Completed</Option>
-              <Option value="Cancelled">Cancelled</Option>
-            </Select>
-          </Form.Item>
-        </Form>
-      </Modal>
+        Reload
+      </Button>
+      {noData ? (
+        <div style={{ marginTop: 20, color: "red" }}>
+          No data available for this date.
+        </div>
+      ) : (
+        <Table columns={columns} dataSource={data} style={{ marginTop: 20 }} />
+      )}
     </div>
   );
 };

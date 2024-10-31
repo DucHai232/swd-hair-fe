@@ -23,7 +23,9 @@ const { Sider, Content } = Layout;
 
 const StaffLayout = () => {
   const navigate = useNavigate();
-  const sidebarItem = useSelector((state) => state.rootReducer.staff.sidebarItem);
+  const sidebarItem = useSelector(
+    (state) => state.rootReducer.staff.sidebarItem
+  );
   const [collapsed, setCollapsed] = useState(false);
   const [confirmModalOpen, setConfirmModalOpen] = useState(false);
   const dispatch = useDispatch();
@@ -65,15 +67,20 @@ const StaffLayout = () => {
           <div className={styles.logo}>
             {collapsed ? "Salon" : "Hair Salon"}
           </div>
-          <Menu theme="dark" defaultSelectedKeys={sidebarItem} selectedKeys={[sidebarItem]} mode="inline">
+          <Menu
+            theme="dark"
+            defaultSelectedKeys={sidebarItem}
+            selectedKeys={[sidebarItem]}
+            mode="inline"
+          >
             <Menu.SubMenu
               key="appointments"
               icon={<CalendarOutlined />}
               title="Appointments"
               onClick={handleSidebarChange}
             >
-              <Menu.Item key="appointments">All Appointments</Menu.Item>
-              <Menu.Item key="appointmentsPerDay">Appointment in Day</Menu.Item>
+              <Menu.Item key="appointments.all">All Appointments</Menu.Item>
+              <Menu.Item key="appointments.date">Appointment in Day</Menu.Item>
             </Menu.SubMenu>
 
             <Menu.Item
@@ -104,10 +111,8 @@ const StaffLayout = () => {
         <Layout>
           <Content style={{ padding: "24px" }}>
             {sidebarItem === "details" && <SDashboardDetail />}
-            {sidebarItem === "appointments" && <AppointmentManage />}
-            {sidebarItem === "appointmentsPerDay" && (
-              <AppointmentPerDayManage />
-            )}
+            {sidebarItem === "appointments.all" && <AppointmentManage />}
+            {sidebarItem === "appointments.date" && <AppointmentPerDayManage />}
             {sidebarItem === "feedback" && <FeedbackManage />}
             {sidebarItem === "stylist" && <StylistManage />}
           </Content>

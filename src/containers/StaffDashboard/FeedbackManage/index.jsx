@@ -1,32 +1,11 @@
 import { useState } from "react";
 import { Table, Space, Button, Modal, Form, Input, Rate, message } from "antd";
 import moment from "moment";
+import axios from "axios"; // Import axios for API calls
 import styles from "./FeedbackManage.module.scss";
 
-// Dum Data
-const initialData = [
-  {
-    key: "1",
-    customer: "John Doe",
-    stylist: "Anna Smith",
-    service: "Haircut",
-    rating: 4,
-    feedback: "Great service!",
-    createdAt: "2024-09-30",
-  },
-  {
-    key: "2",
-    customer: "Jane Roe",
-    stylist: "Tom Brown",
-    service: "Hair Coloring",
-    rating: 5,
-    feedback: "Loved the color!",
-    createdAt: "2024-09-28",
-  },
-];
-
 const FeedbackManage = () => {
-  const [data, setData] = useState(initialData);
+  const [data, setData] = useState([]); // Xóa dữ liệu giả mạo
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [editingRecord, setEditingRecord] = useState(null);
   const [form] = Form.useForm();
@@ -49,27 +28,36 @@ const FeedbackManage = () => {
   };
 
   // Handle form when submitting
-  const handleOk = () => {
-    form.validateFields().then((values) => {
-      const newData = { ...values };
-      if (editingRecord) {
-        setData((prevData) =>
-          prevData.map((item) =>
-            item.key === editingRecord.key ? { ...item, ...newData } : item
-          )
-        );
-        message.success("Feedback updated successfully!");
-      } else {
-        const newFeedback = {
-          key: (data.length + 1).toString(),
-          ...newData,
-          createdAt: moment().format("YYYY-MM-DD"),
-        };
-        setData([...data, newFeedback]);
+  const handleOk = async () => {
+    try {
+      const values = await form.validateFields();
+      const newFeedback = {
+        stylistId: values.stylistId,
+        appointmentId: values.appointmentId,
+        rating: values.rating,
+        comment: values.feedback,
+      };
+
+      // Gửi dữ liệu đến API để tạo feedback
+      const response = await axios.post("/create-feedback", newFeedback);
+      if (response.status === 201) {
+        // Thêm phản hồi mới vào dữ liệu
+        setData([
+          ...data,
+          {
+            ...newFeedback,
+            key: response.data.id,
+            createdAt: moment().format("YYYY-MM-DD"),
+          },
+        ]); // Giả sử API trả về ID của feedback
         message.success("Feedback created successfully!");
       }
+
       handleCancel();
-    });
+    } catch (error) {
+      message.error("Failed to create feedback: " + error.message);
+      console.error("Error creating feedback:", error);
+    }
   };
 
   // Delete feedback
@@ -102,8 +90,8 @@ const FeedbackManage = () => {
     },
     {
       title: "Feedback",
-      dataIndex: "feedback",
-      key: "feedback",
+      dataIndex: "comment", // Cập nhật tên trường
+      key: "comment", // Cập nhật tên trường
     },
     {
       title: "Created At",
@@ -138,23 +126,18 @@ const FeedbackManage = () => {
       >
         <Form form={form} layout="vertical">
           <Form.Item
-            name="customer"
-            label="Customer Name"
-            rules={[{ required: true, message: "Please input customer name!" }]}
+            name="stylistId"
+            label="Stylist ID" // Thêm trường Stylist ID
+            rules={[{ required: true, message: "Please input stylist ID!" }]}
           >
             <Input />
           </Form.Item>
           <Form.Item
-            name="stylist"
-            label="Stylist Name"
-            rules={[{ required: true, message: "Please input stylist name!" }]}
-          >
-            <Input />
-          </Form.Item>
-          <Form.Item
-            name="service"
-            label="Service"
-            rules={[{ required: true, message: "Please input service!" }]}
+            name="appointmentId"
+            label="Appointment ID" // Thêm trường Appointment ID
+            rules={[
+              { required: true, message: "Please input appointment ID!" },
+            ]}
           >
             <Input />
           </Form.Item>
