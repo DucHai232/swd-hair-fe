@@ -1,35 +1,41 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Table, Space, Button, Modal, Form, Input, message } from "antd";
 import styles from "./StylistManage.module.scss";
 import moment from "moment";
-
-// Dummy Data
-const initialData = [
-  {
-    key: "1",
-    name: "Anna Smith",
-    specialization: "Haircut",
-    phone: "123-456-7890",
-    experience: "5 years",
-    createdAt: "2024-09-30",
-  },
-  {
-    key: "2",
-    name: "Tom Brown",
-    specialization: "Hair Coloring",
-    phone: "098-765-4321",
-    experience: "3 years",
-    createdAt: "2024-09-28",
-  },
-];
+import { getAllStylists } from "../../../services/stylist.service";
 
 const StylistManage = () => {
-  const [data, setData] = useState(initialData);
+  const [data, setData] = useState([]);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [editingRecord, setEditingRecord] = useState(null);
   const [form] = Form.useForm();
 
-  // Show modal to add/edit stylist
+  useEffect(() => {
+    const fetchStylists = async () => {
+      try {
+        const response = await getAllStylists();
+        const stylists = response.data;
+        const formattedStylists = stylists.map((stylist) => ({
+          key: stylist.stylistId,
+          name: stylist.name,
+          email: stylist.email,
+          avatar: stylist.avatar,
+          phone: stylist.phone,
+          numberAppointments: stylist.numberAppointments,
+          numberExperiences: stylist.numberExperiences,
+          expertise: stylist.expertise,
+          createdAt: moment(stylist.createdAt).format("YYYY-MM-DD"),
+        }));
+        setData(formattedStylists);
+      } catch (error) {
+        message.error("Failed to fetch stylists: " + error.message);
+        console.error("Error fetching stylists:", error);
+      }
+    };
+
+    fetchStylists();
+  }, []);
+
   const showModal = (record = null) => {
     setIsModalVisible(true);
     setEditingRecord(record);
@@ -40,13 +46,11 @@ const StylistManage = () => {
     }
   };
 
-  // Close modal
   const handleCancel = () => {
     setIsModalVisible(false);
     setEditingRecord(null);
   };
 
-  // Handle form submission
   const handleOk = () => {
     form.validateFields().then((values) => {
       const newData = { ...values };
@@ -70,7 +74,6 @@ const StylistManage = () => {
     });
   };
 
-  // Delete stylist
   const handleDelete = (key) => {
     setData(data.filter((item) => item.key !== key));
     message.success("Stylist deleted successfully!");
@@ -83,9 +86,9 @@ const StylistManage = () => {
       key: "name",
     },
     {
-      title: "Specialization",
-      dataIndex: "specialization",
-      key: "specialization",
+      title: "Email",
+      dataIndex: "email",
+      key: "email",
     },
     {
       title: "Phone Number",
@@ -93,15 +96,24 @@ const StylistManage = () => {
       key: "phone",
     },
     {
+      title: "Expertise",
+      dataIndex: "expertise",
+      key: "expertise",
+    },
+    {
       title: "Experience",
-      dataIndex: "experience",
-      key: "experience",
+      dataIndex: "numberExperiences",
+      key: "numberExperiences",
+    },
+    {
+      title: "Number of Appointments",
+      dataIndex: "numberAppointments",
+      key: "numberAppointments",
     },
     {
       title: "Created At",
       dataIndex: "createdAt",
       key: "createdAt",
-      render: (text) => moment(text).format("YYYY-MM-DD"),
     },
     {
       title: "Action",
@@ -137,11 +149,9 @@ const StylistManage = () => {
             <Input />
           </Form.Item>
           <Form.Item
-            name="specialization"
-            label="Specialization"
-            rules={[
-              { required: true, message: "Please input specialization!" },
-            ]}
+            name="email"
+            label="Email"
+            rules={[{ required: true, message: "Please input stylist email!" }]}
           >
             <Input />
           </Form.Item>
@@ -153,11 +163,30 @@ const StylistManage = () => {
             <Input />
           </Form.Item>
           <Form.Item
-            name="experience"
+            name="expertise"
+            label="Expertise"
+            rules={[{ required: true, message: "Please input expertise!" }]}
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item
+            name="numberExperiences"
             label="Experience"
             rules={[{ required: true, message: "Please input experience!" }]}
           >
             <Input />
+          </Form.Item>
+          <Form.Item
+            name="numberAppointments"
+            label="Number of Appointments"
+            rules={[
+              {
+                required: true,
+                message: "Please input number of appointments!",
+              },
+            ]}
+          >
+            <Input type="number" />
           </Form.Item>
         </Form>
       </Modal>
