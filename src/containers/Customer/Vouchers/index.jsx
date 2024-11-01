@@ -76,7 +76,7 @@ const Hero = ({ point }) => {
             <div className={styles.pointsSection}>
               <p>
                 Your Points:{" "}
-                {Number(point).toLocaleString("vi-VN", {
+                {Number(point).aleString("vi-VN", {
                   style: "currency",
                   currency: "VND",
                 })}

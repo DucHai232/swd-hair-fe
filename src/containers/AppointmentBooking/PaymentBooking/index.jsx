@@ -48,8 +48,11 @@ const PaymentBooking = ({ responseAppointment, setIsPayment }) => {
   };
   const handleAddVoucher = (voucher) => {
     if (voucher.discountType == "percent") {
-      let moneyAfterDiscount =
-        (responseAppointment.totalPrice * voucher.discountPercent) / 100;
+      let moneyAfterDiscount = Math.min(
+        (responseAppointment.totalPrice * voucher.discountPercent) / 100,
+        voucher.maxPriceDiscount
+      );
+
       setPriceDiscount(moneyAfterDiscount);
     } else {
       setPriceDiscount(voucher.discountMoney);
@@ -280,7 +283,6 @@ const PaymentBooking = ({ responseAppointment, setIsPayment }) => {
             </>
           )}
 
-          {/* Phần còn lại */}
           {(priceDiscount !== 0 || discountCoupon !== 0) && (
             <Row>
               <Col className={styles.flexCenter} span={12}>
@@ -356,10 +358,10 @@ const PaymentBooking = ({ responseAppointment, setIsPayment }) => {
               header={
                 <>
                   {" "}
-                  <Col span={24} style={{ fontSize: "16px" }}>
+                  <Col span={24}>
                     Thông tin khách hàng: {responseAppointment.customerName}
                   </Col>
-                  <Col span={24} style={{ fontSize: "16px" }}>
+                  <Col span={24}>
                     Số điện thoại: {responseAppointment.customerPhone}
                   </Col>
                 </>

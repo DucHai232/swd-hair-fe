@@ -48,7 +48,7 @@ const ResultPayment = () => {
             <Button type="primary" key="console" onClick={() => navigate("/")}>
               Về trang chủ
             </Button>,
-            <Button key="buy" onClick={() => navigate("/schedule-appointment")}>
+            <Button key="buy" onClick={() => navigate("/list-appointment")}>
               Xem lịch hẹn
             </Button>,
           ]}
@@ -62,7 +62,7 @@ const ResultPayment = () => {
             <Button
               type="primary"
               key="retry"
-              onClick={() => navigate("/list-payment")}
+              onClick={() => navigate("/list-appointment")}
             >
               Thanh toán lại
             </Button>,
@@ -77,13 +77,31 @@ const ResultPayment = () => {
             <Button
               type="primary"
               key="retry"
-              onClick={() => navigate("/list-payment")}
+              onClick={() => navigate("/list-appointment")}
             >
               Thanh toán lại
             </Button>,
           ]}
         />
-      ) : null}
+      ) : (
+        <Result
+          status="warning"
+          title="Thanh toán chưa được thực hiện"
+          subTitle="Bạn đã hủy thanh toán."
+          extra={[
+            <Button key="console" onClick={() => navigate("/")}>
+              Về trang chủ
+            </Button>,
+            <Button
+              type="primary"
+              key="retry"
+              onClick={() => navigate("/list-appointment")}
+            >
+              Thanh toán lại
+            </Button>,
+          ]}
+        />
+      )}
     </Spin>
   );
 };

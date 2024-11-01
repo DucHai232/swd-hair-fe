@@ -24,12 +24,14 @@ const Menu = () => {
       value: 100,
     },
     {
-      title: "Setting Profile",
+      title: "Thông tin cá nhân",
       value: "",
+      url: "/info-profile",
     },
     {
-      title: "Apointment History",
+      title: "Lịch hẹn",
       value: "",
+      url: "/list-appointment",
     },
   ];
   return (
@@ -57,6 +59,7 @@ const Menu = () => {
                 ? "none"
                 : "0px 0px 10px rgba(0, 0, 0, 0.1)",
             }}
+            onClick={() => navigate(item.url || "/")}
           >
             {item.title}
           </Col>
