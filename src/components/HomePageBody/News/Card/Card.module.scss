@@ -1,46 +1,46 @@
 .card {
-    box-sizing: border-box;
-    margin:auto;
-    width: 95%;
-    height: 95%;
-    background: rgba(217, 217, 217, 0.58);
-    border: 2px solid white;
-    box-shadow: 12px 17px 51px rgba(0, 0, 0, 0.22);
-    border-radius: 17px;
-    cursor: pointer;
-    transition: all 0.5s;
-    display: flex;
-    align-items: flex-start;
-    justify-content: flex-start;
-    user-select: none;
-    font-weight: bolder;
-  
-    &:hover {
-      border: 5px solid #FFC300;
-      transform: scale(1.05);
-    }
-  
-    &:active {
-      transform: scale(0.95) rotateZ(1.7deg);
-    }
+  box-sizing: border-box;
+  margin: auto;
+  width: 95%;
+  height: 95%;
+  background: rgba(217, 217, 217, 0.58);
+  border: 2px solid white;
+  box-shadow: 12px 17px 51px rgba(0, 0, 0, 0.22);
+  border-radius: 17px;
+  cursor: pointer;
+  transition: all 0.5s;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  user-select: none;
+  font-weight: bolder;
+
+  &:hover {
+    border: 5px solid #ffc300;
+    transform: scale(1.05);
+  }
+
+  &:active {
+    transform: scale(0.95) rotateZ(1.7deg);
+  }
 }
-   .img{
-    justify-self: start;
-    height: 100%;
-    width: 50%;
-    border-radius: 17px;
+.img {
+  justify-self: start;
+  height: 100%;
+  width: 50%;
+  border-radius: 17px;
 }
-   .content{
-    display: flex;
-    flex-flow: row wrap;
-    margin: 20px;
-    .h3{
-        top: 0;
-        font-size: 50px;
-    }
-    .p{
-        font-size: 20px;
-        color: black;
-        font-weight: 100;
-    }
+.content {
+  display: flex;
+  flex-flow: row wrap;
+  margin: 20px;
+  .h3 {
+    top: 0;
+    font-size: 50px;
+  }
+  .p {
+    font-size: 10px;
+    color: black;
+    font-weight: 100;
+  }
 }

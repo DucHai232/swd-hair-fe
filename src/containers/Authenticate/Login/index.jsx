@@ -25,6 +25,7 @@ function Login() {
   const handleLogin = async (values) => {
     try {
       const userData = await login(values).unwrap();
+      localStorage.setItem("user", JSON.stringify(userData?.user));
       dispatch(setAccessToken(userData?.access_token));
       dispatch(setRole(userData?.user?.role));
       dispatch(setUsername(userData?.user?.username));
@@ -69,7 +70,7 @@ function Login() {
               <div className={styles.titleContainer}>
                 <h1 className={styles.title}>Welcome</h1>
                 <span className={styles.subtitle}>
-                  Enter with style, leave with confidence!
+                  Bạn đi vào với phong cách, đi ra với sự tự tin!
                 </span>
               </div>
 
@@ -84,22 +85,23 @@ function Login() {
               >
                 <Form.Item
                   name="username"
-                  label="Username"
+                  label="Tên đăng nhập"
                   rules={[
-                    { required: true, message: "Please input your username!" },
+                    { required: true, message: "Vui lòng nhập tên đăng nhập!" },
                   ]}
+                  style={{ marginBottom: "-10px" }}
                 >
-                  <Input placeholder="Enter your username" />
+                  <Input placeholder="Tên đăng nhập..." />
                 </Form.Item>
 
                 <Form.Item
                   name="password"
-                  label="Password"
+                  label="Mật khẩu"
                   rules={[
-                    { required: true, message: "Please input your password!" },
+                    { required: true, message: "Vui lòng nhập mật khẩu!" },
                   ]}
                 >
-                  <Input.Password placeholder="Enter your password" />
+                  <Input.Password placeholder="Mật khẩu..." />
                 </Form.Item>
 
                 <Button
@@ -112,14 +114,14 @@ function Login() {
 
                 <div className={styles.forgotPasswordContainer}>
                   <Link to={endpoints.VERIFY_OTP_CHANGE_PASSWORD}>
-                    Forgot Password?
+                    Quên mật khẩu?
                   </Link>
                 </div>
 
                 <span className={styles.signupContainer}>
-                  Don&apos;t have an account yet?{" "}
+                  Bạn không có tài khoản?{" "}
                   <strong>
-                    <Link to={endpoints.REGISTER}>Sign up here!</Link>
+                    <Link to={endpoints.REGISTER}>Đăng ký ngay!</Link>
                   </strong>
                 </span>
               </Form>

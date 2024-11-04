@@ -44,7 +44,7 @@ function Register() {
           <div className={styles.titleContainer}>
             <h1 className={styles.title}>Sign Up</h1>
             <span className={styles.subtitle}>
-              Join us for the ultimate style experience!
+              Hãy cùng chúng tôi trải nghiệm phong cách đẳng cấp nhất!
             </span>
           </div>
 
@@ -58,11 +58,14 @@ function Register() {
           >
             <Form.Item
               name="username"
-              label="Username"
-              rules={[{ required: true, message: "Please input your username!" }]}
+              label="Tên đăng nhập"
+              rules={[
+                { required: true, message: "Vui lòng nhập tên đăng nhập!" },
+              ]}
+              style={{ marginBottom: "-10px" }}
             >
               <Input
-                placeholder="Enter your username"
+                placeholder="Tên đăng nhập..."
                 name="username"
                 onChange={handleChange}
               />
@@ -71,10 +74,11 @@ function Register() {
             <Form.Item
               name="email"
               label="Email"
-              rules={[{ required: true, message: "Please input your email!" }]}
+              rules={[{ required: true, message: "Vui lòng nhập email!" }]}
+              style={{ marginBottom: "-10px" }}
             >
               <Input
-                placeholder="Enter your email"
+                placeholder="Email..."
                 name="email"
                 onChange={handleChange}
               />
@@ -82,11 +86,12 @@ function Register() {
 
             <Form.Item
               name="password"
-              label="Password"
-              rules={[{ required: true, message: "Please input your password!" }]}
+              label="Mật khẩu"
+              rules={[{ required: true, message: "Vui lòng nhập mật khẩu!" }]}
+              style={{ marginBottom: "-10px" }}
             >
               <Input.Password
-                placeholder="Enter your password"
+                placeholder="Mật khẩu..."
                 name="password"
                 onChange={handleChange}
               />
@@ -94,11 +99,11 @@ function Register() {
 
             <Form.Item
               name="confirmPassword"
-              label="Confirm Password"
-              rules={[{ required: true, message: "Please confirm your password!" }]}
+              label="Xác nhận mật khẩu"
+              rules={[{ required: true, message: "Xác nhận lại mật khẩu!" }]}
             >
               <Input.Password
-                placeholder="Confirm your password"
+                placeholder="Xác nhận mật khẩu..."
                 name="confirmPassword"
                 onChange={handleChange}
               />
@@ -108,15 +113,15 @@ function Register() {
               type="primary"
               htmlType="submit"
               className={styles.fullWidthButton}
-              loading={isLoading} // Show loading spinner when the request is in progress
+              loading={isLoading}
             >
               Register
             </Button>
 
             <span className={styles.signupContainer}>
-              Already have an account?{" "}
+              Bạn đã có tài khoản?{" "}
               <strong>
-                <Link to="/login">Login here!</Link>
+                <Link to="/login">Đăng nhập ngay!</Link>
               </strong>
             </span>
           </Form>

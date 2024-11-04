@@ -45,6 +45,7 @@ const userSlice = createSlice({
       state.username = "";
       state.avatar = "";
       state.role = [];
+      localStorage.removeItem("user");
     },
   },
 });
