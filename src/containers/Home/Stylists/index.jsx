@@ -1,80 +1,34 @@
-import React from "react";
+import { useEffect, useState } from "react";
 import style from "./Stylists.module.scss";
-import cutHair from "../../../share/assets/BoyHair.jpg";
 import { Row, Col } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
+import { getStylists } from "../../../services/stylist.service";
+import { useNavigate } from "react-router-dom";
 
 const Stylists = () => {
-  const DataCard = [
-    {
-      img1: cutHair,
-      img2: cutHair,
-      img3: cutHair,
-      title: "Haircut Services",
-      time: "50 minutes",
-      decription: "Includes haircut and post-cut styling services",
-    },
-    {
-      img1: cutHair,
-      img2: cutHair,
-      img3: cutHair,
-      title: "Haircut Services",
-      time: "50 minutes",
-      decription: "Includes haircut and post-cut styling services",
-    },
-    {
-      img1: cutHair,
-      img2: cutHair,
-      img3: cutHair,
-      title: "Haircut Services",
-      time: "50 minutes",
-      decription: "Includes haircut and post-cut styling services",
-    },
-    {
-      img1: cutHair,
-      img2: cutHair,
-      img3: cutHair,
-      title: "Haircut Services",
-      time: "50 minutes",
-      decription: "Includes haircut and post-cut styling services",
-    },
-    {
-      img1: cutHair,
-      img2: cutHair,
-      img3: cutHair,
-      title: "Haircut Services",
-      time: "50 minutes",
-      decription: "Includes haircut and post-cut styling services",
-    },
-    {
-      img1: cutHair,
-      img2: cutHair,
-      img3: cutHair,
-      title: "Haircut Services",
-      time: "50 minutes",
-      decription: "Includes haircut and post-cut styling services",
-    },
-    {
-      img1: cutHair,
-      img2: cutHair,
-      img3: cutHair,
-      title: "Haircut Services",
-      time: "50 minutes",
-      decription: "Includes haircut and post-cut styling services",
-    },
-  ];
+  const [stylists, setStylists] = useState([]);
+  const navigate = useNavigate();
+
+  const loadStylists = async () => {
+    try {
+      const response = await getStylists();
+      setStylists(response.data.users);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    loadStylists();
+  }, []);
   return (
     <>
       <div>
         <p className={style.p}> OUR STYLISTS</p>
-        <div>
-          <SearchOutlined size={30} />
-        </div>
       </div>
 
       <Row>
         <div className={style.cardBox}>
-          {DataCard.map((data, index) => (
+          {stylists.map((data, index) => (
             <Col
               className={style.container}
               key={index}
@@ -85,12 +39,17 @@ const Stylists = () => {
             >
               <div className={style.cardBorder}>
                 <div className={style.card}>
-                  <img className={style.img} src={data.img1} />
+                  <img className={style.img} src={data.avatar} />
                   <div className={style.content}>
-                    <p className={style.heading}>{data.title}</p>
-                    <p className={style.para}>99 Lê Văn Việt, HCM</p>
+                    <p className={style.heading}>{data.name}</p>
+                    <p className={style.para}>Chuyên môn: {data.Expertise}</p>
                   </div>
-                  <button className={style.button}>Booking Now!</button>
+                  <button
+                    className={style.button}
+                    onClick={() => navigate("/appointment-booking")}
+                  >
+                    Booking Now!
+                  </button>
                 </div>
               </div>
             </Col>

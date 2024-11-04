@@ -1,4 +1,3 @@
-import React from "react";
 import style from "./Menu.module.scss";
 import { Avatar, Button, Col, Row } from "antd";
 import BoyHair from "../../../../share/assets/BoyHair.jpg";
@@ -15,10 +14,6 @@ const Menu = () => {
     dispatch(signout());
   };
   const dataProfile = [
-    {
-      title: "Account balance",
-      value: 1000,
-    },
     {
       title: "Point",
       value: 100,
