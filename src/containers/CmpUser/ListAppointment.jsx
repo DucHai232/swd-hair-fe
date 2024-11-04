@@ -1,15 +1,37 @@
-import { Button, Col, Input, message, Row, Spin, Table, Tag } from "antd";
+import {
+  Button,
+  Col,
+  Input,
+  message,
+  Modal,
+  Row,
+  Spin,
+  Table,
+  Tag,
+} from "antd";
 import { Content } from "antd/es/layout/layout";
 import { useEffect, useState } from "react";
 import { LeftOutlined } from "@ant-design/icons";
 import "./CmpUser.scss";
 import { useNavigate } from "react-router-dom";
-import { getAppointmentByUser } from "../../services/appointment.service";
+import {
+  createFeedback,
+  getAppointmentByUser,
+  rejectAppointment,
+} from "../../services/appointment.service";
 import { convertToDateString } from "../../utils/util";
 import { paymentService } from "../../services/payment.service";
+import dayjs from "dayjs";
+import { FaStar } from "react-icons/fa6";
 const ListAppointment = () => {
   const [appointments, setAppointments] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [feedbackModal, setFeedbackModal] = useState(false);
+  const [formFeedback, setFormFeedback] = useState({
+    rating: 0,
+    comment: "",
+  });
+  const [feedbackData, setFeedbackData] = useState(null);
   const navigate = useNavigate();
   const loadAppointments = async () => {
     try {
@@ -35,6 +57,7 @@ const ListAppointment = () => {
           pinCode: item.pinCode,
           totalPrice: item.totalPrice,
           stylistName: item.stylistId.name,
+          stylistId: item.stylistId._id,
           customerName: item.customerName,
           nameBook: item.customerId.name,
           status: item.status,
@@ -84,6 +107,56 @@ const ListAppointment = () => {
       );
     }
   };
+  const handleRejectOrder = (booking) => {
+    Modal.confirm({
+      title: "Xác nhận",
+      content: "Bạn muốn hủy lịch hẹn này?",
+      okText: "Có",
+      cancelText: "Không",
+      onOk: async () => {
+        const appointmentDateTimeStr = `${booking.appointmentDate} ${booking.appointmentTime}`;
+        const appointmentDateTime = dayjs(
+          appointmentDateTimeStr,
+          "YYYY-MM-DD HH:mm"
+        );
+        const currentTime = dayjs();
+        if (appointmentDateTime.diff(currentTime, "hour") < 1) {
+          message.error("Hủy lịch hẹn trước 1 giờ.");
+          return;
+        }
+        try {
+          await rejectAppointment(booking.appointmentId);
+          await loadAppointments();
+          message.success("Hủy lịch hẹn thành công");
+        } catch (error) {
+          message.error(
+            error.response?.data?.message || "Có lỗi xảy ra, vui lòng thử lại"
+          );
+        }
+      },
+      onCancel: () => {
+        console.log("Người dùng đã hủy bỏ việc áp dụng voucher");
+      },
+    });
+  };
+  const handleFeedback = async () => {
+    console.log(feedbackData);
+    const payload = {
+      stylistId: feedbackData.stylistId,
+      appointmentId: feedbackData.appointmentId,
+      rating: formFeedback.rating,
+      comment: formFeedback.comment,
+    };
+    try {
+      await createFeedback(payload);
+      setFeedbackModal(false);
+      message.success("Cảm ơn bạn đã lựa chọn chúng tôi");
+    } catch (error) {
+      message.error(
+        error.response?.data?.message || "Có lỗi xảy ra, vui lòng thử lại"
+      );
+    }
+  };
   const columns = [
     {
       title: "Mã lịch hẹn",
@@ -103,22 +176,15 @@ const ListAppointment = () => {
       key: "customerName",
       render: (text) => <a>{text}</a>,
     },
-
-    {
-      title: "Số điện thoại",
-      dataIndex: "customerPhone",
-      key: "customerPhone",
-      render: (text) => <a>{text}</a>,
-    },
-    {
-      title: "Thời gian đặt",
-      dataIndex: "appointmentTime",
-      key: "appointmentTime",
-    },
     {
       title: "Ngày thực hiện",
       dataIndex: "appointmentDate",
       key: "appointmentDate",
+      render: (_, data) => (
+        <span>
+          {data.appointmentDate} {data.appointmentTime}
+        </span>
+      ),
     },
     {
       title: "Nhân viên thực hiện",
@@ -177,7 +243,52 @@ const ListAppointment = () => {
           {data.isPayment ? (
             <Tag color="green">Đã thanh toán</Tag>
           ) : (
-            <Button onClick={() => handlePaymentOrder(data)}>Thanh toán</Button>
+            data.status !== "Rejected" && (
+              <Button onClick={() => handlePaymentOrder(data)}>
+                Thanh toán
+              </Button>
+            )
+          )}
+        </>
+      ),
+    },
+    {
+      title: "Hủy lịch hẹn",
+      key: "book",
+      dataIndex: "book",
+      render: (_, data) => (
+        <>
+          {data.status !== "Approved" &&
+            data.status !== "Rejected" &&
+            data.status !== "Completed" && (
+              <Button
+                variant="filled"
+                danger
+                onClick={() => handleRejectOrder(data)}
+              >
+                Hủy lịch
+              </Button>
+            )}
+        </>
+      ),
+    },
+    {
+      title: "Đánh giá dịch vụ",
+      key: "feedback",
+      dataIndex: "feedback",
+      render: (_, data) => (
+        <>
+          {data.status === "Completed" && (
+            <Button
+              variant="filled"
+              style={{ backgroundColor: "#4CAF50", color: "white" }}
+              onClick={() => {
+                setFeedbackModal(true);
+                setFeedbackData(data);
+              }}
+            >
+              Đánh giá
+            </Button>
           )}
         </>
       ),
@@ -221,6 +332,44 @@ const ListAppointment = () => {
           />
         </Row>
       </Spin>
+      <Modal
+        title="Đánh giá dịch vụ"
+        visible={feedbackModal}
+        onCancel={() => setFeedbackModal(false)}
+        footer={null}
+      >
+        <p>Chào bạn, vui lòng đánh giá dịch vụ của bạn tại đây:</p>
+        <Input.TextArea
+          placeholder="Bạn mô tả chất lượng dịch vụ của bạn"
+          rows={4}
+          onChange={(e) =>
+            setFormFeedback((prev) => ({ ...prev, comment: e.target.value }))
+          }
+        />
+        <p>Đánh giá chất lượng dịch vụ:</p>
+        <Row>
+          {[1, 2, 3, 4, 5].map((item) => (
+            <Col key={item}>
+              <Button
+                onClick={() =>
+                  setFormFeedback((prev) => ({ ...prev, rating: item }))
+                }
+              >
+                <FaStar
+                  color={item <= formFeedback.rating ? "orange" : "black"}
+                />
+              </Button>
+            </Col>
+          ))}
+        </Row>
+        <Button
+          type="primary"
+          style={{ marginTop: "12px" }}
+          onClick={() => handleFeedback()}
+        >
+          Gửi
+        </Button>
+      </Modal>
     </Content>
   );
 };
