@@ -105,10 +105,12 @@ const PaymentBooking = ({ responseAppointment, setIsPayment }) => {
         appointmentId: responseAppointment._id,
       };
       const response = await paymentService.createPayment(newPayment);
-      await paymentService.addVoucherAppointment({
-        appointmentId: responseAppointment._id,
-        voucherId: addedVoucher,
-      });
+      if (addedVoucher) {
+        await paymentService.addVoucherAppointment({
+          appointmentId: responseAppointment._id,
+          voucherId: addedVoucher,
+        });
+      }
       const paymentUrl = response?.result?.order_url;
       window.location.href = paymentUrl;
     } catch (error) {
