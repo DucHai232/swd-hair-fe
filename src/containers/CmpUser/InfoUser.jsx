@@ -20,11 +20,11 @@ const InfoUser = () => {
     newPassword: "",
   });
   const [formData, setFormData] = useState({
-    email: user.email,
-    username: user.username,
-    name: user.name,
-    phone: user.phone,
-    address: user.address,
+    email: user?.email,
+    username: user?.username,
+    name: user?.name,
+    phone: user?.phone,
+    address: user?.address,
   });
   const navigate = useNavigate();
   const dataInfo = [
@@ -80,9 +80,9 @@ const InfoUser = () => {
     try {
       if (
         !selectedFile &&
-        formData.name === user.name &&
-        formData.phone === user.phone &&
-        formData.address === user.address
+        formData.name === user?.name &&
+        formData.phone === user?.phone &&
+        formData.address === user?.address
       ) {
         message.warning("Không có thông tin thay đổi!");
         return;
@@ -127,7 +127,7 @@ const InfoUser = () => {
       content: "Bạn có chắc chắn muốn đổi mật khẩu?",
       async onOk() {
         try {
-          await sendOTP({ email: user.email });
+          await sendOTP({ email: user?.email });
           message.success("Mã OTP đã được gửi tới email của bạn!");
           setIsOpenOtp(true);
         } catch (error) {
@@ -144,7 +144,7 @@ const InfoUser = () => {
 
   const handleSubmitChange = async () => {
     const payload = {
-      email: user.email,
+      email: user?.email,
       otp: formChangePassword.otp,
       newPassword: formChangePassword.newPassword,
     };
