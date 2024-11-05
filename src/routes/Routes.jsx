@@ -45,7 +45,7 @@ const AppRoutes = () => {
             <PrivateRoleBasedRoute
               path="/appointment-booking"
               Component={AppointmentBooking}
-              requiredRoles={["stylist", "customer", "manager", "admin"]}
+              requiredRoles={["customer"]}
             />
           }
         />
