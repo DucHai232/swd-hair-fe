@@ -3,7 +3,7 @@ import { axiosInstance } from "./api.service";
 export const getStylists = async () => {
   try {
     const response = await axiosInstance.post(`/get-user-role`, {
-      roleSymbol: "ST",
+      roleSymbols: ["ST"],
     });
     return response;
   } catch (error) {

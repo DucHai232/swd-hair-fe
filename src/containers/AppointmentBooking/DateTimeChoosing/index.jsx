@@ -44,13 +44,13 @@ const DateTimeChoosing = ({ formBooking, setFormBooking }) => {
       (slot) => slot.date === selectedDay
     )[0]?.timeSlots;
     setTimeSlots(getTimesSlot);
-    console.log(timeSlots)
+    console.log(timeSlots);
   };
   useEffect(() => {
-    const loadStylistSchedule = async() => {
+    const loadStylistSchedule = async () => {
       await loadScheduleOfStylist();
       await loadTimeSlots();
-    }
+    };
     loadStylistSchedule();
   }, [selectedDay, selectedStylist]);
   return (
@@ -72,31 +72,22 @@ const DateTimeChoosing = ({ formBooking, setFormBooking }) => {
         ))}
       </Select>
 
-      <Swiper
-        slidesPerView={6}
-        navigation
-        pagination={{ clickable: true }}
-        className={styles.swiperContainer}
-      >
-        <Row>
-          {timeSlots?.map((hour, index) => (
-            <Col key={index} span={4}>
-              <Button
-                key={index}
-                className={`${styles.timeItem} ${
-                  selectedSlot === hour.time
-                    ? styles.selected
-                    : styles.available
-                }`}
-                disabled={!hour.available}
-                onClick={() => hour.available && handleSlotSelect(hour.time)}
-              >
-                {hour.time}
-              </Button>
-            </Col>
-          ))}
-        </Row>
-      </Swiper>
+      <Row>
+        {timeSlots?.map((hour, index) => (
+          <Col key={index} span={4}>
+            <Button
+              key={index}
+              className={`${styles.timeItem} ${
+                selectedSlot === hour.time ? styles.selected : styles.available
+              }`}
+              disabled={!hour.available}
+              onClick={() => hour.available && handleSlotSelect(hour.time)}
+            >
+              {hour.time}
+            </Button>
+          </Col>
+        ))}
+      </Row>
     </div>
   );
 };

@@ -31,7 +31,13 @@ const StylistChoosing = ({ formBooking, setFormBooking }) => {
           <Col span={6} key={stylist._id}>
             <Card
               hoverable
-              cover={<img alt={stylist.name} src={stylist?.avatar} />}
+              cover={
+                <img
+                  alt={stylist.name}
+                  src={stylist?.avatar}
+                  style={{ height: "300px" }}
+                />
+              }
               onClick={() => handleSelectStylist(stylist)}
               className={`${
                 formBooking.selectedStylist?._id === stylist._id

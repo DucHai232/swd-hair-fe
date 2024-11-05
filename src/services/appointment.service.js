@@ -51,3 +51,13 @@ export const completeAppointment = async (appointmentId) => {
     throw error;
   }
 };
+
+export const getAppointmentByUser = async () => {
+  const response = await axiosInstance.get(`/get-appointment-user`);
+  return response.data?.data;
+};
+
+export const createFeedback = async (payload) => {
+  const response = await axiosInstance.post(`/create-feedback`, payload);
+  return response.data;
+};

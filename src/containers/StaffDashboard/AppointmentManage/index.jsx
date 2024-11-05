@@ -1,7 +1,19 @@
 import { useState, useEffect } from "react";
-import { Table, Tag, Space, message } from "antd";
+import {
+  Table,
+  Tag,
+  Space,
+  message,
+  Button,
+  Modal,
+  Row,
+  Col,
+  Avatar,
+} from "antd";
+import { UserOutlined } from "@ant-design/icons";
 import moment from "moment";
 import styles from "./AppointmentManage.module.scss";
+import { FaStar } from "react-icons/fa6";
 import {
   getAppointments,
   approveAppointment,
@@ -11,7 +23,8 @@ import {
 
 const AppointmentManage = () => {
   const [data, setData] = useState([]);
-
+  const [openViewFeedback, setOpenViewFeedback] = useState(false);
+  const [feedback, setFeedback] = useState([]);
   // Fetch appointments from API
   const fetchAppointments = async () => {
     try {
@@ -32,6 +45,7 @@ const AppointmentManage = () => {
         createdAt: moment(appointment.createdAt).format("YYYY-MM-DD"),
         totalPrice: appointment.totalPrice,
         isPayment: appointment.isPayment,
+        feedbacks: appointment.feedbacks,
       }));
 
       setData(formattedAppointments);
@@ -119,7 +133,6 @@ const AppointmentManage = () => {
 
   const columns = [
     { title: "Customer Name", dataIndex: "customer", key: "customer" },
-    { title: "Stylist ID", dataIndex: "stylist", key: "stylist" },
     { title: "Service", dataIndex: "service", key: "service" },
     {
       title: "Appointment Date",
@@ -141,12 +154,63 @@ const AppointmentManage = () => {
     { title: "Created At", dataIndex: "createdAt", key: "createdAt" },
     { title: "Total Price", dataIndex: "totalPrice", key: "totalPrice" },
     { title: "Action", key: "action", render: renderActions },
+    {
+      title: "Xem đánh giá",
+      key: "viewReview",
+      render: (_, data) => (
+        <Button
+          onClick={() => {
+            setOpenViewFeedback(true);
+            setFeedback(data.feedbacks);
+          }}
+        >
+          Xem đánh giá
+        </Button>
+      ),
+    },
   ];
 
   return (
-    <div className={styles.appointmentTable}>
-      <Table columns={columns} dataSource={data} style={{ marginTop: 20 }} />
-    </div>
+    <>
+      <div className={styles.appointmentTable}>
+        <Table columns={columns} dataSource={data} style={{ marginTop: 20 }} />
+      </div>
+      <Modal
+        open={openViewFeedback}
+        onCancel={() => setOpenViewFeedback(false)}
+        width={"50%"}
+        footer={null}
+      >
+        <h1>Xem đánh giá</h1>
+        {feedback.length === 0 && <p>Chưa có đánh giá nào</p>}
+        {feedback?.map((item, index) => {
+          return (
+            <Row
+              key={index}
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Col span={2}>
+                <Avatar size="large" icon={<UserOutlined />} />
+              </Col>
+              <Col span={22}>
+                <p>
+                  {Array(item?.rating)
+                    .fill()
+                    .map((_, index) => (
+                      <FaStar key={index} color="orange" />
+                    ))}
+                </p>
+                <p>{item.comment}</p>
+              </Col>
+            </Row>
+          );
+        })}
+      </Modal>
+    </>
   );
 };
 

@@ -1,75 +1,22 @@
+import { useEffect, useState } from "react";
 import styles from "./Stylist.module.scss"; // Import SCSS module
-import { Carousel } from "antd";
-
-// Sample stylist data
-const stylists = [
-  {
-    _id: "66e657812287bd197205262a",
-    username: "sl1",
-    name: "Stylist 1",
-    email: "sl1@gmail.com",
-    role: ["stylist"],
-    salary: 0,
-    commissionRate: 0,
-    totalSalry: 0,
-    banned: false,
-    image:
-      "https://www.1900hairsalon.com/wp-content/uploads/2023/11/uon-toc.jpg",
-    createdAt: "2024-09-15T03:41:53.661Z",
-    updatedAt: "2024-09-17T03:23:17.538Z",
-    favoriteStylists: ["66e7a7056d6b95b778156f1f"],
-  },
-  {
-    _id: "66e7a7056d6b95b778156f1f",
-    username: "st2",
-    name: "Stylist 2",
-    email: "st2@gmail.com",
-    role: ["stylist"],
-    salary: 0,
-    commissionRate: 0,
-    totalSalry: 0,
-    favoriteStylists: [],
-    banned: false,
-    image:
-      "https://www.1900hairsalon.com/wp-content/uploads/2023/11/uon-toc.jpg",
-    createdAt: "2024-09-16T03:33:25.216Z",
-    updatedAt: "2024-09-16T03:33:25.216Z",
-  },
-  {
-    _id: "66e7a7056d6b95b778156f1f",
-    username: "st2",
-    name: "Stylist 2",
-    email: "st2@gmail.com",
-    role: ["stylist"],
-    salary: 0,
-    commissionRate: 0,
-    totalSalry: 0,
-    favoriteStylists: [],
-    banned: false,
-    image:
-      "https://www.1900hairsalon.com/wp-content/uploads/2023/11/uon-toc.jpg",
-    createdAt: "2024-09-16T03:33:25.216Z",
-    updatedAt: "2024-09-16T03:33:25.216Z",
-  },
-  {
-    _id: "66e7a7056d6b95b778156f1f",
-    username: "st2",
-    name: "Stylist 2",
-    email: "st2@gmail.com",
-    role: ["stylist"],
-    salary: 0,
-    commissionRate: 0,
-    totalSalry: 0,
-    favoriteStylists: [],
-    banned: false,
-    image:
-      "https://www.1900hairsalon.com/wp-content/uploads/2023/11/uon-toc.jpg",
-    createdAt: "2024-09-16T03:33:25.216Z",
-    updatedAt: "2024-09-16T03:33:25.216Z",
-  },
-];
+import { Carousel, Spin } from "antd";
+import { getAllStylists } from "../../../services/stylist.service";
 
 const StylistSlider = () => {
+  const [stylists, setStylists] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const loadStylists = async () => {
+    try {
+      setIsLoading(true);
+      const response = await getAllStylists();
+      setStylists(response.data);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
   const settings = {
     dots: true,
     infinite: true,
@@ -81,24 +28,31 @@ const StylistSlider = () => {
     dotPosition: "bottom",
   };
 
+  useEffect(() => {
+    loadStylists();
+  }, []);
+
   return (
     <div className={styles.stylistSlider}>
       <h2>Our Stylists</h2>
-      <Carousel {...settings}>
-        {stylists.map((stylist) => (
-          <div key={stylist._id} className={styles.stylistCard}>
-            <img
-              src={stylist.image}
-              alt={stylist.name}
-              className={styles.stylistImage}
-            />
-            <h3>{stylist.name}</h3>
-            <p>Email: {stylist.email}</p>
-            <p>Username: {stylist.username}</p>
-            <p>Banned: {stylist.banned ? "Yes" : "No"}</p>
-          </div>
-        ))}
-      </Carousel>
+      <Spin spinning={isLoading}>
+        <Carousel {...settings}>
+          {stylists.map((stylist) => (
+            <div key={stylist._id} className={styles.stylistCard}>
+              <img
+                src={stylist.avatar}
+                alt={stylist.name}
+                className={styles.stylistImage}
+              />
+              <h3>{stylist.name}</h3>
+              <p>Email: {stylist.email}</p>
+              <p>Dịch vụ đã làm: {stylist.numberAppointments}</p>
+              <p>Kinh nghiệm: {stylist.numberExperiences}</p>
+              <p>Chuyên môn: {stylist.expertise}</p>
+            </div>
+          ))}
+        </Carousel>
+      </Spin>
     </div>
   );
 };

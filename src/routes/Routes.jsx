@@ -14,6 +14,9 @@ import ManagerLayout from "../containers/ManagerDashboard/ManagerLayout";
 import StylistLayout from "../containers/StylistPage/StylistLayout";
 import StaffLayout from "../containers/StaffDashboard/StaffLayout";
 import Vouchers from "../containers/Customer/Vouchers";
+import ResultPayment from "../containers/ResultPayment/ResultPayment";
+import ListAppointment from "../containers/CmpUser/ListAppointment";
+import InfoUser from "../containers/CmpUser/InfoUser";
 //luồng ruoting chính sẽ là component này
 const AppRoutes = () => {
   return (
@@ -50,6 +53,9 @@ const AppRoutes = () => {
           }
         />
       </Route>
+      <Route path="/result-payment" element={<ResultPayment />} />
+      <Route path="/list-appointment" element={<ListAppointment />} />
+      <Route path="/info-profile" element={<InfoUser />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
       <Route path="/forgot-password" element={<ForgotPassword />} />

@@ -1,49 +1,48 @@
-import React from "react";
+import { useEffect, useState } from "react";
 import style from "./Services.module.scss";
-import cutHair from "../../../share/assets/HairCutService.jpg";
-import advanceService from "../../../share/assets/AdvanceService.jpg";
-import ortherService from "../../../share/assets/OrderService.jpg";
-import { Row, Col } from "antd";
+import { Row, Col, Spin } from "antd";
+import { getServices } from "../../../services/service.service";
 
 const Services = () => {
-  const DataCard = [
-    {
-      img: cutHair,
-      title: "Haircut Services",
-      decription: "Includes haircut and post-cut styling services",
-    },
-    {
-      img: advanceService,
-      title: " Advanced Hair Styling Services",
-      decription:
-        "Our services include perming, straightening, coloring, hair restoration, styling, hair treatment, extensions, and bleaching.",
-    },
-    {
-      img: ortherService,
-      title: "Other Services",
-      decription:
-        "We also offer services such as ear cleaning, facial hair shaving, relaxing massages, and beard shaving.",
-    },
-  ];
+  const [services, setServices] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const loadServices = async () => {
+    try {
+      setIsLoading(true);
+      const response = await getServices();
+      setServices(response.data.services.slice(0, 3));
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+  useEffect(() => {
+    loadServices();
+  }, []);
   return (
     <>
       <p className={style.p}>SERVICES</p>
-      <Row className={style.container}>
-        <Col span={3} />
-        {DataCard.map((data) => (
-          <Col span={6}>
-            <div className={style.card}>
-              <div className={style.cardDetail}>
-                <img className={style.img} src={data.img} />
-                <p className={style.p1}>{data.title}</p>
-                <p className={style.p2}>{data.decription}</p>
+      <Spin spinning={isLoading}>
+        <Row className={style.container}>
+          <Col span={3} />
+          {services.map((data, index) => (
+            <Col span={6} key={index}>
+              <div className={style.card}>
+                <div className={style.cardDetail}>
+                  <img className={style.img} src={data.image} />
+                  <p className={style.p1}>{data.name}</p>
+                  <p className={style.p2}>
+                    ĐIỂM TÍCH LŨY: {data.loyaltyPoints}
+                  </p>
+                </div>
+                <button className={style.button}>More info</button>
               </div>
-              <button className={style.button}>More info</button>
-            </div>
-          </Col>
-        ))}
-        <Col span={3} />
-      </Row>
+            </Col>
+          ))}
+          <Col span={3} />
+        </Row>
+      </Spin>
     </>
   );
 };

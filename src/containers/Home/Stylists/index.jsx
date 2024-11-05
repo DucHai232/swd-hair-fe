@@ -1,102 +1,65 @@
-import React from "react";
+import { useEffect, useState } from "react";
 import style from "./Stylists.module.scss";
-import cutHair from "../../../share/assets/BoyHair.jpg";
-import { Row, Col } from "antd";
-import { SearchOutlined } from "@ant-design/icons";
+import { Row, Col, Spin } from "antd";
+import { getStylists } from "../../../services/stylist.service";
+import { useNavigate } from "react-router-dom";
 
 const Stylists = () => {
-  const DataCard = [
-    {
-      img1: cutHair,
-      img2: cutHair,
-      img3: cutHair,
-      title: "Haircut Services",
-      time: "50 minutes",
-      decription: "Includes haircut and post-cut styling services",
-    },
-    {
-      img1: cutHair,
-      img2: cutHair,
-      img3: cutHair,
-      title: "Haircut Services",
-      time: "50 minutes",
-      decription: "Includes haircut and post-cut styling services",
-    },
-    {
-      img1: cutHair,
-      img2: cutHair,
-      img3: cutHair,
-      title: "Haircut Services",
-      time: "50 minutes",
-      decription: "Includes haircut and post-cut styling services",
-    },
-    {
-      img1: cutHair,
-      img2: cutHair,
-      img3: cutHair,
-      title: "Haircut Services",
-      time: "50 minutes",
-      decription: "Includes haircut and post-cut styling services",
-    },
-    {
-      img1: cutHair,
-      img2: cutHair,
-      img3: cutHair,
-      title: "Haircut Services",
-      time: "50 minutes",
-      decription: "Includes haircut and post-cut styling services",
-    },
-    {
-      img1: cutHair,
-      img2: cutHair,
-      img3: cutHair,
-      title: "Haircut Services",
-      time: "50 minutes",
-      decription: "Includes haircut and post-cut styling services",
-    },
-    {
-      img1: cutHair,
-      img2: cutHair,
-      img3: cutHair,
-      title: "Haircut Services",
-      time: "50 minutes",
-      decription: "Includes haircut and post-cut styling services",
-    },
-  ];
+  const [stylists, setStylists] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
+
+  const loadStylists = async () => {
+    try {
+      setIsLoading(true);
+      const response = await getStylists();
+      setStylists(response.data.users);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+  useEffect(() => {
+    loadStylists();
+  }, []);
   return (
     <>
       <div>
         <p className={style.p}> OUR STYLISTS</p>
-        <div>
-          <SearchOutlined size={30} />
-        </div>
       </div>
-
-      <Row>
-        <div className={style.cardBox}>
-          {DataCard.map((data, index) => (
-            <Col
-              className={style.container}
-              key={index}
-              xs={24}
-              sm={24}
-              md={12}
-              lg={8}
-            >
-              <div className={style.cardBorder}>
-                <div className={style.card}>
-                  <img className={style.img} src={data.img1} />
-                  <div className={style.content}>
-                    <p className={style.heading}>{data.title}</p>
-                    <p className={style.para}>99 Lê Văn Việt, HCM</p>
+      <Spin spinning={isLoading}>
+        <Row>
+          <div className={style.cardBox}>
+            {stylists.map((data, index) => (
+              <Col
+                className={style.container}
+                key={index}
+                xs={24}
+                sm={24}
+                md={12}
+                lg={8}
+              >
+                <div className={style.cardBorder}>
+                  <div className={style.card}>
+                    <img className={style.img} src={data.avatar} />
+                    <div className={style.content}>
+                      <p className={style.heading}>{data.name}</p>
+                      <p className={style.para}>Chuyên môn: {data.Expertise}</p>
+                    </div>
+                    <button
+                      className={style.button}
+                      onClick={() => navigate("/appointment-booking")}
+                    >
+                      Booking Now!
+                    </button>
                   </div>
-                  <button className={style.button}>Booking Now!</button>
                 </div>
-              </div>
-            </Col>
-          ))}
-        </div>
-      </Row>
+              </Col>
+            ))}
+          </div>
+        </Row>
+      </Spin>
     </>
   );
 };

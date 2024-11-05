@@ -16,7 +16,7 @@ export const axiosInstance = axios.create({
 });
 
 export const axiosBaseQuery =
-  ({ baseUrl } = { baseUrl: '' }) =>
+  ({ baseUrl } = { baseUrl: "" }) =>
   async ({ url, method, data, params }) => {
     try {
       const result = await axiosInstance({
@@ -36,7 +36,7 @@ export const axiosBaseQuery =
       };
     }
   };
-  
+
 // Set up interceptors
 const setUpInterceptor = (store) => {
   // Retry logic
