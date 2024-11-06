@@ -34,7 +34,7 @@ const Menu = () => {
       <div className={style.nameBox}>
         <Avatar
           size={50}
-          src={user.avatar || BoyHair}
+          src={user?.avatar || BoyHair}
           className={style.avatar}
           shape="square"
         />
