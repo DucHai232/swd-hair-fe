@@ -98,7 +98,7 @@ const ServiceManage = () => {
       title: 'Price',
       dataIndex: 'price',
       key: 'price',
-      render: (price) => `$${price}`,
+      render: (price) => `${price} VND`,
     },
     {
       title: 'Loyalty Points',
