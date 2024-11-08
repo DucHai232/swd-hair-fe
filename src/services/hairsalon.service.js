@@ -164,9 +164,9 @@ const hairsalonApi = createApi({
         data: serviceId,
       }),
     }),
-    getStaff: builder.query({
+    getAllStaff: builder.query({
       query: () => ({
-        url: endpoints.GET_STAFF,
+        url: endpoints.GET_ALL_STAFF,
         method: 'GET',
       }),
     }),
@@ -204,8 +204,8 @@ export const {
   useGetAllStylistQuery,
   useGetStylistVerifyQuery,
   useDeleteSoftServiceMutation,
-  useGetStaffQuery,
-  useScheduleStylistQuery
+  useScheduleStylistQuery,
+  useGetAllStaffQuery
 } = hairsalonApi;
 
 export default hairsalonApi;

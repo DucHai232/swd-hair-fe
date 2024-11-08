@@ -22,7 +22,7 @@ const endpoints = {
   GET_DASHBOARD: '/get-dashboard',
   GET_STYLIST_VERIFY: '/get-stylist-verify',
   VIEW_STYLISTS: "/get-all-stylists",
-  GET_STAFF: "/get-staff",
+  GET_ALL_STAFF: "/get-all-staff",
   SCHEDULE_STYLIST: "/schedule-stylist",
 }
 
