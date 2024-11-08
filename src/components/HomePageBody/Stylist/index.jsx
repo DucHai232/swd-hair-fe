@@ -1,23 +1,29 @@
 import { useEffect, useState } from "react";
-import styles from "./Stylist.module.scss"; // Import SCSS module
+import styles from "./Stylist.module.scss";
 import { Carousel, Spin } from "antd";
 import { getAllStylists } from "../../../services/stylist.service";
 
 const StylistSlider = () => {
   const [stylists, setStylists] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+
   const loadStylists = async () => {
+    setIsLoading(true);
     try {
-      setIsLoading(true);
-      const response = await getAllStylists();
-      setStylists(response.data);
+      const { data } = await getAllStylists();
+      setStylists(data);
     } catch (error) {
-      console.log(error);
+      console.error("Error fetching stylists:", error);
     } finally {
       setIsLoading(false);
     }
   };
-  const settings = {
+
+  useEffect(() => {
+    loadStylists();
+  }, []);
+
+  const carouselSettings = {
     dots: true,
     infinite: true,
     speed: 3000,
@@ -28,29 +34,31 @@ const StylistSlider = () => {
     dotPosition: "bottom",
   };
 
-  useEffect(() => {
-    loadStylists();
-  }, []);
-
   return (
     <div className={styles.stylistSlider}>
-      <h2>Our Stylists</h2>
+      <h2>THỢ CẮT CỦA CHÚNG TÔI</h2>
       <Spin spinning={isLoading}>
-        <Carousel {...settings}>
-          {stylists.map((stylist) => (
-            <div key={stylist._id} className={styles.stylistCard}>
-              <img
-                src={stylist.avatar}
-                alt={stylist.name}
-                className={styles.stylistImage}
-              />
-              <h3>{stylist.name}</h3>
-              <p>Email: {stylist.email}</p>
-              <p>Dịch vụ đã làm: {stylist.numberAppointments}</p>
-              <p>Kinh nghiệm: {stylist.numberExperiences}</p>
-              <p>Chuyên môn: {stylist.expertise}</p>
-            </div>
-          ))}
+        <Carousel {...carouselSettings}>
+          {stylists.map(
+            ({
+              _id,
+              avatar,
+              name,
+              email,
+              numberAppointments,
+              numberExperiences,
+              expertise,
+            }) => (
+              <div key={_id} className={styles.stylistCard}>
+                <img src={avatar} alt={name} className={styles.stylistImage} />
+                <h3>{name}</h3>
+                <p>Email: {email}</p>
+                <p>Dịch vụ đã làm: {numberAppointments}</p>
+                <p>Kinh nghiệm: {numberExperiences}</p>
+                <p>Chuyên môn: {expertise}</p>
+              </div>
+            )
+          )}
         </Carousel>
       </Spin>
     </div>

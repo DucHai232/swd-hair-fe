@@ -1,32 +1,29 @@
-import React from "react";
 import style from "./Navigation.module.scss";
 import { useNavigate } from "react-router-dom";
 
-const index = () => {
+const Navigation = () => {
   const navItems = [
-    { name: "Hot", path: "/service" },
-    { name: "Services", path: "/service" },
-    { name: "Stylist", path: "/stylist" },
-    { name: "Male", path: "/service" },
-    { name: "Female", path: "/service" },
+    { name: "Nổi bật", path: "/service" },
+    { name: "Dịch vụ", path: "/service" },
+    { name: "Thợ cắt", path: "/stylist" },
+    { name: "Đặt lịch", path: "/appointment-booking" },
   ];
+
   const navigate = useNavigate();
 
   return (
-    <div>
-      <div className={style.container}>
-        {navItems.map((item, index) => (
-          <button
-            key={index}
-            className={style.button}
-            onClick={() => navigate(item.path)}
-          >
-            {item.name}
-          </button>
-        ))}
-      </div>
+    <div className={style.container}>
+      {navItems.map(({ name, path }, index) => (
+        <button
+          key={index}
+          className={style.button}
+          onClick={() => navigate(path)}
+        >
+          {name}
+        </button>
+      ))}
     </div>
   );
 };
 
-export default index;
+export default Navigation;

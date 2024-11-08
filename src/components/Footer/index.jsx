@@ -4,45 +4,41 @@ import {
   InstagramOutlined,
   YoutubeOutlined,
 } from "@ant-design/icons";
+import { Link } from "react-router-dom";
 import styles from "./Footer.module.scss";
 
-export const footerLinks = [
+const footerLinks = [
   {
-    title: "Quick Links",
+    title: "Liên kết nhanh",
     links: [
-      { name: "About Us", url: "/about" },
-      { name: "Shopping", url: "/shopping" },
-      { name: "Contact Us", url: "/contact" },
+      { name: "Về chúng tôi", url: "/about" },
+      { name: "Mua sắm", url: "/shopping" },
     ],
   },
   {
-    title: "Services",
+    title: "Dịch vụ",
     links: [
-      {
-        name: (
-          <>
-            Service hours: <br /> 8:30 am - 8:30 pm
-          </>
-        ),
-        isText: true,
-      },
-      { name: "Hair Coloring", url: "/services/coloring" },
-      { name: "Styling", url: "/services/styling" },
-      { name: "Pricing", url: "/pricing" },
+      { name: "Giờ phục vụ:", isText: true },
+      { name: "8:00 sáng - 9:00 tối", isText: true },
+      { name: "Nhuộm tóc", url: "/services/coloring" },
+      { name: "Tạo kiểu", url: "/services/styling" },
+      { name: "Bảng giá", url: "/pricing" },
     ],
   },
   {
-    title: "Legal",
+    title: "Quy định",
     links: [
-      { name: "Terms of Service", url: "/terms" },
-      { name: "Privacy Policy", url: "/privacy-policy" },
+      { name: "Điều khoản dịch vụ", url: "/terms" },
+      { name: "Chính sách bảo mật", url: "/privacy-policy" },
     ],
   },
   {
-    title: "Contact Us",
+    title: "Liên hệ",
     links: [
-      { name: "Telephone: (+84)766710603", isText: true },
-      { name: "Email: contact@hairharmony.com", isText: true },
+      { name: "Điện thoại:", isText: true },
+      { name: "(+84) 766 710 603", isText: true },
+      { name: "Email:", isText: true },
+      { name: "contact@hairharmony.com", isText: true },
     ],
   },
 ];
@@ -50,11 +46,11 @@ export const footerLinks = [
 const BookingBox = () => (
   <div className={styles.bookingBox}>
     <h3 className={styles.bookingTitle}>
-      Book an Appointment in just 30 seconds
+      Đặt lịch nhanh chóng trong 30 giây!!
     </h3>
-    <p>Pay after cutting, no problem canceling</p>
+    <p>Thanh toán sau khi cắt và dễ dàng hủy lịch khi cần.</p>
     <Button type="primary" className={styles.bookingButton}>
-      Book Now
+      ĐẶT NGAY
     </Button>
   </div>
 );
@@ -68,9 +64,9 @@ const FooterColumn = ({ title, links, isContact }) => (
           {link.isText ? (
             <span className={styles.footerText}>{link.name}</span>
           ) : (
-            <a href={link.url} className={styles.footerLink}>
+            <Link to={link.url} className={styles.footerLink}>
               {link.name}
-            </a>
+            </Link>
           )}
         </li>
       ))}
@@ -91,33 +87,31 @@ const FooterColumn = ({ title, links, isContact }) => (
   </div>
 );
 
-const Footer = () => {
-  return (
-    <footer className={styles.footerContainer}>
-      <Row justify="space-around" className={styles.footerContent}>
-        <Col xs={24} sm={24} md={8}>
-          <BookingBox />
-        </Col>
-        <Col xs={24} sm={24} md={16}>
-          <Row justify="space-between">
-            {footerLinks.map((column, index) => (
-              <Col xs={24} sm={12} md={6} key={index}>
-                <FooterColumn
-                  title={column.title}
-                  links={column.links}
-                  isContact={column.title === "Contact Us"}
-                />
-              </Col>
-            ))}
-          </Row>
-        </Col>
-      </Row>
-      <p className={styles.footerCopyright}>
-        © 2024 HairHarmony | Nguyen Xien - Phuoc Thien, Long Thanh My, Thu Duc |
-        All rights reserved
-      </p>
-    </footer>
-  );
-};
+const Footer = () => (
+  <footer className={styles.footerContainer}>
+    <Row justify="space-around" className={styles.footerContent}>
+      <Col xs={24} sm={24} md={8}>
+        <BookingBox />
+      </Col>
+      <Col xs={24} sm={24} md={16}>
+        <Row justify="space-between">
+          {footerLinks.map((column, index) => (
+            <Col xs={24} sm={12} md={6} key={index}>
+              <FooterColumn
+                title={column.title}
+                links={column.links}
+                isContact={column.title === "Liên hệ"}
+              />
+            </Col>
+          ))}
+        </Row>
+      </Col>
+    </Row>
+    <p className={styles.footerCopyright}>
+      © 2024 HairHarmony | Nguyễn Xiển - Phước Thiện, Long Thạnh Mỹ, Thủ Đức |
+      All rights reserved
+    </p>
+  </footer>
+);
 
 export default Footer;

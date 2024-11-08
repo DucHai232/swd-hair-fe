@@ -1,59 +1,59 @@
-@import '../../../share/styles/color.scss';
+@import "../../../share/styles/color.scss";
 
 .container {
   display: flex;
   margin: auto;
   max-width: 1000px;
 }
+
 .button {
   position: relative;
   font-size: 17px;
   text-transform: uppercase;
   text-decoration: none;
-  padding: 15px;
-  display: inline-block;
+  padding: 1em 4em;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
-  border-radius: 100px;
+  border-radius: 6em;
   transition: all 0.2s;
-  border: none;
+  border: solid 1px pink;
   font-family: inherit;
   font-weight: 500;
   color: black;
   background-color: white;
-  margin: 10px auto;
-  border: 1px solid pink;
-  width: 150px;
-}
+  width: auto;
+  margin-right: 20px;
+  margin-top: 6px;
+  white-space: nowrap;
 
-.button:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-}
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  }
 
-.button:active {
-  transform: translateY(-1px);
-  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-}
+  &:active {
+    transform: translateY(-1px);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  }
 
-.button::after {
-  content: "";
-  display: inline-block;
-  height: 100%;
-  width: 100%;
-  border-radius: 100px;
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: -1;
-  transition: all 0.4s;
-}
+  &::after {
+    content: "";
+    display: inline-block;
+    height: 100%;
+    width: 100%;
+    border-radius: 100px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    transition: all 0.4s;
+    background-color: #fff;
+  }
 
-.button::after {
-  background-color: #fff;
+  &:hover::after {
+    transform: scaleX(1.4) scaleY(1.6);
+    opacity: 0;
+  }
 }
-
-.button:hover::after {
-  transform: scaleX(1.4) scaleY(1.6);
-  opacity: 0;
-}
-  

@@ -8,15 +8,13 @@ import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 const Header = () => {
-  const isLoggedIn = useSelector((state) => state.rootReducer.user.isLoggedIn)
-  const navigate = useNavigate()
-  
-  const handleLoginClick = () => {
-    navigate('/login')
-  };
+  const isLoggedIn = useSelector((state) => state.rootReducer.user.isLoggedIn);
+  const navigate = useNavigate();
+
+  const handleLoginClick = () => navigate("/login");
 
   return (
-    <Row className={style.container}>
+    <Row className={style.container} gutter={16}>
       <Col span={4}>
         <Logo />
       </Col>
@@ -27,9 +25,7 @@ const Header = () => {
         {isLoggedIn ? (
           <Avatar className={style.UserPoint} />
         ) : (
-        
-            <ButtonLogin onClick={handleLoginClick} />
-          
+          <ButtonLogin onClick={handleLoginClick} />
         )}
       </Col>
     </Row>

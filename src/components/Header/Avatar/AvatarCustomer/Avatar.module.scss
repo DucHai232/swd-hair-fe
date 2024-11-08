@@ -4,13 +4,16 @@
   align-items: center;
   width: 100%;
   position: relative;
+
   .Button {
     position: relative;
     font-size: 17px;
     text-transform: uppercase;
     text-decoration: none;
-    padding: 1em 2.5em;
-    display: inline-block;
+    padding: 1em 4em;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     cursor: pointer;
     border-radius: 6em;
     transition: all 0.2s;
@@ -19,6 +22,8 @@
     font-weight: 500;
     color: black;
     background-color: white;
+    margin-right: 40px;
+    white-space: nowrap;
 
     &:hover {
       transform: translateY(-3px);
@@ -59,19 +64,22 @@
     border-radius: 6em;
     margin: 10px 10px 10px 10px;
     width: 120px;
-    background-color: #ffc300;
+    background-color: #faf0ca;
   }
+
   .MenuBox {
     position: absolute;
     margin-top: 100%;
     right: 10px;
     z-index: 1000;
   }
+
   .Avatar {
     margin: 10px;
-    background-color: #fde3cf;
-    color: "#f56a00";
+    background-color: #f4d35e;
+    color: black;
   }
+
   .Point {
     padding: 0;
     font-weight: 1000;
