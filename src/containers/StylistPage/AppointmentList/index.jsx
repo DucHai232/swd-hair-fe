@@ -24,10 +24,10 @@ const StylistManage = () => {
       key: "appointmentTime",
     },
     {
-      title: "Revenue ($)",
+      title: "Revenue (VND)",
       dataIndex: "money",
       key: "money",
-      render: (money) => `$${money.toLocaleString()}`, // Formats with commas
+      render: (money) => `${money.toLocaleString()} VND`, // Formats with commas
     },
     {
       title: "Status",

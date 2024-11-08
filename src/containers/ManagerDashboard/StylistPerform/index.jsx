@@ -29,10 +29,10 @@ const StylistPerform = () => {
       key: 'appointments',
     },
     {
-      title: 'Revenue ($)',
+      title: 'Revenue (VND)',
       dataIndex: 'revenueStylist',
       key: 'revenue',
-      render: (revenue) => `$${revenue}`, // Format as currency
+      render: (revenue) => `${revenue} VND`, // Format as currency
     },
     {
       title: 'Avg. Feedback Rating',
@@ -46,8 +46,8 @@ const StylistPerform = () => {
     },
     {
       title: 'Performance Rating',
-      dataIndex: 'performanceRating',
-      key: 'performanceRating',
+      dataIndex: 'avgFeedback',
+      key: 'avgFeedbackRating',
       render: (rating) => {
         let color = 'default';
         let label = '';
@@ -65,7 +65,7 @@ const StylistPerform = () => {
           color = 'red';
           label = 'Unsastisfactory';
         }
-  
+        console.log(rating)
         return <Tag color={color}>{label}</Tag>;
       },
     },
