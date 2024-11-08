@@ -48,11 +48,26 @@ const StylistPerform = () => {
       title: 'Performance Rating',
       dataIndex: 'performanceRating',
       key: 'performanceRating',
-      render: (rating) => (
-        <Tag color={rating === 'Excellent' ? 'green' : 'orange'}>
-          {rating}
-        </Tag>
-      ),
+      render: (rating) => {
+        let color = 'default';
+        let label = '';
+  
+        if (rating >= 4.5) {
+          color = 'green';
+          label = 'Excellent';
+        } else if (rating >= 3.5) {
+          color = 'blue';
+          label = 'Good';
+        } else if (rating >= 2.5) {
+          color = 'orange';
+          label = 'Average';
+        } else {
+          color = 'red';
+          label = 'Unsastisfactory';
+        }
+  
+        return <Tag color={color}>{label}</Tag>;
+      },
     },
     {
       title: 'View Feedback',
