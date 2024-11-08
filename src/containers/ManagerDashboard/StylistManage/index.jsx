@@ -10,7 +10,6 @@ const StylistManage = () => {
   const columns = [
     { title: 'Name', dataIndex: 'name', key: 'name' },
     { title: 'Email', dataIndex: 'email', key: 'email' },
-    { title: 'Salary', dataIndex: 'salary', key: 'salary' },
     { title: 'Avatar', dataIndex: 'avatar', key: 'avatar', render: (image) => <img src={image} alt="Service" style={{ width: 50 }} /> },
     { title: 'Phone', dataIndex: 'phone', key: 'phone' },
     { title: 'Expertise', dataIndex: 'expertise', key: 'expertise' },

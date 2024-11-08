@@ -103,7 +103,7 @@ const DashboardDetail = () => {
               />
               <Statistic
                 title="Average Per Service"
-                value={dashboardData?.averageRevenuePerService || 0}
+                value={Math.round(dashboardData?.averageRevenuePerService) || 0}
                 suffix="VND"
                 style={{ marginTop: '16px' }}
               />
