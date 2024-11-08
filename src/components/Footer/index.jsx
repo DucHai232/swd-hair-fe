@@ -19,7 +19,7 @@ const footerLinks = [
     title: "Dịch vụ",
     links: [
       { name: "Giờ phục vụ:", isText: true },
-      { name: "8:00 sáng - 9:00 tối", isText: true },
+      { name: "7:00 sáng - 7:00 tối", isText: true },
       { name: "Nhuộm tóc", url: "/services/coloring" },
       { name: "Tạo kiểu", url: "/services/styling" },
       { name: "Bảng giá", url: "/pricing" },

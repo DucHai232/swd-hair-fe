@@ -1,12 +1,12 @@
 import { Button } from "antd";
 import { LeftOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
-import "./BackButton.scss";
+import styles from "./backButton.module.scss";
 
 const BackButton = ({
   path = "/",
-  label = "Home",
-  className = "back-button",
+  label = "Trang chủ",
+  className = styles["back-button"],
   style,
 }) => {
   const navigate = useNavigate();

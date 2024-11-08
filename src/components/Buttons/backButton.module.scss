@@ -2,24 +2,30 @@
   position: absolute;
   top: 1rem;
   left: 1rem;
-  color: #ac8859;
-  background-color: rgba(255, 255, 255, 0.7);
-  font-weight: bold;
-  padding: 0.5rem 1rem;
+  color: #8c6e48;
+  background-color: rgba(255, 255, 255, 0.8);
+  font-weight: 600;
+  padding: 0.4rem 0.8rem;
   border-radius: 0.5rem;
-  display: inline-flex;
+  display: flex;
   align-items: center;
   border: none;
   cursor: pointer;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  transition: background-color 0.2s ease, color 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
 
-  &:hover {
-    background-color: rgba(255, 255, 255, 0.9);
-    color: #8c6e48;
-  }
+.back-button:hover {
+  background-color: rgba(255, 255, 255, 0.9);
+  color: #735b3f;
+}
 
-  &:focus {
-    outline: none;
-    box-shadow: 0 0 0 3px rgba(172, 136, 89, 0.4);
-  }
+.back-button:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(140, 110, 72, 0.5);
+}
+
+.back-button-icon {
+  margin-right: 0.4rem;
+  font-size: 1.2rem;
 }

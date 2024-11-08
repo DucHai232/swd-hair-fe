@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 
 const Navigation = () => {
   const navItems = [
-    { name: "Nổi bật", path: "/service" },
     { name: "Dịch vụ", path: "/service" },
     { name: "Thợ cắt", path: "/stylist" },
     { name: "Đặt lịch", path: "/appointment-booking" },

@@ -3,11 +3,13 @@ import styles from "./Register.module.scss";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import hair_salon_2 from "../../../assets/hair_salon_2.jpg";
-import { useRegisterMutation } from "../../../services/hairsalon.service.js"; // Import register mutation
+import { useRegisterMutation } from "../../../services/hairsalon.service.js";
+import { toast } from "react-toastify";
+import BackButton from "../../../components/Buttons/backButton.jsx";
 
 function Register() {
   const navigate = useNavigate();
-  const [register, { isLoading, error }] = useRegisterMutation(); // useRegisterMutation hook
+  const [register, { isLoading, error }] = useRegisterMutation();
   const [formData, setFormData] = useState({
     username: "",
     email: "",
@@ -29,12 +31,16 @@ function Register() {
       }
     } catch (err) {
       console.error("Registration failed: ", err);
-      // You can use toast or another notification system to show errors
+      // Show toast notification in case of error
+      toast.error(
+        err?.data?.message || "Đăng ký không thành công. Vui lòng thử lại."
+      );
     }
   };
 
   return (
     <div className={styles.background}>
+      <BackButton />
       <div className={styles.loginContainer}>
         <div className={styles.imageContainer}>
           <img src={hair_salon_2} alt="hair_salon" className={styles.image} />
@@ -42,7 +48,7 @@ function Register() {
 
         <div className={styles.formContainer}>
           <div className={styles.titleContainer}>
-            <h1 className={styles.title}>Sign Up</h1>
+            <h1 className={styles.title}>Đăng Ký</h1>
             <span className={styles.subtitle}>
               Hãy cùng chúng tôi trải nghiệm phong cách đẳng cấp nhất!
             </span>
@@ -54,7 +60,7 @@ function Register() {
             initialValues={{ remember: true }}
             autoComplete="off"
             className={styles.form}
-            onFinish={handleRegister} // Use onFinish to handle form submission
+            onFinish={handleRegister}
           >
             <Form.Item
               name="username"
@@ -115,8 +121,14 @@ function Register() {
               className={styles.fullWidthButton}
               loading={isLoading}
             >
-              Register
+              Đăng ký
             </Button>
+
+            {error && (
+              <div className={styles.errorMessage}>
+                {error.data?.message || "Đã xảy ra lỗi. Vui lòng thử lại."}
+              </div>
+            )}
 
             <span className={styles.signupContainer}>
               Bạn đã có tài khoản?{" "}

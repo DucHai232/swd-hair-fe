@@ -14,12 +14,13 @@ import {
   setUsername,
 } from "../../../feature/authentication.js";
 import { useDispatch } from "react-redux";
+import BackButton from "../../../components/Buttons/backButton.jsx";
 
 function Login() {
   const dispatch = useDispatch();
   const [login, { isLoading }] = useLoginMutation();
   const navigate = useNavigate();
-  const [form] = Form.useForm(); // Ant Design form instance
+  const [form] = Form.useForm();
 
   // Handle login after form validation
   const handleLogin = async (values) => {
@@ -46,10 +47,12 @@ function Login() {
           navigate("/");
         }
       } else {
-        throw new Error("Invalid user role.");
+        throw new Error("Vai trò người dùng không hợp lệ.");
       }
     } catch (err) {
-      toast.error(err?.data?.message || "Login failed. Please try again.");
+      toast.error(
+        err?.data?.message || "Đăng nhập không thành công. Vui lòng thử lại."
+      );
     }
   };
 
@@ -57,6 +60,7 @@ function Login() {
     <>
       <Spin spinning={isLoading} delay={1000}>
         <div className={styles.background}>
+          <BackButton />
           <div className={styles.loginContainer}>
             <div className={styles.imageContainer}>
               <img
@@ -68,7 +72,7 @@ function Login() {
 
             <div className={styles.formContainer}>
               <div className={styles.titleContainer}>
-                <h1 className={styles.title}>Welcome</h1>
+                <h1 className={styles.title}>Đăng Nhập</h1>
                 <span className={styles.subtitle}>
                   Bạn đi vào với phong cách, đi ra với sự tự tin!
                 </span>
@@ -81,7 +85,7 @@ function Login() {
                 initialValues={{ remember: true }}
                 autoComplete="off"
                 className={styles.form}
-                onFinish={handleLogin} // Trigger login on successful validation
+                onFinish={handleLogin}
               >
                 <Form.Item
                   name="username"
@@ -109,7 +113,7 @@ function Login() {
                   htmlType="submit"
                   className={styles.fullWidthButton}
                 >
-                  Login
+                  Đăng nhập
                 </Button>
 
                 <div className={styles.forgotPasswordContainer}>

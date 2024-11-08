@@ -10,8 +10,71 @@
   height: 100vh;
   width: 100%;
   background-color: #ffc300;
+  padding: 20px;
+  box-sizing: border-box;
 }
 
 .container-info {
-  padding: 50px;
+  padding: 30px 40px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  max-width: 800px;
+  margin: auto;
+  box-sizing: border-box;
+}
+
+.ant-modal-body {
+  padding: 20px;
+}
+
+.ant-input {
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  padding: 10px;
+  font-size: 16px;
+}
+
+.ant-input:focus {
+  border-color: #ffc300;
+}
+
+.ant-btn {
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-size: 16px;
+}
+
+.ant-btn:hover {
+  background-color: #ffc300;
+  color: white;
+  border-color: #ffc300;
+}
+
+.ant-avatar {
+  border-radius: 50%;
+  margin-bottom: 20px;
+}
+
+.input-file {
+  margin-bottom: 10px;
+  display: block;
+}
+
+@media (max-width: 768px) {
+  .container-bg {
+    height: auto;
+    padding: 40px 20px;
+  }
+
+  .container-info {
+    padding: 20px;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  .ant-input,
+  .ant-btn {
+    width: 100%;
+  }
 }

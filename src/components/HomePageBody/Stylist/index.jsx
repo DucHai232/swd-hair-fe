@@ -45,6 +45,7 @@ const StylistSlider = () => {
               avatar,
               name,
               email,
+              phone,
               numberAppointments,
               numberExperiences,
               expertise,
@@ -53,6 +54,7 @@ const StylistSlider = () => {
                 <img src={avatar} alt={name} className={styles.stylistImage} />
                 <h3>{name}</h3>
                 <p>Email: {email}</p>
+                <p>Số điện thoại: {phone}</p>
                 <p>Dịch vụ đã làm: {numberAppointments}</p>
                 <p>Kinh nghiệm: {numberExperiences}</p>
                 <p>Chuyên môn: {expertise}</p>

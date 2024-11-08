@@ -8,6 +8,7 @@ import {
   updateUser,
 } from "../../services/user.service";
 import { useNavigate } from "react-router-dom";
+
 const InfoUser = () => {
   const user = JSON.parse(localStorage.getItem("user"));
   const [imageUrl, setImageUrl] = useState(user?.avatar);
@@ -26,76 +27,63 @@ const InfoUser = () => {
     phone: user?.phone,
     address: user?.address,
   });
+
   const navigate = useNavigate();
+
   const dataInfo = [
-    {
-      title: "Email",
-      name: "email",
-    },
-    {
-      title: "Tên đăng nhập",
-      name: "username",
-    },
-    {
-      title: "Tên của bạn",
-      name: "name",
-    },
-    {
-      title: "Số điện thoại",
-      name: "phone",
-    },
-    {
-      title: "Địa chỉ",
-      name: "address",
-    },
+    { title: "Email", name: "email", disabled: true },
+    { title: "Tên đăng nhập", name: "username", disabled: true },
+    { title: "Tên của bạn", name: "name" },
+    { title: "Số điện thoại", name: "phone" },
+    { title: "Địa chỉ", name: "address" },
   ];
-  const renderInfo = (item) => {
-    return (
-      <Row style={{ marginBottom: "12px" }}>
-        <Col span={6} style={{ fontSize: "18px", fontWeight: "bold" }}>
-          {item.title}
-        </Col>
-        <Col span={18}>
-          {" "}
-          <Input
-            value={formData[item.name]}
-            placeholder={item.title}
-            disabled={
-              item.name === "email" || item.name === "username" ? true : false
-            }
-            onChange={(e) =>
-              setFormData((prev) => ({ ...prev, [item.name]: e.target.value }))
-            }
-          />
-        </Col>
-      </Row>
-    );
-  };
+
+  const renderInfo = (item) => (
+    <Row style={{ marginBottom: "12px" }} key={item.name}>
+      <Col span={6} style={{ fontSize: "18px", fontWeight: "bold" }}>
+        {item.title}
+      </Col>
+      <Col span={18}>
+        <Input
+          value={formData[item.name]}
+          placeholder={item.title}
+          disabled={item.disabled}
+          onChange={(e) =>
+            setFormData({ ...formData, [item.name]: e.target.value })
+          }
+        />
+      </Col>
+    </Row>
+  );
+
   const handleChangeFile = (e) => {
     const file = e.target.files[0];
     setSelectedFile(file);
     setImageUrl(URL.createObjectURL(file));
   };
-  const handleUpdate = async () => {
-    try {
-      if (
-        !selectedFile &&
-        formData.name === user?.name &&
-        formData.phone === user?.phone &&
-        formData.address === user?.address
-      ) {
-        message.warning("Không có thông tin thay đổi!");
-        return;
-      }
-      setIsLoading(true);
-      let imageUploadUrl = imageUrl;
 
+  const handleUpdate = async () => {
+    if (
+      !selectedFile &&
+      formData.name === user?.name &&
+      formData.phone === user?.phone &&
+      formData.address === user?.address
+    ) {
+      message.warning("Không có thông tin thay đổi!");
+      return;
+    }
+
+    setIsLoading(true);
+
+    try {
+      let imageUploadUrl = imageUrl;
       if (selectedFile) {
         const formData = new FormData();
         formData.append("img", selectedFile);
         const response = await uploadImage(formData);
         imageUploadUrl = response.url;
       }
+
       const response = await updateUser({
         avatar: imageUploadUrl,
         name: formData.name,
@@ -113,44 +101,41 @@ const InfoUser = () => {
           address: response.address,
         })
       );
+
       message.success("Cập nhật thông tin thành công!");
     } catch (error) {
-      console.log(error);
+      console.error(error);
       message.error("Cập nhật thất bại, vui lòng thử lại!");
     } finally {
       setIsLoading(false);
     }
   };
+
   const handleSendOtp = () => {
     Modal.confirm({
       title: "Xác nhận đổi mật khẩu",
       content: "Bạn có chắc chắn muốn đổi mật khẩu?",
-      async onOk() {
+      onOk: async () => {
         try {
           await sendOTP({ email: user?.email });
           message.success("Mã OTP đã được gửi tới email của bạn!");
           setIsOpenOtp(true);
         } catch (error) {
-          console.log(error);
+          console.error(error);
           message.error("Có lỗi xảy ra, vui lòng thử lại sau!");
         }
       },
-      onCancel() {},
     });
-  };
-  const onChangeOtp = (text) => {
-    setFormChangePassword((prev) => ({ ...prev, otp: text.toUpperCase() }));
   };
 
   const handleSubmitChange = async () => {
-    const payload = {
-      email: user?.email,
-      otp: formChangePassword.otp,
-      newPassword: formChangePassword.newPassword,
-    };
     try {
       setIsLoadingChangePassword(true);
-      await changePassword(payload);
+      await changePassword({
+        email: user?.email,
+        otp: formChangePassword.otp,
+        newPassword: formChangePassword.newPassword,
+      });
       message.success("Đổi mật khẩu thành công!");
       setIsOpenOtp(false);
     } catch (error) {
@@ -161,6 +146,7 @@ const InfoUser = () => {
       setIsLoadingChangePassword(false);
     }
   };
+
   return (
     <>
       <Row>
@@ -171,26 +157,27 @@ const InfoUser = () => {
 
         <Col span={16} className="container-info">
           <Spin spinning={isLoading}>
-            {dataInfo.map((item) => renderInfo(item))}
+            {dataInfo.map(renderInfo)}
+
             <Row>
               <Col span={6}>
                 <Avatar size={64} src={imageUrl} />
               </Col>
               <Col span={18}>
-                <input type="file" onChange={handleChangeFile} />
+                <input
+                  type="file"
+                  className="input-file"
+                  onChange={handleChangeFile}
+                />
               </Col>
             </Row>
 
-            <Row justify={"center"} gutter={[12, 12]}>
+            <Row justify="center" gutter={[12, 12]}>
               <Col>
                 <Button onClick={handleSendOtp}>Đổi mật khẩu</Button>
               </Col>
               <Col>
-                <Button
-                  type="primary"
-                  style={{ margin: "0 auto" }}
-                  onClick={handleUpdate}
-                >
+                <Button type="primary" onClick={handleUpdate}>
                   Cập nhật
                 </Button>
               </Col>
@@ -198,6 +185,7 @@ const InfoUser = () => {
           </Spin>
         </Col>
       </Row>
+
       <Modal
         open={isOpenOtp}
         title="Điền mã OTP - đổi mật khẩu"
@@ -206,14 +194,23 @@ const InfoUser = () => {
         onOk={handleSubmitChange}
         loading={isLoadingChangePassword}
       >
-        <Input.OTP onChange={onChangeOtp} />
+        <Input
+          value={formChangePassword.otp}
+          onChange={(e) =>
+            setFormChangePassword({
+              ...formChangePassword,
+              otp: e.target.value,
+            })
+          }
+          placeholder="Mã OTP"
+        />
         <Input.Password
           placeholder="Mật khẩu mới"
           onChange={(e) =>
-            setFormChangePassword((prev) => ({
-              ...prev,
+            setFormChangePassword({
+              ...formChangePassword,
               newPassword: e.target.value,
-            }))
+            })
           }
           style={{ marginTop: "12px" }}
         />

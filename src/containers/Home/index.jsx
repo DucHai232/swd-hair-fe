@@ -6,7 +6,6 @@ import { toast, ToastContainer } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import { setFirstLogin } from "../../feature/authentication";
 import { useEffect } from "react";
-import Menu from "../../components/Header/Avatar/Menu/index";
 import { useLocation } from "react-router-dom";
 
 const Home = () => {
@@ -14,7 +13,9 @@ const Home = () => {
   const dispatch = useDispatch();
   const username = useSelector((state) => state.rootReducer.user.username);
   const isLoggedIn = useSelector((state) => state.rootReducer.user.isLoggedIn);
-  const isFirstLogin = useSelector((state) => state.rootReducer.user.isFirstLogin);
+  const isFirstLogin = useSelector(
+    (state) => state.rootReducer.user.isFirstLogin
+  );
 
   useEffect(() => {
     //check first entry page for display toast
