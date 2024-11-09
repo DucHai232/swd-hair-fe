@@ -1,34 +1,27 @@
-import { useState } from "react";
-import { Table, Button, Space, Modal, Form, Input } from "antd";
-import { useGetStaffQuery } from "../../../services/hairsalon.service";
-
-const staffData = [
-  {
-    _id: "1",
-    username: "staff1",
-    name: "Staff 1",
-    email: "staff1@example.com",
-    phoneNumber: "123-456-7890",
-    appointmentsCompleted: 50,
-    hireDate: "2023-05-01T00:00:00Z",
-  },
-  {
-    _id: "2",
-    username: "staff2",
-    name: "Staff 2",
-    email: "staff2@example.com",
-    phoneNumber: "123-456-7891",
-    appointmentsCompleted: 30,
-    hireDate: "2023-06-15T00:00:00Z",
-  },
-  // Add more staff members here
-];
+import React, { useState, useEffect } from 'react';
+import { Table, Button, Space, Modal, Form, Input } from 'antd';
+import { useGetAllStaffQuery } from '../../../services/hairsalon.service';
 
 const StaffManage = () => {
-  const { data: staffs } = useGetStaffQuery();
-  const [dataSource, setDataSource] = useState(staffData);
+  const { data, isLoading } = useGetAllStaffQuery();
+  const [dataSource, setDataSource] = useState([]);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [editingStaff, setEditingStaff] = useState(null);
+
+  // Update dataSource when API data is loaded
+  useEffect(() => {
+    if (data && data.staffs) {
+      const formattedStaffs = data.staffs.map((staff) => ({
+        _id: staff._id,
+        name: staff.name,
+        email: staff.email,
+        phoneNumber: staff.phone,
+        appointmentsCompleted: staff.approvedAppointmentsCount,
+        hireDate: staff.createdAt,
+      }));
+      setDataSource(formattedStaffs);
+    }
+  }, [data]);
 
   // Handle opening the edit modal
   const handleEdit = (record) => {
@@ -69,11 +62,6 @@ const StaffManage = () => {
       key: "phoneNumber",
     },
     {
-      title: "Appointments",
-      dataIndex: "appointmentsCompleted",
-      key: "appointmentsCompleted",
-    },
-    {
       title: "Hire Date",
       dataIndex: "hireDate",
       key: "hireDate",
@@ -100,6 +88,7 @@ const StaffManage = () => {
         dataSource={dataSource}
         rowKey={(record) => record._id}
         pagination={{ pageSize: 5 }}
+        loading={isLoading}
       />
 
       {/* Modal for editing staff details */}
