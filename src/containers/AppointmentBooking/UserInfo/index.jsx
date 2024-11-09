@@ -13,12 +13,12 @@ const UserInfo = ({ formBooking, setFormBooking }) => {
   return (
     <>
       <Typography.Title level={4}>
-        STEP 1: Enter Your Information
+        BƯỚC 1: Nhập Thông Tin Của Bạn
       </Typography.Title>
       <Row gutter={[12, 12]}>
         <Col span={12}>
           <Typography.Text strong>
-            Name <span style={{ color: "red" }}>*</span>:{" "}
+            Tên <span style={{ color: "red" }}>*</span>:{" "}
           </Typography.Text>
           <Input
             className={styles.formitem}
@@ -26,12 +26,12 @@ const UserInfo = ({ formBooking, setFormBooking }) => {
             name="customerName"
             value={formBooking.customerName}
             onChange={(e) => handleChangeUser(e)}
-            placeholder="Enter your name"
+            placeholder="Nhập tên của bạn"
           />
         </Col>
         <Col span={12}>
           <Typography.Text strong>
-            Phone Number <span style={{ color: "red" }}>*</span>:{" "}
+            Số điện thoại <span style={{ color: "red" }}>*</span>:{" "}
           </Typography.Text>
           <Input
             className={styles.formitem}
@@ -41,7 +41,7 @@ const UserInfo = ({ formBooking, setFormBooking }) => {
             type="number"
             inputmode="numeric"
             onChange={(e) => handleChangeUser(e)}
-            placeholder="Enter your phone number"
+            placeholder="Nhập số điện thoại của bạn"
           />
         </Col>
       </Row>

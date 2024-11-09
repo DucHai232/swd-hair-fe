@@ -1,5 +1,5 @@
 import { Button, Col, Empty, Row, Space, Table, Tag, Typography } from "antd";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "./ServiceChoosing.module.scss";
 import { DeleteOutlined } from "@ant-design/icons";
 import ServiceModal from "../ServiceModal";
@@ -70,7 +70,9 @@ const ServiceChoosing = ({ formBooking, setFormBooking }) => {
   }, [formBooking.selectedServices]);
   return (
     <>
-      <Typography.Title level={4}>STEP 2: Choose Your Service</Typography.Title>
+      <Typography.Title level={4}>
+        BƯỚC 2: Chọn Dịch Vụ Của Bạn
+      </Typography.Title>
 
       {formBooking.selectedServices.length > 0 ? (
         <Table
@@ -97,12 +99,12 @@ const ServiceChoosing = ({ formBooking, setFormBooking }) => {
             type="primary"
             onClick={() => setOpenModalChooseStylist(true)}
           >
-            Choose a Service
+            Chọn Dịch Vụ
           </Button>
         </Col>
         <Col span={13}>
           <Typography.Title level={5} style={{ color: "red" }}>
-            {totalPrice !== 0 && totalPrice && `Total price: $${totalPrice}`}
+            {totalPrice !== 0 && totalPrice && `Tổng giá tiền: ${totalPrice}đ`}
           </Typography.Title>
         </Col>
       </Row>

@@ -64,7 +64,9 @@
 }
 
 .fullWidthButton {
-  width: 100%;
+  width: 60%;
+  padding: 1rem;
+  margin: 0 auto;
 }
 
 .forgotPasswordContainer {
@@ -98,4 +100,24 @@
     color: #40a9ff;
     text-decoration: underline;
   }
+}
+
+.inputUsername {
+  width: 100% !important;
+  font-size: 1rem;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.inputPassword {
+  width: 100% !important;
+  font-size: 1rem;
+  border-radius: 7px;
+  box-sizing: border-box;
+  padding: 0.6rem;
+}
+
+.ant-form-item-label {
+  font-size: 1rem;
+  font-weight: bold;
 }

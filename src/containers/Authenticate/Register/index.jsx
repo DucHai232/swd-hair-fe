@@ -100,6 +100,7 @@ function Register() {
                 placeholder="Mật khẩu..."
                 name="password"
                 onChange={handleChange}
+                className={styles.inputPassword}
               />
             </Form.Item>
 
@@ -112,6 +113,7 @@ function Register() {
                 placeholder="Xác nhận mật khẩu..."
                 name="confirmPassword"
                 onChange={handleChange}
+                className={styles.inputPassword}
               />
             </Form.Item>
 

@@ -114,8 +114,9 @@
 }
 
 .fullWidthButton {
-  width: 100%;
-  padding: 0.5rem;
+  width: 60%;
+  padding: 1rem;
+  margin: 0 auto;
 
   @media (max-width: 768px) {
     padding: 0.4rem;
@@ -146,4 +147,12 @@
     color: #40a9ff;
     text-decoration: underline;
   }
+}
+
+.inputPassword {
+  width: 100% !important;
+  font-size: 1rem;
+  border-radius: 7px;
+  box-sizing: border-box;
+  padding: 0.6rem;
 }

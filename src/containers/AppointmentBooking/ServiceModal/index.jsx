@@ -13,15 +13,15 @@ function ServiceModal({
   setOpenModal,
   handleChooseServices,
 }) {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const [dataServices, setDataServices] = useState([]);
   const loadServices = async () => {
     try {
       const response = await getServices();
       setDataServices(response?.data?.services);
     } catch (error) {
-      dispatch(signout())
-      console.log(error)
+      dispatch(signout());
+      console.log(error);
     }
   };
   const toggleSelectService = (service) => {
@@ -40,7 +40,7 @@ function ServiceModal({
   };
   const handleConfirmChooseService = () => {
     if (selectedServices.length === 0) {
-      message.warning("Bạn chưa chọn dịch vụ nào");
+      message.warning("Bạn chưa chọn dịch vụ nào!");
       return;
     }
     setOpenModal(false);
@@ -94,7 +94,7 @@ function ServiceModal({
           className={styles.button}
           onClick={handleConfirmChooseService}
         >
-          Confirm Selection
+          Xác nhận lựa chọn
         </Button>
       </Modal>
     </>

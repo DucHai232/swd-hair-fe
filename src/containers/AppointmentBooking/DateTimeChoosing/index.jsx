@@ -1,5 +1,4 @@
 import { Select, Button, Typography, Col, Row } from "antd";
-import { Swiper } from "swiper/react";
 import "swiper/swiper-bundle.min.css";
 import "swiper/swiper.min.css";
 import styles from "./DateTimeChoosing.module.scss";
@@ -55,14 +54,12 @@ const DateTimeChoosing = ({ formBooking, setFormBooking }) => {
   }, [selectedDay, selectedStylist]);
   return (
     <div className={styles.dateSelectContainer}>
-      <Typography.Title level={4}>
-        STEP 4: Choose a day & time:
-      </Typography.Title>
+      <Typography.Title level={4}>BƯỚC 4: Chọn Ngày Và Giờ</Typography.Title>
       <Select
         id="day-select"
         value={formBooking.selectedDay ? formBooking.selectedDay : null}
         onChange={handleDayChange}
-        placeholder="Select a day"
+        placeholder="Chọn ngày"
         className={styles.select}
       >
         {next7Days.map((day) => (

@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { Table, Button, Modal, Form, Input, Space } from 'antd';
-import { useGetAllStylistQuery } from '../../../services/hairsalon.service';
+import React, { useState } from "react";
+import { Table, Button, Modal, Form, Input, Space } from "antd";
+import { useGetAllStylistQuery } from "../../../services/hairsalon.service";
 
 const StylistManage = () => {
   const { data: stylists, isLoading, error } = useGetAllStylistQuery();
@@ -8,11 +8,18 @@ const StylistManage = () => {
 
   // Define the columns for the table
   const columns = [
-    { title: 'Name', dataIndex: 'name', key: 'name' },
-    { title: 'Email', dataIndex: 'email', key: 'email' },
-    { title: 'Avatar', dataIndex: 'avatar', key: 'avatar', render: (image) => <img src={image} alt="Service" style={{ width: 50 }} /> },
-    { title: 'Phone', dataIndex: 'phone', key: 'phone' },
-    { title: 'Expertise', dataIndex: 'expertise', key: 'expertise' },
+    { title: "Name", dataIndex: "name", key: "name" },
+    { title: "Email", dataIndex: "email", key: "email" },
+    {
+      title: "Avatar",
+      dataIndex: "avatar",
+      key: "avatar",
+      render: (image) => (
+        <img src={image} alt="Service" style={{ width: 50 }} />
+      ),
+    },
+    { title: "Phone", dataIndex: "phone", key: "phone" },
+    { title: "Expertise", dataIndex: "expertise", key: "expertise" },
   ];
 
   return (
@@ -25,7 +32,6 @@ const StylistManage = () => {
         pagination={{ pageSize: 5 }}
         loading={isLoading}
       />
-
     </div>
   );
 };

@@ -1,5 +1,4 @@
 import { Navigate, Route, Routes } from "react-router-dom";
-import ForgotPassword from "../containers/Authenticate/ForgotPassword";
 import Login from "../containers/Authenticate/Login";
 import Register from "../containers/Authenticate/Register";
 import DisconnectPage from "../containers/DisconnectPage";
@@ -25,7 +24,7 @@ const AppRoutes = () => {
         <Route path="service" element={<Services />} />
         <Route path="stylist" element={<Stylists />} />
         <Route path="/vouchers" element={<Vouchers />} />
-        
+
         <Route
           path="/appointment-booking"
           element={
@@ -42,7 +41,6 @@ const AppRoutes = () => {
       <Route path="/info-profile" element={<InfoUser />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
-      <Route path="/forgot-password" element={<ForgotPassword />} />
       <Route path="/disconnect" element={<DisconnectPage />} />
 
       <Route

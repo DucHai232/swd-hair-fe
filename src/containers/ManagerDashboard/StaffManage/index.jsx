@@ -1,31 +1,31 @@
-import React, { useState } from 'react';
-import { Table, Button, Space, Modal, Form, Input } from 'antd';
-import { useGetStaffQuery } from '../../../services/hairsalon.service';
+import { useState } from "react";
+import { Table, Button, Space, Modal, Form, Input } from "antd";
+import { useGetStaffQuery } from "../../../services/hairsalon.service";
 
 const staffData = [
   {
-    _id: '1',
-    username: 'staff1',
-    name: 'Staff 1',
-    email: 'staff1@example.com',
-    phoneNumber: '123-456-7890',
+    _id: "1",
+    username: "staff1",
+    name: "Staff 1",
+    email: "staff1@example.com",
+    phoneNumber: "123-456-7890",
     appointmentsCompleted: 50,
-    hireDate: '2023-05-01T00:00:00Z',
+    hireDate: "2023-05-01T00:00:00Z",
   },
   {
-    _id: '2',
-    username: 'staff2',
-    name: 'Staff 2',
-    email: 'staff2@example.com',
-    phoneNumber: '123-456-7891',
+    _id: "2",
+    username: "staff2",
+    name: "Staff 2",
+    email: "staff2@example.com",
+    phoneNumber: "123-456-7891",
     appointmentsCompleted: 30,
-    hireDate: '2023-06-15T00:00:00Z',
+    hireDate: "2023-06-15T00:00:00Z",
   },
   // Add more staff members here
 ];
 
 const StaffManage = () => {
-  const  {data: staffs}  = useGetStaffQuery()
+  const { data: staffs } = useGetStaffQuery();
   const [dataSource, setDataSource] = useState(staffData);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [editingStaff, setEditingStaff] = useState(null);
@@ -54,34 +54,34 @@ const StaffManage = () => {
 
   const columns = [
     {
-      title: 'Name',
-      dataIndex: 'name',
-      key: 'name',
+      title: "Name",
+      dataIndex: "name",
+      key: "name",
     },
     {
-      title: 'Email',
-      dataIndex: 'email',
-      key: 'email',
+      title: "Email",
+      dataIndex: "email",
+      key: "email",
     },
     {
-      title: 'Phone Number',
-      dataIndex: 'phoneNumber',
-      key: 'phoneNumber',
+      title: "Phone Number",
+      dataIndex: "phoneNumber",
+      key: "phoneNumber",
     },
     {
-      title: 'Appointments',
-      dataIndex: 'appointmentsCompleted',
-      key: 'appointmentsCompleted',
+      title: "Appointments",
+      dataIndex: "appointmentsCompleted",
+      key: "appointmentsCompleted",
     },
     {
-      title: 'Hire Date',
-      dataIndex: 'hireDate',
-      key: 'hireDate',
+      title: "Hire Date",
+      dataIndex: "hireDate",
+      key: "hireDate",
       render: (hireDate) => new Date(hireDate).toLocaleDateString(),
     },
     {
-      title: 'Actions',
-      key: 'actions',
+      title: "Actions",
+      key: "actions",
       render: (_, record) => (
         <Space size="middle">
           <Button type="link" onClick={() => handleEdit(record)}>
@@ -117,21 +117,25 @@ const StaffManage = () => {
           <Form.Item
             name="name"
             label="Name"
-            rules={[{ required: true, message: 'Please input the staff name!' }]}
+            rules={[
+              { required: true, message: "Please input the staff name!" },
+            ]}
           >
             <Input />
           </Form.Item>
           <Form.Item
             name="email"
             label="Email"
-            rules={[{ required: true, message: 'Please input the email!' }]}
+            rules={[{ required: true, message: "Please input the email!" }]}
           >
             <Input />
           </Form.Item>
           <Form.Item
             name="phoneNumber"
             label="Phone Number"
-            rules={[{ required: true, message: 'Please input the phone number!' }]}
+            rules={[
+              { required: true, message: "Please input the phone number!" },
+            ]}
           >
             <Input />
           </Form.Item>

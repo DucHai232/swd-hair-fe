@@ -1,4 +1,3 @@
-import { InfoCircleOutlined } from "@ant-design/icons";
 import {
   Avatar,
   Button,
@@ -6,7 +5,6 @@ import {
   Col,
   Drawer,
   Empty,
-  Image,
   Input,
   List,
   message,
@@ -156,7 +154,7 @@ const PaymentBooking = ({ responseAppointment, setIsPayment }) => {
               <Col span={14}>
                 Có hiệu lực đến: {convertToDateString(data.expiryDate)}
               </Col>
-              <Col span={10}>Số point quy đổi: {data.pointThreshold}</Col>
+              <Col span={10}>Số điểm quy đổi: {data.pointThreshold}</Col>
             </Row>
             <Row
               className={
@@ -411,7 +409,7 @@ const PaymentBooking = ({ responseAppointment, setIsPayment }) => {
               }
               bordered
               dataSource={responseAppointment.services}
-              renderItem={(item, index) => (
+              renderItem={(item) => (
                 <List.Item>
                   <List.Item.Meta
                     avatar={

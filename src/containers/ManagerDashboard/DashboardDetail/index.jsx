@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import { Row, Col, Card, Statistic, DatePicker, Spin, Table } from 'antd';
-import { useDataDashboardMutation } from '../../../services/hairsalon.service';
-import styles from './DashboardDetail.module.scss';
+import { useEffect, useState } from "react";
+import { Row, Col, Card, Statistic, DatePicker, Spin, Table } from "antd";
+import { useDataDashboardMutation } from "../../../services/hairsalon.service";
+import styles from "./DashboardDetail.module.scss";
 
 const { RangePicker } = DatePicker;
 
 const DashboardDetail = () => {
-  const [loadDashboardData, { isLoading, error }] = useDataDashboardMutation();
+  const [loadDashboardData, { isLoading }] = useDataDashboardMutation();
   const [dashboardData, setDashboardData] = useState(null);
   const [dateRange, setDateRange] = useState({
     fromDate: null,
@@ -16,8 +16,8 @@ const DashboardDetail = () => {
   const handleDateChange = (dates) => {
     if (dates) {
       setDateRange({
-        fromDate: dates[0].format('YYYY-MM-DD'),
-        toDate: dates[1].format('YYYY-MM-DD'),
+        fromDate: dates[0].format("YYYY-MM-DD"),
+        toDate: dates[1].format("YYYY-MM-DD"),
       });
     }
   };
@@ -36,15 +36,15 @@ const DashboardDetail = () => {
   // Define columns for revenue over time table
   const revenueColumns = [
     {
-      title: 'Date',
-      dataIndex: 'date',
-      key: 'date',
+      title: "Date",
+      dataIndex: "date",
+      key: "date",
       render: (date) => new Date(date).toLocaleDateString(),
     },
     {
-      title: 'Revenue',
-      dataIndex: 'value',
-      key: 'value',
+      title: "Revenue",
+      dataIndex: "value",
+      key: "value",
       render: (value) => `${value} VND`, // Format revenue with currency
     },
   ];
@@ -54,11 +54,14 @@ const DashboardDetail = () => {
       <div className={styles.dashboardContainer}>
         <Row gutter={16}>
           <Col span={8}>
-            <RangePicker onChange={handleDateChange} className={styles.dateRangePicker} />
+            <RangePicker
+              onChange={handleDateChange}
+              className={styles.dateRangePicker}
+            />
           </Col>
         </Row>
 
-        <Row gutter={16} style={{ marginTop: '16px' }}>
+        <Row gutter={16} style={{ marginTop: "16px" }}>
           <Col span={6}>
             <Card title="Appointments">
               <Statistic
@@ -93,7 +96,7 @@ const DashboardDetail = () => {
           </Col>
         </Row>
 
-        <Row gutter={16} style={{ marginTop: '16px' }}>
+        <Row gutter={16} style={{ marginTop: "16px" }}>
           <Col span={8}>
             <Card title="Revenue Analytics">
               <Statistic
@@ -105,7 +108,7 @@ const DashboardDetail = () => {
                 title="Average Per Service"
                 value={Math.round(dashboardData?.averageRevenuePerService) || 0}
                 suffix="VND"
-                style={{ marginTop: '16px' }}
+                style={{ marginTop: "16px" }}
               />
             </Card>
           </Col>

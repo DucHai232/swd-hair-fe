@@ -25,7 +25,9 @@ const StylistChoosing = ({ formBooking, setFormBooking }) => {
   }, []);
   return (
     <>
-      <Typography.Title level={4}>STEP 3: Choose Your Stylist</Typography.Title>
+      <Typography.Title level={4}>
+        BƯỚC 3: Chọn Thợ Cắt Của Bạn
+      </Typography.Title>
       <Row gutter={[16, 16]}>
         {stylists.map((stylist) => (
           <Col span={6} key={stylist._id}>
@@ -45,7 +47,7 @@ const StylistChoosing = ({ formBooking, setFormBooking }) => {
                   : ""
               }`}
             >
-              <Card.Meta title={stylist.name} description="Click to choose" />
+              <Card.Meta title={stylist.name} description="Bấm để chọn" />
             </Card>
           </Col>
         ))}

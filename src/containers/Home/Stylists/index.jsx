@@ -26,7 +26,7 @@ const Stylists = () => {
   return (
     <>
       <div>
-        <p className={style.p}> OUR STYLISTS</p>
+        <p className={style.p}>Các Thợ Cắt Của Chúng Tôi</p>
       </div>
       <Spin spinning={isLoading}>
         <Row>
@@ -51,7 +51,7 @@ const Stylists = () => {
                       className={style.button}
                       onClick={() => navigate("/appointment-booking")}
                     >
-                      Booking Now!
+                      Đặt lịch ngay!
                     </button>
                   </div>
                 </div>

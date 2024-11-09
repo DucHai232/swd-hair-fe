@@ -93,9 +93,11 @@ function Login() {
                   rules={[
                     { required: true, message: "Vui lòng nhập tên đăng nhập!" },
                   ]}
-                  style={{ marginBottom: "-10px" }}
                 >
-                  <Input placeholder="Tên đăng nhập..." />
+                  <Input
+                    className={styles.inputUsername}
+                    placeholder="Tên đăng nhập..."
+                  />
                 </Form.Item>
 
                 <Form.Item
@@ -105,7 +107,10 @@ function Login() {
                     { required: true, message: "Vui lòng nhập mật khẩu!" },
                   ]}
                 >
-                  <Input.Password placeholder="Mật khẩu..." />
+                  <Input.Password
+                    className={styles.inputPassword}
+                    placeholder="Mật khẩu..."
+                  />
                 </Form.Item>
 
                 <Button

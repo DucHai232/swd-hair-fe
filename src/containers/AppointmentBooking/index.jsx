@@ -20,9 +20,9 @@ import { setAccessTokenExpired, signout } from "../../feature/authentication";
 import { useNavigate } from "react-router-dom";
 
 const AppointmentBooking = () => {
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
-  const [form] = Form.useForm()
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [form] = Form.useForm();
   const [formBooking, setFormBooking] = useState({
     customerName: "",
     customerPhone: "",
@@ -35,7 +35,7 @@ const AppointmentBooking = () => {
   const [responseAppointment, setResponseAppoinment] = useState({});
   const handleBooking = async () => {
     // Regex for 10 to 11 digit phone number
-  const phoneRegex = /^\d{10,11}$/;
+    const phoneRegex = /^\d{10,11}$/;
     const {
       customerName,
       customerPhone,
@@ -49,7 +49,9 @@ const AppointmentBooking = () => {
       return;
     }
     if (!phoneRegex.test(customerPhone)) {
-      message.warning("Invalid phone number, please enter correct number (10 or 11 digits)");
+      message.warning(
+        "Invalid phone number, please enter correct number (10 or 11 digits)"
+      );
       return;
     }
     if (selectedServices.length === 0) {
@@ -119,15 +121,13 @@ const AppointmentBooking = () => {
         } catch (error) {
           setIsPayment(false);
           if (error.status == 401) {
-            message.error('Login session has expired please login again'),
-            dispatch(signout()),
-            dispatch(setAccessTokenExpired(true))
-            navigate('/login')
+            message.error("Phiên đăng nhập đã hết hạn, vui lòng đăng nhập lại"),
+              dispatch(signout()),
+              dispatch(setAccessTokenExpired(true));
+            navigate("/login");
           } else {
             message.error(error.response.data.message || "Đặt lịch thất bại");
           }
-          
-
         }
       },
       onCancel() {
@@ -145,7 +145,7 @@ const AppointmentBooking = () => {
           />
         ) : (
           <>
-            <h2 className={styles.heading}>Book an Appointment</h2>
+            <h2 className={styles.heading}>Đặt Lịch Hẹn</h2>
             <Form
               form={form}
               onFinish={handleBooking}
@@ -241,7 +241,7 @@ const AppointmentBooking = () => {
                     dot: <CalendarOutlined style={{ fontSize: "16px" }} />,
                     children: (
                       <Button type="primary" onClick={() => handleBooking()}>
-                        Book Appointment
+                        Đặt Lịch
                       </Button>
                     ),
                   },
