@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Table, Space, Button, Modal, Form, Input, Rate, message } from "antd";
+import { Table, Space, Modal, Form, Input, Rate, message } from "antd";
 import moment from "moment";
 import axios from "axios"; // Import axios for API calls
 import styles from "./FeedbackManage.module.scss";
@@ -113,9 +113,6 @@ const FeedbackManage = () => {
 
   return (
     <div className={styles.feedbackTable}>
-      <Button type="primary" onClick={() => showModal()}>
-        Create Feedback
-      </Button>
       <Table columns={columns} dataSource={data} style={{ marginTop: 20 }} />
 
       <Modal

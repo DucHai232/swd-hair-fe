@@ -9,6 +9,7 @@ import {
   Row,
   Col,
   Avatar,
+  Input,
 } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 import moment from "moment";
@@ -20,21 +21,32 @@ import {
   rejectAppointment,
   completeAppointment,
 } from "../../../services/appointment.service";
+import { getAllStylists } from "../../../services/stylist.service"; // Correct import
 
 const AppointmentManage = () => {
   const [data, setData] = useState([]);
+  const [filteredData, setFilteredData] = useState([]);
   const [openViewFeedback, setOpenViewFeedback] = useState(false);
   const [feedback, setFeedback] = useState([]);
-  // Fetch appointments from API
-  const fetchAppointments = async () => {
-    try {
-      const response = await getAppointments();
-      const appointments = response.data;
+  const [searchTerm, setSearchTerm] = useState(""); // State for search term
 
+  // Fetch appointments and stylists data
+  const fetchAppointmentsAndStylists = async () => {
+    try {
+      // Fetch appointments
+      const appointmentResponse = await getAppointments();
+      const appointments = appointmentResponse.data;
+
+      // Fetch stylists
+      const stylistResponse = await getAllStylists();
+      const stylistList = stylistResponse.data;
+
+      // Format appointments with stylist name
       const formattedAppointments = appointments.map((appointment) => ({
         key: appointment._id,
         customer: appointment.customerName,
-        stylist: appointment.stylistId,
+        stylistId: appointment.stylistId,
+        stylistName: getStylistName(appointment.stylistId, stylistList), // Get stylist name
         service: appointment.services[0]?.name || "N/A",
         appointmentDate: moment(appointment.appointmentDate).format(
           "YYYY-MM-DD"
@@ -48,23 +60,58 @@ const AppointmentManage = () => {
         feedbacks: appointment.feedbacks,
       }));
 
-      setData(formattedAppointments);
+      // Sort appointments by date (descending order) and time
+      const sortedAppointments = formattedAppointments.sort((a, b) => {
+        const dateA = moment(a.appointmentDate + " " + a.appointmentTime);
+        const dateB = moment(b.appointmentDate + " " + b.appointmentTime);
+        return dateB.isBefore(dateA) ? -1 : dateA.isBefore(dateB) ? 1 : 0;
+      });
+
+      setData(sortedAppointments);
+      setFilteredData(sortedAppointments); // Set initial filtered data to all appointments
     } catch (error) {
-      message.error("Failed to fetch appointments: " + error.message);
-      console.error("Error fetching appointments:", error);
+      message.error(
+        "Failed to fetch appointments and stylists: " + error.message
+      );
+      console.error("Error fetching appointments or stylists:", error);
     }
   };
 
+  // Fetch appointments and stylists on initial render
   useEffect(() => {
-    fetchAppointments();
+    fetchAppointmentsAndStylists();
   }, []);
+
+  // Get stylist name by stylistId
+  const getStylistName = (stylistId, stylistList) => {
+    const stylist = stylistList.find(
+      (stylist) => stylist.stylistId === stylistId
+    );
+    return stylist ? stylist.name : "Unknown";
+  };
+
+  // Handle search term change
+  const handleSearch = (e) => {
+    const searchValue = e.target.value.toLowerCase();
+    setSearchTerm(searchValue);
+
+    if (searchValue === "") {
+      setFilteredData(data); // Show all appointments when search is cleared
+    } else {
+      // Filter appointments by stylist name
+      const filteredAppointments = data.filter((appointment) =>
+        appointment.stylistName.toLowerCase().includes(searchValue)
+      );
+      setFilteredData(filteredAppointments);
+    }
+  };
 
   // Approve appointment
   const handleApprove = async (appointmentId) => {
     try {
       await approveAppointment(appointmentId);
       message.success("Appointment approved successfully!");
-      fetchAppointments(); // Reload appointments
+      fetchAppointmentsAndStylists(); // Reload appointments and stylists
     } catch (error) {
       message.error("Failed to approve appointment: " + error.message);
       console.error("Error approving appointment:", error);
@@ -76,7 +123,7 @@ const AppointmentManage = () => {
     try {
       await rejectAppointment(appointmentId);
       message.success("Appointment rejected successfully!");
-      fetchAppointments(); // Reload appointments
+      fetchAppointmentsAndStylists(); // Reload appointments and stylists
     } catch (error) {
       message.error("Failed to reject appointment: " + error.message);
       console.error("Error rejecting appointment:", error);
@@ -88,7 +135,7 @@ const AppointmentManage = () => {
     try {
       await completeAppointment(appointmentId);
       message.success("Appointment marked as completed successfully!");
-      fetchAppointments(); // Reload appointments
+      fetchAppointmentsAndStylists(); // Reload appointments and stylists
     } catch (error) {
       message.error(
         "Failed to mark appointment as completed: " + error.message
@@ -131,8 +178,10 @@ const AppointmentManage = () => {
     </Space>
   );
 
+  // Column definitions
   const columns = [
     { title: "Customer Name", dataIndex: "customer", key: "customer" },
+    { title: "Stylist Name", dataIndex: "stylistName", key: "stylistName" },
     { title: "Service", dataIndex: "service", key: "service" },
     {
       title: "Appointment Date",
@@ -144,7 +193,13 @@ const AppointmentManage = () => {
       dataIndex: "appointmentTime",
       key: "appointmentTime",
     },
-    { title: "Visit Count", dataIndex: "visitCount", key: "visitCount" },
+    {
+      title: "Visit Count",
+      dataIndex: "visitCount",
+      key: "visitCount",
+      // Set column width for "Visit Count" to make it smaller
+      width: 80,
+    },
     {
       title: "Status",
       dataIndex: "status",
@@ -155,7 +210,7 @@ const AppointmentManage = () => {
     { title: "Total Price", dataIndex: "totalPrice", key: "totalPrice" },
     { title: "Action", key: "action", render: renderActions },
     {
-      title: "Xem đánh giá",
+      title: "View Reviews",
       key: "viewReview",
       render: (_, data) => (
         <Button
@@ -164,7 +219,7 @@ const AppointmentManage = () => {
             setFeedback(data.feedbacks);
           }}
         >
-          Xem đánh giá
+          View
         </Button>
       ),
     },
@@ -172,8 +227,19 @@ const AppointmentManage = () => {
 
   return (
     <>
+      <div className={styles.searchWrapper}>
+        <Input
+          placeholder="Search by Stylist name"
+          value={searchTerm}
+          onChange={handleSearch}
+        />
+      </div>
       <div className={styles.appointmentTable}>
-        <Table columns={columns} dataSource={data} style={{ marginTop: 20 }} />
+        <Table
+          columns={columns}
+          dataSource={filteredData}
+          style={{ marginTop: 20 }}
+        />
       </div>
       <Modal
         open={openViewFeedback}
@@ -181,8 +247,8 @@ const AppointmentManage = () => {
         width={"50%"}
         footer={null}
       >
-        <h1>Xem đánh giá</h1>
-        {feedback.length === 0 && <p>Chưa có đánh giá nào</p>}
+        <h1>View Reviews</h1>
+        {feedback.length === 0 && <p>No reviews yet</p>}
         {feedback?.map((item, index) => {
           return (
             <Row

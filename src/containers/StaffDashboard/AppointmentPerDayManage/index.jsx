@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Table, Tag, DatePicker, Button, message, Space } from "antd";
+import { Table, Tag, DatePicker, message, Space } from "antd";
 import moment from "moment";
 import styles from "./AppointmentPerDayManage.module.scss";
 import {
@@ -8,16 +8,18 @@ import {
   rejectAppointment,
   completeAppointment,
 } from "../../../services/appointment.service";
+import { getAllStylists } from "../../../services/stylist.service"; // Correct import
 
 const AppointmentPerDayManage = () => {
   const [data, setData] = useState([]);
   const [selectedDate, setSelectedDate] = useState(moment());
-  const [noData, setNoData] = useState(false); // State to track if there is no data
+  const [noData, setNoData] = useState(false);
+  const [stylists, setStylists] = useState([]); // State để lưu danh sách stylist
 
   // Fetch appointments for the selected date from the API
   const fetchAppointments = async (date) => {
     try {
-      const response = await getAppointments(); // Assuming this gets all appointments
+      const response = await getAppointments(); // Giả sử đây lấy tất cả các cuộc hẹn
       const appointments = response.data;
 
       // Log the fetched appointments
@@ -27,18 +29,12 @@ const AppointmentPerDayManage = () => {
       const formattedAppointments = appointments
         .filter((appointment) => {
           const appointmentDate = moment(appointment.appointmentDate);
-          console.log(
-            "Checking appointment date:",
-            appointmentDate.format("YYYY-MM-DD"),
-            "against selected date:",
-            date.format("YYYY-MM-DD")
-          );
           return appointmentDate.isSame(date, "day");
         })
         .map((appointment) => ({
           key: appointment._id,
           customer: appointment.customerName,
-          stylist: appointment.stylistId,
+          stylistId: appointment.stylistId,
           service: appointment.services[0]?.name || "N/A",
           appointmentDate: moment(appointment.appointmentDate).format(
             "YYYY-MM-DD"
@@ -51,19 +47,45 @@ const AppointmentPerDayManage = () => {
           isPayment: appointment.isPayment,
         }));
 
-      setData(formattedAppointments);
+      // Sort the appointments by appointmentTime (ascending order)
+      const sortedAppointments = formattedAppointments.sort((a, b) => {
+        const timeA = moment(a.appointmentTime, "HH:mm");
+        const timeB = moment(b.appointmentTime, "HH:mm");
+        return timeA.isBefore(timeB) ? -1 : timeA.isAfter(timeB) ? 1 : 0;
+      });
+
+      setData(sortedAppointments); // Set sorted data
 
       // Check if there are no appointments for the selected date
-      setNoData(formattedAppointments.length === 0);
+      setNoData(sortedAppointments.length === 0);
     } catch (error) {
       message.error("Failed to fetch appointments: " + error.message);
       console.error("Error fetching appointments:", error);
     }
   };
 
+  // Fetch stylists data
+  const fetchStylists = async () => {
+    try {
+      const response = await getAllStylists(); // Lấy danh sách stylist từ API
+      setStylists(response.data); // Cập nhật danh sách stylist vào state
+    } catch (error) {
+      message.error("Failed to fetch stylists: " + error.message);
+      console.error("Error fetching stylists:", error);
+    }
+  };
+
+  // Fetch appointments and stylists on initial render
   useEffect(() => {
-    fetchAppointments(selectedDate); // Fetch appointments for the initially selected date
+    fetchAppointments(selectedDate); // Fetch appointments for the selected date
+    fetchStylists(); // Fetch all stylists
   }, [selectedDate]);
+
+  // Hàm lấy tên của stylist từ ID
+  const getStylistName = (stylistId) => {
+    const stylist = stylists.find((stylist) => stylist.stylistId === stylistId);
+    return stylist ? stylist.name : "Unknown"; // Trả về tên stylist nếu tìm thấy, nếu không trả về "Unknown"
+  };
 
   // Render status tag
   const renderStatus = (status) => (
@@ -106,7 +128,12 @@ const AppointmentPerDayManage = () => {
 
   const columns = [
     { title: "Customer Name", dataIndex: "customer", key: "customer" },
-    { title: "Stylist ID", dataIndex: "stylist", key: "stylist" },
+    {
+      title: "Stylist Name", // Hiển thị tên stylist thay vì stylistId
+      dataIndex: "stylistName",
+      key: "stylist",
+      render: (text, record) => getStylistName(record.stylistId), // Gọi hàm lấy tên stylist
+    },
     { title: "Service", dataIndex: "service", key: "service" },
     {
       title: "Appointment Date",
@@ -159,18 +186,13 @@ const AppointmentPerDayManage = () => {
         value={selectedDate}
         onChange={(date) => {
           if (date) {
-            setSelectedDate(date);
-            fetchAppointments(date); // Fetch appointments for the new selected date
+            setSelectedDate(date); // Update selected date
+            fetchAppointments(date); // Fetch appointments for the new selected date immediately
           }
         }}
         style={{ marginBottom: 20 }}
       />
-      <Button
-        type="primary"
-        onClick={() => fetchAppointments(selectedDate)} // Fetch appointments for the selected date
-      >
-        Reload
-      </Button>
+
       {noData ? (
         <div style={{ marginTop: 20, color: "red" }}>
           No data available for this date.
